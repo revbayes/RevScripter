@@ -72,11 +72,13 @@ seq ~ dnPhyloCTMC(tree=psi, Q=Q, type="DNA")
 seq.clamp(data)
 
 
+mymodel = model(x=psi)
+
+
 ############
 # Analysis #
 ############
 
-mymodel = model(x=psi)
 
 # add monitors
 monitors[mni++] = mnScreen(TL, printgen=1000)  # option to change printgen
@@ -86,12 +88,6 @@ monitors[mni++] = mnModel(filename="output/primates_cytb_GTR.log", printgen=10) 
 # run the analysis
 mymcmc = mcmc(mymodel, moves, monitors)
 mymcmc.run(generations=20000,tuningInterval=200)   # option to change generations and tuningInterval
-
-
-# summarize output
-treetrace = readTreeTrace(file="output/primates_cytb_GTR.trees", treetype="non-clock", outgroup=out_group) # options for all three args
-# and then get the MAP tree
-map_tree = mapTree(trace=treetrace,file="output/primates_cytb_GTR_MAP.tre") #options for args
 
 
 # you may want to quit RevBayes now
