@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+       <link rel="stylesheet" type="text/css" href="scriptgen.css">
+        <title>RevBayes Script Generator</title>    
+    </head>
+    <body>
+            
+            <h1>RevBayes Script Generator</h1>
+            <nav>
+                <div>
+                    <a href="#title1" class="tab">Configuration</a>
+                    <a href="#title2" class="tab">Control File</a>
+                    <a href="#title3" class="tab">Sequence Data</a>
+                    <a href="#title4" class="tab">Map File</a>
+                    <a href="#title5" class="tab">Trees</a>
+                    <a href="#title6" class="tab">Run BPP</a>
+                    <a href="#title7" class="tab">Results</a>
+                    <a href="#title8" class="tab">Notebook</a>
+                    <a href="#title9" class="tab">Preferences</a>
+                </div>
+            </nav>
+            <box>
+                <a class="box">
+                    <p>Species Delimitation</p> 
+                    <select>
+                        <option value="No Species Delimitation">No Species Delimitation</option>
+                        <option value="Species Delimitation">Species Delimitation</option>
+                    </select> 
+                </a>
+                <a class="box">
+                    <p>Species Delimitation Mixing Parameters</p>
+                    <button class="button">Proposal Method 1</button>
+                    <button class="button">Proposal Method 2</button>
+                </a>
+                <a class="box">
+                    <p>Species Tree Inference</p>
+                    <select>
+                        <option value="FSP">Fix Species Tree</option>
+                        <option value="ISP">Inference Species Tree</option>
+                    </select>
+                </a>
+                <a class="box">
+                    <p>Species and Starting Tree</p>
+                    <button>Generate Random Tree</button>
+                </a>
+                <a class ="box">
+                    <p>Input Files</p>
+                    <form>
+                        <label>Individual to population map file:</label>
+                        <input type="file" name="pic" accept="image/*">
+                    </form>
+                    <form>
+                        <label>Sequence data file:</label>
+                        <input type="file" name="pic" accept="image/*">
+                    </form>
+                </a>
+                <a class ="box">
+                    <p>Output Files</p>
+                </a>
+                <a class ="box">
+                    <p>Models</p>
+                </a>
+                <a class ="box">
+                    <p>Prior Distributions</p>
+                </a>
+                <a class ="box">
+                    <p>MCMC Specifications</p>
+                </a>
+                <a class ="box">
+                    <p>Debugging Options</p>
+                </a>
+            </box>
+
+
+    </body>
+</html>
