@@ -3,24 +3,22 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-       <link rel="stylesheet" type="text/css" href="scriptgen.css">
+        <link rel="stylesheet" type="text/css" href="scriptgen.css">
         <title>RevBayes Script Generator</title>    
     </head>
     <body>
-            
+        <div id ="container">
             <h1>RevBayes Script Generator</h1>
             <nav>
-                <div>
-                    <a href="#title1" class="tab">Configuration</a>
-                    <a href="#title2" class="tab">Control File</a>
-                    <a href="#title3" class="tab">Sequence Data</a>
-                    <a href="#title4" class="tab">Map File</a>
-                    <a href="#title5" class="tab">Trees</a>
-                    <a href="#title6" class="tab">Run BPP</a>
-                    <a href="#title7" class="tab">Results</a>
-                    <a href="#title8" class="tab">Notebook</a>
-                    <a href="#title9" class="tab">Preferences</a>
-                </div>
+                <a href="#title1" class="tab">Configuration</a>
+                <a href="controlfile.html" class="tab">Control File</a>
+                <a href="#title3" class="tab">Sequence Data</a>
+                <a href="#title4" class="tab">Map File</a>
+                <a href="#title5" class="tab">Trees</a>
+                <a href="#title6" class="tab">Run BPP</a>
+                <a href="#title7" class="tab">Results</a>
+                <a href="#title8" class="tab">Notebook</a>
+                <a href="#title9" class="tab">Preferences</a>
             </nav>
             <box>
                 <a class="box">
@@ -51,29 +49,105 @@
                     <form>
                         <label>Individual to population map file:</label>
                         <input type="file" name="pic" accept="image/*">
-                    </form>
-                    <form>
+                        <br>
                         <label>Sequence data file:</label>
                         <input type="file" name="pic" accept="image/*">
+                        <br>
+                        <input type="checkbox" name="adata" value="true"> Remove sites with ambiguity data<br>
                     </form>
                 </a>
                 <a class ="box">
                     <p>Output Files</p>
+                    <form>
+                        <label>MCMC tree output file:</label>
+                        <input type="file" name="pic" accept="image/*">
+                        <br>
+                        <label>Results output file:</label>
+                        <input type="file" name="pic" accept="image/*">
+                    </form>
                 </a>
                 <a class ="box">
                     <p>Models</p>
+                    <form>
+                        <p>Locus-Specific Substitution Rates</p>
+                        <select>
+                            <option value="ESR">Equal Substitution Rates</option>
+                            <option value="ESR2">Estimate Substitution Rates</option>
+                            <option value="SSP">Specified Substitution Rates</option>
+                        </select>
+                        <br>
+                        <p>Locus-Specific Heredity Scalars</p>
+                        <select>
+                            <option value="EHS">Equal Heredity Scalars</option>
+                            <option value="EHS2">Estimate Heredity Scalars</option>
+                            <option value="SHS">Specified Heredity Scalars</option>
+                        </select>
+                    </form>
                 </a>
                 <a class ="box">
                     <p>Prior Distributions</p>
+                    <form>
+                        <p>Root Age</p>
+                        <Label>Mean:</Label>
+                        <input type="number" name="mean" value="0.001" style="width: 100px;">
+                        <Label>Variance:</Label>
+                        <input type="number" name="mean" value="0.000001" style="width: 100px;">
+                        <Label>Dirichlet (alpha):</Label>
+                        <input type="number" name="mean" value="1" style="width: 100px;">
+                        <br>
+                        <p>Theta</p>
+                        <Label>Mean:</Label>
+                        <input type="number" name="mean" value="0.001" style="width: 100px;">
+                        <Label>Variance:</Label>
+                        <input type="number" name="mean" value="0.000001" style="width: 100px;">
+                    </form>
                 </a>
                 <a class ="box">
                     <p>MCMC Specifications</p>
+                    <form>
+                        <p>Mixing Parameters</p>
+                        <input type="checkbox" name="atparameters" value="true"> Auto-tuning of missing parameters<br>
+                        <Label>GBtj:</Label>
+                        <input type="number" name="mean" value="0.10" style="width: 50px;">
+                        <Label>GBspr:</Label>
+                        <input type="number" name="mean" value="0.10" style="width: 50px;">
+                        <Label>theta:</Label>
+                        <input type="number" name="mean" value="0.10" style="width: 50px;">
+                        <Label>tau:</Label>
+                        <input type="number" name="mean" value="0.10" style="width: 50px;">
+                        <Label>mix:</Label>
+                        <input type="number" name="mean" value="0.10" style="width: 50px;">
+                        <Label>locusrate:</Label>
+                        <input type="number" name="mean" value="0.10" style="width: 50px;">
+                        <Label>seqerr:</Label>
+                        <input type="number" name="mean" value="0.10" style="width: 50px;">
+                        <br>
+                        <p>RNG Seed</p>
+                        <input type="number" name="mean" value="0" style="width: 55px;"> (0 =  seed from system clock)
+                        <br>
+                        <p>MCMC Sampling Files</p>
+                        <Label>Burn-in:</Label>
+                        <input type="number" name="mean" value="5000" style="width: 75px;">
+                        <Label>Replicate:</Label>
+                        <input type="number" name="mean" value="50000" style="width: 75px;">
+                        <Label>Sampling:</Label>
+                        <input type="number" name="mean" value="5" style="width: 75px;">
+                        <br>
+                        <p>MCMC Output Files</p>
+                        <input type="checkbox" name="atparameters" value="true"> Species trees
+                        <input type="checkbox" name="atparameters" value="true"> Gene trees
+                        <input type="checkbox" name="atparameters" value="true"> Locus Rates
+                        <input type="checkbox" name="atparameters" value="true"> Heredity scalars
+                    </form>
                 </a>
                 <a class ="box">
                     <p>Debugging Options</p>
+                    <form>
+                        <input type="checkbox" name="atparameters" value="true"> Likelihood On (uncheck to sample from priors using no data)
+                    </form>
                 </a>
             </box>
-
+        </div>
 
     </body>
 </html>
