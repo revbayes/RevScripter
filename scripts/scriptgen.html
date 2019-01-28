@@ -5,10 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="scriptgen.css">
         <title>RevBayes Script Generator</title>    
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     </head>
     <body>
         <div id ="container">
-            <h1>RevBayes Script Generator</h1>
+            
+            <!---
             <nav>
                 <a href="#title1" class="tab">Configuration</a>
                 <a href="controlfile.html" class="tab">Control File</a>
@@ -20,31 +22,61 @@
                 <a href="#title8" class="tab">Notebook</a>
                 <a href="#title9" class="tab">Preferences</a>
             </nav>
-            <box>
-                <a class="box">
+            -->
+            
+            <ul>
+                <li><a class="active" href="#scriptgen.html">Configuration</a></li>
+                <li><a href="controlfile.html">Control File</a></li>
+                <li><a href="sequencedata.html">Sequence Data</a></li>
+                <li><a href="mapfile.html">Map File</a></li>
+                <li><a href="trees.html">Trees</a></li>
+                <li><a href="#run.html">Run BPP</a></li>
+                <li><a href="results.html">Results</a></li>
+                <li><a href="notebook.html">Notebook</a></li>
+                <li><a href="preferences.html">Preferences</a></li>
+                <li style="float:right"><a href="#about">About</a></li>
+              </ul>
+            
+            <!--
+            <div id="nav-placeholder">
+
+            </div>
+            
+               
+            <script>
+            $(function(){
+              $("#nav-placeholder").load("nav.html");
+            });
+            </script>
+            -->
+            <h1>RevBayes Script Generator</h1>
+            <div>
+
+
+                <div class="box">
                     <p>Species Delimitation</p> 
                     <select>
                         <option value="No Species Delimitation">No Species Delimitation</option>
                         <option value="Species Delimitation">Species Delimitation</option>
                     </select> 
-                </a>
-                <a class="box">
+                </div>
+                <div class="box">
                     <p>Species Delimitation Mixing Parameters</p>
                     <button class="button">Proposal Method 1</button>
                     <button class="button">Proposal Method 2</button>
-                </a>
-                <a class="box">
+                </div>
+                <div class="box">
                     <p>Species Tree Inference</p>
                     <select>
                         <option value="FSP">Fix Species Tree</option>
                         <option value="ISP">Inference Species Tree</option>
                     </select>
-                </a>
-                <a class="box">
+                </div>
+                <div class="box">
                     <p>Species and Starting Tree</p>
                     <button>Generate Random Tree</button>
-                </a>
-                <a class ="box">
+                </div>
+                <div class ="box">
                     <p>Input Files</p>
                     <form>
                         <label>Individual to population map file:</label>
@@ -55,8 +87,8 @@
                         <br>
                         <input type="checkbox" name="adata" value="true"> Remove sites with ambiguity data<br>
                     </form>
-                </a>
-                <a class ="box">
+                </div>
+                <div class ="box">
                     <p>Output Files</p>
                     <form>
                         <label>MCMC tree output file:</label>
@@ -65,8 +97,8 @@
                         <label>Results output file:</label>
                         <input type="file" name="pic" accept="image/*">
                     </form>
-                </a>
-                <a class ="box">
+                </div>
+                <div class ="box">
                     <p>Models</p>
                     <form>
                         <p>Locus-Specific Substitution Rates</p>
@@ -83,8 +115,8 @@
                             <option value="SHS">Specified Heredity Scalars</option>
                         </select>
                     </form>
-                </a>
-                <a class ="box">
+                </div>
+                <div class ="box">
                     <p>Prior Distributions</p>
                     <form>
                         <p>Root Age</p>
@@ -101,8 +133,8 @@
                         <Label>Variance:</Label>
                         <input type="number" name="mean" value="0.000001" style="width: 100px;">
                     </form>
-                </a>
-                <a class ="box">
+                </div>
+                <div class ="box">
                     <p>MCMC Specifications</p>
                     <form>
                         <p>Mixing Parameters</p>
@@ -139,14 +171,25 @@
                         <input type="checkbox" name="atparameters" value="true"> Locus Rates
                         <input type="checkbox" name="atparameters" value="true"> Heredity scalars
                     </form>
-                </a>
-                <a class ="box">
+                </div>
+                <div class ="box">
                     <p>Debugging Options</p>
                     <form>
                         <input type="checkbox" name="atparameters" value="true"> Likelihood On (uncheck to sample from priors using no data)
                     </form>
-                </a>
-            </box>
+                </div>
+                <div class="box">
+                    <p>Testing Script</p>
+                    <script src "https://ajax.gooleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                    <script src="scriptgen.js"></script>
+                    <button onclick ="generateScript()">Generate Script</button>
+                    <button onclick ="resetScript()">Reset</button>
+                    <br>
+                    <br>
+                    <textarea id="myTextarea" name="something" rows="30" cols="80" >Example script.....</textarea>
+                </div>
+
+            </div>
         </div>
 
     </body>
