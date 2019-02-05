@@ -5,11 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="scriptgen.css">
         <title>RevBayes Script Generator</title>    
-        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+      
+        
+
     </head>
     <body>
         <div id ="container">
-            
             <!---
             <nav>
                 <a href="#title1" class="tab">Configuration</a>
@@ -54,12 +55,17 @@
 
 
                 <div class="box">
-                    <p>Species Delimitation</p> 
-                    <select>
-                        <option value="No Species Delimitation">No Species Delimitation</option>
-                        <option value="Species Delimitation">Species Delimitation</option>
-                    </select> 
+                    <p>Model</p> 
+                        
+                        <select  id="theModel"  >
+                            <option value="1">Jukes-Cantor</option>
+                            <option value="2" >GTR+Gamma+Inv</option>
+                            <option value="3">GTR</option>
+                            <option value="4">Empirical Amino Acid</option>
+                            <option value="5">GTR-Covariotide</option>
+                        </select> 
                 </div>
+                <!---
                 <div class="box">
                     <p>Species Delimitation Mixing Parameters</p>
                     <button class="button">Proposal Method 1</button>
@@ -178,16 +184,20 @@
                         <input type="checkbox" name="atparameters" value="true"> Likelihood On (uncheck to sample from priors using no data)
                     </form>
                 </div>
+            -->
                 <div class="box">
-                    <p>Testing Script</p>
-                    <script src "https://ajax.gooleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-                    <script src="scriptgen.js"></script>
+                    <p>Generated Script:</p>
+                    
                     <button onclick ="generateScript()">Generate Script</button>
                     <button onclick ="resetScript()">Reset</button>
                     <br>
                     <br>
                     <textarea id="myTextarea" name="something" rows="30" cols="80" >Example script.....</textarea>
                 </div>
+           
+                <script src="scriptgen.js"></script>
+                <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+                <script src "https://ajax.gooleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
             </div>
         </div>
