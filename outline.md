@@ -20,7 +20,7 @@ Datatype (Dropdown)
 					- Alpha, Beta -> enter values (default = 1)
 					- 
 ```
-pinv ~ dnBeta(1,1)
+pinv ~ dnBeta(<alpha>,<beta>)
 moves.append(mvBetaSimplex(pinv))
 ```
 		- +G
