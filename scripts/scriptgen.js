@@ -14,6 +14,37 @@ var postProcessing;
 
 
 
+function displaydataType(){
+    var d = document.getElementById("dataType").value;
+    var x = document.getElementById("Nucleotide");
+    if( d == "N"){
+        x.style.display = "block";
+    }
+    else{
+        x.style.display = "none";
+    }
+}
+
+function checksiteModel(){
+    var sModel = document.getElementById("siteModel");
+    var y = document.getElementById("smOptions");
+    if(sModel.checked){
+        y.style.display = "block";
+    }
+    else{
+        y.style.display= "none";
+    }
+}
+
+function getSubstitutionModel(){
+    
+}
+
+function readText(fileData){
+	scripttest = fileData;
+}
+
+
 
 function doGET(path, callback) {
     var xhr = new XMLHttpRequest();
@@ -33,7 +64,7 @@ function doGET(path, callback) {
         }
     };
 	script = author + model + scripttest; //test
-    xhr.open("GET", path);
+    xhr.open("GET", path, true);
     xhr.send();
 }
 
@@ -55,13 +86,6 @@ function handleFileData(fileData) {
     console.log("5");
 }
 
-function getSubstitutionModel(){
-    
-}
-
-function readText(fileData){
-	scripttest = fileData;
-}
 
 function val() {
     model = document.getElementById("theModel").value; 
