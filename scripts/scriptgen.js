@@ -1,8 +1,11 @@
 var author = "###Author###\n\n";
 var script = "";
-var model;
+var model = "";
 var modeltype = "";
-var scripttest = "Example Script";
+var scripttest = "E";
+var fixed = 0;
+var alpha = 0;
+var beta = 0;
 
 var sequenceData;
 var variables;
@@ -30,10 +33,19 @@ function checksiteModel(){
     var y = document.getElementById("smOptions");
     if(sModel.checked){
         y.style.display = "block";
+        fixed = document.getElementById("fixed").value;
+        alpha = document.getElementById("alpha").value;
+        beta = document.getElementById("beta").value;
     }
     else{
         y.style.display= "none";
     }
+}
+
+function setsmOptions(){
+    fixed = document.getElementById("fixed").value;
+    alpha = document.getElementById("alpha").value;
+    beta = document.getElementById("beta").value;
 }
 
 function getSubstitutionModel(){
@@ -44,8 +56,8 @@ function readText(fileData){
 	scripttest = fileData;
 }
 
-
-
+/*
+//Gets infor from the a file for each script
 function doGET(path, callback) {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
@@ -68,6 +80,7 @@ function doGET(path, callback) {
     xhr.send();
 }
 
+//Handles the data from whatever file is accessed
 function handleFileData(fileData) {
 	console.log("3");//test
     if (!fileData) {
@@ -86,7 +99,7 @@ function handleFileData(fileData) {
     console.log("5");
 }
 
-
+//Gets the option of which model to get the file from
 function val() {
     model = document.getElementById("theModel").value; 
 	if(model == "1"){
@@ -99,11 +112,14 @@ function val() {
 		modeltype = "gtr.txt";
 	}
 }
+*/
 
+
+//creates the script that will be generated.
 function createScript(){
-    //script = author + sequenceData + variables + substitutionModel + treeModel + phyloctmcModel + analysis + postProcessing;
-    script = author + model + "\n" + scripttest; 
+    script = author + model + "\n" + scripttest + "\n" + fixed + "\n" + alpha + "\n" + beta; 
 }
+
 
 function resetScript(){
     script = "";
@@ -111,9 +127,8 @@ function resetScript(){
 }
 
 function generateScript(){
-    val();
-	doGET(modeltype, handleFileData, readText);
-	doGET(modeltype, handleFileData, readText);
+    //val();
+    //doGET(modeltype, handleFileData, readText);
 	createScript();
     document.getElementById('myTextarea').value = script; 
 }

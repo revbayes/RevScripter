@@ -61,13 +61,13 @@
                         <!--If Site Model is checked-->
                         <div id ="smOptions" style="display:none">
                             <h4>Fixed</h4>
-                            <input type="number" name="mean" value="0.001" style="width: 50px;">
+                            <input type="number"  id="fixed" name="mean" value="0.001" style="width: 50px;" onchange="setsmOptions()">
                             <h4>Estimate:</h4>
                             <h4>Beta Prior</h4>
                             <p>Alpha</p>
-                            <input type="number" name="mean" value="1" style="width: 25px;">
+                            <input type="number" id="alpha" name="mean" value="1" style="width: 25px;" onchange="setsmOptions()">
                             <p>Beta</p>
-                            <input type="number" name="mean" value="1" style="width: 25px;">
+                            <input type="number" id="beta" name="mean" value="1" style="width: 25px;" onchange="setsmOptions()">
                         </div>
                         
 
@@ -206,7 +206,7 @@
             -->
                 <div class="box">
                     <p>Generated Script:</p>          
-                    <button onclick ="generateScript()">Generate Script</button>
+                    <button onclick ="generateScript()" onclick="generateScript2()">Generate Script</button>
                     <button onclick ="resetScript()">Reset</button>
                     <br>
                     <br>
