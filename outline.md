@@ -98,7 +98,7 @@
 			- Estimate
 				- Dirichlet prior distribution => Enter concentration parameters > 0 (default = (1,1,1,1))
 		
-						er ~ dnDirichlet(v(<value>, <value>, <value>, <value>))
+						er ~ dnDirichlet(v(<value>, <value>, <value>, <value>, <value>, <value>))
 						moves.append(mvBetaSimplex(er))
 						moves.append(mvDirichletSimplex(er))
 						
