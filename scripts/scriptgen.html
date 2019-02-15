@@ -5,26 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="scriptgen.css">
         <title>RevBayes Script Generator</title>    
-      
-        
-
     </head>
     <body>
-        <div id ="container">
-            <!---
-            <nav>
-                <a href="#title1" class="tab">Configuration</a>
-                <a href="controlfile.html" class="tab">Control File</a>
-                <a href="#title3" class="tab">Sequence Data</a>
-                <a href="#title4" class="tab">Map File</a>
-                <a href="#title5" class="tab">Trees</a>
-                <a href="#title6" class="tab">Run BPP</a>
-                <a href="#title7" class="tab">Results</a>
-                <a href="#title8" class="tab">Notebook</a>
-                <a href="#title9" class="tab">Preferences</a>
-            </nav>
-            -->
-            
+        <div id ="container"> 
             <ul>
                 <li><a class="active" href="#scriptgen.html">Configuration</a></li>
                 <li><a href="controlfile.html">Control File</a></li>
@@ -38,25 +21,10 @@
                 <li style="float:right"><a href="#about">About</a></li>
               </ul>
             
-            <!--
-            <div id="nav-placeholder">
-
-            </div>
-            
-               
-            <script>
-            $(function(){
-              $("#nav-placeholder").load("nav.html");
-            });
-            </script>
-            -->
             <h1>RevBayes Script Generator</h1>
             <div>
-
-
                 <div class="box">
-                    <p>Model</p> 
-                        
+                    <h2>Model</h2> 
                         <select  id="theModel"  >
                             <option value="1">Jukes-Cantor</option>
                             <option value="2" >GTR+Gamma+Inv</option>
@@ -65,6 +33,57 @@
                             <option value="5">Covariotide</option>
                         </select> 
                 </div>
+                <!--Substitution Model Option-->
+                <div class ="box">
+                    <h2>Substitution Model</h2>
+
+                    <!--Select menu for Datatype-->
+                    <select id="dataType" onchange="displaydataType()">
+                        <option value ="N">Nucleotide</option>
+                        <option value ="A">Amino Acid</option>
+                    </select>
+
+                    <!--Option Nucleotide from Datatype-->
+                    <div id ="Nucleotide" style="display:block">
+                        <h3>Q Matrix</h3>
+                        <!-- select Menu for Q Matrix-->
+                        <select id="qMatrix">
+                            <option value="JC">Jukes-Cantor</option>
+                            <option value="F81">F81</option>
+                            <option value="K80">K80</option>
+                            <option value="HKY">HKY</option>
+                            <option value="GTR">GTR</option>
+                        </select>
+                        <br>
+                        <br>
+                        <!--CheckBox for Site Model-->
+                        <input type="checkbox" id ="siteModel" onchange="checksiteModel()"> Site Model
+                        <!--If Site Model is checked-->
+                        <div id ="smOptions" style="display:none">
+                            <h4>Fixed</h4>
+                            <input type="number"  id="fixed" name="mean" value="0.001" style="width: 50px;" onchange="setsmOptions()">
+                            <h4>Estimate:</h4>
+                            <h4>Beta Prior</h4>
+                            <p>Alpha</p>
+                            <input type="number" id="alpha" name="mean" value="1" style="width: 25px;" onchange="setsmOptions()">
+                            <p>Beta</p>
+                            <input type="number" id="beta" name="mean" value="1" style="width: 25px;" onchange="setsmOptions()">
+                        </div>
+                        
+
+                    </div>
+                </div>
+
+                <!--Tree Model Option-->
+                <div class ="box">
+                    <h2>Tree Model</h2>
+                </div>
+
+                <!--MCMC option-->
+                <div class = "box">
+                    <h2>MCMC</h2>
+                </div>
+
                 <!---
                 <div class="box">
                     <p>Species Delimitation Mixing Parameters</p>
@@ -186,9 +205,8 @@
                 </div>
             -->
                 <div class="box">
-                    <p>Generated Script:</p>
-                    
-                    <button onclick ="generateScript()">Generate Script</button>
+                    <p>Generated Script:</p>          
+                    <button onclick ="generateScript()" onclick="generateScript2()">Generate Script</button>
                     <button onclick ="resetScript()">Reset</button>
                     <br>
                     <br>
