@@ -201,4 +201,19 @@
 
 # Tree Model
 
+- Topology
+	- Unrooted
+		- Prior distribution
+			- Uniform
+			- others?
+	- Rooted
+		- Prior distribution
+			- Yule
+			- Birth-death
+			- etc.
+- Constraints
+- Calibrations
+
+# Branch Length/Rate Model
+
 # MCMC
