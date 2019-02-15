@@ -1,7 +1,5 @@
 # Data
 
-# Substitution Model
-
 ### Datatype (Dropdown)
 
 - Nucleotide
@@ -11,6 +9,8 @@
 - Amino Acid
 
 		num_char_states <- 20
+
+# Substitution Model
 		
 ### Q Matrix
 
