@@ -119,13 +119,41 @@
 		```
 	
 #### (Amino acid)
-
+				
 - Matrix type (radio button)
 	- Empirical
+		- Base frequencies (radio button)
+			- Empirical
+			- Estimated
+				- Dirichlet prior distribution => Enter concentration parameter > 0 (default = 1)
+			
+						pi ~ dnDirichlet(rep(<value>,20))
+						moves.append(mvBetaSimplex(pi))
+						moves.append(mvDirichletSimplex(pi))
+						
 		- Model (dropdown)
 			- WAG
+				
+				(Empirical base freqs)
+				
+					Q <- fnWAG()
+				
+				(Estimated base freqs)
+				
+					Q <- fnWAG(pi)
+					
 			- LG
+			
+				(Empirical base freqs)
+				
+					Q <- fnLG()
+				
+				(Estimated base freqs)
+				
+					Q <- fnLG(pi)
+					
 			- etc.
+			
 	- Estimated
 		- Model (dropdown)
 			- Poisson
