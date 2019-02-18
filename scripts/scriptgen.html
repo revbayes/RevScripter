@@ -14,7 +14,7 @@
                 <li><a href="sequencedata.html">Sequence Data</a></li>
                 <li><a href="mapfile.html">Map File</a></li>
                 <li><a href="trees.html">Trees</a></li>
-                <li><a href="#run.html">Run BPP</a></li>
+                <li><a href="run.html">Run BPP</a></li>
                 <li><a href="results.html">Results</a></li>
                 <li><a href="notebook.html">Notebook</a></li>
                 <li><a href="preferences.html">Preferences</a></li>
@@ -23,31 +23,24 @@
             
             <h1>RevBayes Script Generator</h1>
             <div>
+                <!--Data Options-->
                 <div class="box">
-                    <h2>Model</h2> 
-                        <select  id="theModel"  >
-                            <option value="1">Jukes-Cantor</option>
-                            <option value="2" >GTR+Gamma+Inv</option>
-                            <option value="3">GTR</option>
-                            <option value="4">Empirical Amino Acid</option>
-                            <option value="5">Covariotide</option>
-                        </select> 
+                    <h2>Data</h2>
+                    Datatype <select id="datatype" onchange="displayDatatype()">
+                        <option value="N">Nucleotide</option>
+                        <option value="A">Amino Acid</option>
+                    </select>
                 </div>
+
                 <!--Substitution Model Option-->
                 <div class ="box">
                     <h2>Substitution Model</h2>
-
-                    <!--Select menu for Datatype-->
-                    <select id="dataType" onchange="displaydataType()">
-                        <option value ="N">Nucleotide</option>
-                        <option value ="A">Amino Acid</option>
-                    </select>
-
+                    <h3>Q Matrix</h3>
                     <!--Option Nucleotide from Datatype-->
-                    <div id ="Nucleotide" style="display:block">
-                        <h3>Q Matrix</h3>
-                        <!-- select Menu for Q Matrix-->
-                        <select id="qMatrix">
+                    <div id ="N" style="display:block">
+                       
+                        <!-- select Menu for Model-->
+                        Model   <select id="model" onchange ="displayModel()">
                             <option value="JC">Jukes-Cantor</option>
                             <option value="F81">F81</option>
                             <option value="K80">K80</option>
@@ -56,27 +49,121 @@
                         </select>
                         <br>
                         <br>
-                        <!--CheckBox for Site Model-->
-                        <input type="checkbox" id ="siteModel" onchange="checksiteModel()"> Site Model
-                        <!--If Site Model is checked-->
-                        <div id ="smOptions" style="display:none">
-                            <h4>Fixed</h4>
-                            <input type="number"  id="fixed" name="mean" value="0.001" style="width: 50px;" onchange="setsmOptions()">
-                            <h4>Estimate:</h4>
-                            <h4>Beta Prior</h4>
-                            <p>Alpha</p>
-                            <input type="number" id="alpha" name="mean" value="1" style="width: 25px;" onchange="setsmOptions()">
-                            <p>Beta</p>
-                            <input type="number" id="beta" name="mean" value="1" style="width: 25px;" onchange="setsmOptions()">
+                        <!--JC Option-->
+                        <div id="JC"></div>
+
+                        <!--F81 Option-->
+                        <div id="F81" style="display:none">
+                           Enter pi simplex vector values:
+                           <input type="number" id="pi1" value="0.25" step=".01" style="width: 50px;">
+                           <input type="number" id="pi2" value="0.25" step=".01" style="width: 50px;">
+                           <input type="number" id="pi3" value="0.25" step=".01" style="width: 50px;">
+                           <input type="number" id="pi4" value="0.25" step=".01" style="width: 50px;">
+                           <br>
+                           <br>
+                           Enter concentration parameters:
+                           <input type="number" id="cParameter1" value ="1" style="width: 25px;">
+                           <input type="number" id="cParameter2" value ="1" style="width: 25px;">
+                           <input type="number" id="cParameter3" value ="1" style="width: 25px;">
+                           <input type="number" id="cParameter4" value ="1" style="width: 25px;">
                         </div>
-                        
+
+                        <!--K80 Option-->
+                        <div id="K80" style="display:none">
+                            Enter Kappa value:
+                            <input type="number" id="kappa" value="1" style="width: 25px;">
+                            <br>
+                            <br>
+                            Enter lamda_kappa rate parameter:
+                            <input type="number" id="lamda_kappa" value="1" style="width: 25px;">                        
+                        </div>
+
+                        <!--HKY option-->
+                        <div id="HKY" style ="display:none">
+                            Enter Kappa value:
+                            <input type="number" id="hkykappa" value="1" style="width: 25px;">
+                            <br>
+                            <br>
+                            Enter lamda_kappa rate parameter:
+                            <input type="number" id="hkylamda_kappa" value="1" style="width: 25px;">
+                            <br>
+                            <br>
+                            Enter pi simplex vector values:
+                           <input type="number" id="pi1" value="0.25" step=".01" style="width: 50px;">
+                           <input type="number" id="pi2" value="0.25" step=".01" style="width: 50px;">
+                           <input type="number" id="pi3" value="0.25" step=".01" style="width: 50px;">
+                           <input type="number" id="pi4" value="0.25" step=".01" style="width: 50px;">
+                           <br>
+                           <br>
+                           Enter concentration parameters:
+                           <input type="number" id="cParameter1" value ="1" style="width: 25px;">
+                           <input type="number" id="cParameter2" value ="1" style="width: 25px;">
+                           <input type="number" id="cParameter3" value ="1" style="width: 25px;">
+                           <input type="number" id="cParameter4" value ="1" style="width: 25px;">
+                            
+                        </div>
+
+                        <!--GTR Option-->
+                        <div id="GTR" style ="display:none">    
+                            Enter er simplex vector values:
+                            <input type="number" id="pi1" value="1" style="width: 25px;">
+                            <input type="number" id="pi2" value="1" style="width: 25px;">
+                            <input type="number" id="pi3" value="1" style="width: 25px;">
+                            <input type="number" id="pi4" value="1" style="width: 25px;">
+                            <br>
+                            <br>
+                            Enter concentration parameters:
+                            <input type="number" id="cParameter1" value ="1" style="width: 25px;">
+                            <input type="number" id="cParameter2" value ="1" style="width: 25px;">
+                            <input type="number" id="cParameter3" value ="1" style="width: 25px;">
+                            <input type="number" id="cParameter4" value ="1" style="width: 25px;">
+                             <br>
+                             <br>
+                             
+                            Enter pi simplex vector values:
+                            <input type="number" id="pi1" value="0.25" step=".01" style="width: 50px;">
+                            <input type="number" id="pi2" value="0.25" step=".01" style="width: 50px;">
+                            <input type="number" id="pi3" value="0.25" step=".01" style="width: 50px;">
+                            <input type="number" id="pi4" value="0.25" step=".01" style="width: 50px;">
+                             <br>
+                             <br>
+                             Enter concentration parameters:
+                            <input type="number" id="cParameter1" value ="1" style="width: 25px;">
+                            <input type="number" id="cParameter2" value ="1" style="width: 25px;">
+                            <input type="number" id="cParameter3" value ="1" style="width: 25px;">
+                            <input type="number" id="cParameter4" value ="1" style="width: 25px;">
+                            
+                        </div>
+
 
                     </div>
+
+                    <!--CheckBox for Site Model-->
+                    <input type="checkbox" id ="siteModel" onchange="checksiteModel()"> Site Model
+                    <!--If Site Model is checked-->
+                    <div id ="smOptions" style="display:none">
+                        <h4>Fixed</h4>
+                        <input type="number"  id="fixed" value="0.001" style="width: 50px;" onchange="setsmOptions()">
+                        <h4>Estimate:</h4>
+                        <h4>Beta Prior</h4>
+                        <p>Alpha</p>
+                        <input type="number" id="alpha" value="1" style="width: 25px;" onchange="setsmOptions()">
+                        <p>Beta</p>
+                        <input type="number" id="beta" value="1" style="width: 25px;" onchange="setsmOptions()">
+                    </div>
+                        
+
+                    
                 </div>
 
                 <!--Tree Model Option-->
                 <div class ="box">
                     <h2>Tree Model</h2>
+                </div>
+
+                <!--Branch Length/ Rate Model-->
+                <div class ="box">
+                    <h2>Branch Length/Rate Model</h2>
                 </div>
 
                 <!--MCMC option-->
@@ -205,8 +292,8 @@
                 </div>
             -->
                 <div class="box">
-                    <p>Generated Script:</p>          
-                    <button onclick ="generateScript()" onclick="generateScript2()">Generate Script</button>
+                    <h2>Generated Script:</h2>          
+                    <button onclick ="generateScript()" >Generate Script</button>
                     <button onclick ="resetScript()">Reset</button>
                     <br>
                     <br>
@@ -214,6 +301,7 @@
                 </div>
            
                 <script src="scriptgen.js"></script>
+                <script src="substitutionoptions.js"></script>
                 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
                 <script src "https://ajax.gooleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
