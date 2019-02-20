@@ -36,19 +36,19 @@
                 <div class ="box">
                     <h2>Substitution Model</h2>
                     <h3>Q Matrix</h3>
+
                     <!--Option Nucleotide from Datatype-->
                     <div id ="N" style="display:block">
                        
                         <!-- select Menu for Model-->
-                        Model   <select id="model" onchange ="displayModel()">
+                        Model<select id="model" onchange ="displayModel()">
                             <option value="JC">Jukes-Cantor</option>
                             <option value="F81">F81</option>
                             <option value="K80">K80</option>
                             <option value="HKY">HKY</option>
                             <option value="GTR">GTR</option>
-                        </select>
-                        <br>
-                        <br>
+                        </select><br><br>
+                        
                         <!--JC Option-->
                         <div id="JC"></div>
 
@@ -58,48 +58,43 @@
                            <input type="number" id="pi1" value="0.25" step=".01" style="width: 50px;">
                            <input type="number" id="pi2" value="0.25" step=".01" style="width: 50px;">
                            <input type="number" id="pi3" value="0.25" step=".01" style="width: 50px;">
-                           <input type="number" id="pi4" value="0.25" step=".01" style="width: 50px;">
-                           <br>
-                           <br>
+                           <input type="number" id="pi4" value="0.25" step=".01" style="width: 50px;"><br><br>
+                          
                            Enter concentration parameters:
                            <input type="number" id="cParameter1" value ="1" style="width: 25px;">
                            <input type="number" id="cParameter2" value ="1" style="width: 25px;">
                            <input type="number" id="cParameter3" value ="1" style="width: 25px;">
-                           <input type="number" id="cParameter4" value ="1" style="width: 25px;">
+                           <input type="number" id="cParameter4" value ="1" style="width: 25px;"><br><br>
                         </div>
 
                         <!--K80 Option-->
                         <div id="K80" style="display:none">
                             Enter Kappa value:
-                            <input type="number" id="kappa" value="1" style="width: 25px;">
-                            <br>
-                            <br>
+                            <input type="number" id="kappa" value="1" style="width: 25px;"><br><br>
+                            
                             Enter lamda_kappa rate parameter:
-                            <input type="number" id="lamda_kappa" value="1" style="width: 25px;">                        
+                            <input type="number" id="lamda_kappa" value="1" style="width: 25px;"><br><br>                        
                         </div>
 
                         <!--HKY option-->
                         <div id="HKY" style ="display:none">
                             Enter Kappa value:
-                            <input type="number" id="hkykappa" value="1" style="width: 25px;">
-                            <br>
-                            <br>
+                            <input type="number" id="hkykappa" value="1" style="width: 25px;"><br><br>
+                            
                             Enter lamda_kappa rate parameter:
-                            <input type="number" id="hkylamda_kappa" value="1" style="width: 25px;">
-                            <br>
-                            <br>
+                            <input type="number" id="hkylamda_kappa" value="1" style="width: 25px;"><br><br>
+                            
                             Enter pi simplex vector values:
                            <input type="number" id="pi1" value="0.25" step=".01" style="width: 50px;">
                            <input type="number" id="pi2" value="0.25" step=".01" style="width: 50px;">
                            <input type="number" id="pi3" value="0.25" step=".01" style="width: 50px;">
-                           <input type="number" id="pi4" value="0.25" step=".01" style="width: 50px;">
-                           <br>
-                           <br>
+                           <input type="number" id="pi4" value="0.25" step=".01" style="width: 50px;"><br><br>
+                           
                            Enter concentration parameters:
                            <input type="number" id="cParameter1" value ="1" style="width: 25px;">
                            <input type="number" id="cParameter2" value ="1" style="width: 25px;">
                            <input type="number" id="cParameter3" value ="1" style="width: 25px;">
-                           <input type="number" id="cParameter4" value ="1" style="width: 25px;">
+                           <input type="number" id="cParameter4" value ="1" style="width: 25px;"><br><br>
                             
                         </div>
 
@@ -109,51 +104,99 @@
                             <input type="number" id="pi1" value="1" style="width: 25px;">
                             <input type="number" id="pi2" value="1" style="width: 25px;">
                             <input type="number" id="pi3" value="1" style="width: 25px;">
-                            <input type="number" id="pi4" value="1" style="width: 25px;">
-                            <br>
-                            <br>
+                            <input type="number" id="pi4" value="1" style="width: 25px;"><br><br>
+                            
                             Enter concentration parameters:
                             <input type="number" id="cParameter1" value ="1" style="width: 25px;">
                             <input type="number" id="cParameter2" value ="1" style="width: 25px;">
                             <input type="number" id="cParameter3" value ="1" style="width: 25px;">
-                            <input type="number" id="cParameter4" value ="1" style="width: 25px;">
-                             <br>
-                             <br>
+                            <input type="number" id="cParameter4" value ="1" style="width: 25px;"><br><br>
                              
                             Enter pi simplex vector values:
                             <input type="number" id="pi1" value="0.25" step=".01" style="width: 50px;">
                             <input type="number" id="pi2" value="0.25" step=".01" style="width: 50px;">
                             <input type="number" id="pi3" value="0.25" step=".01" style="width: 50px;">
-                            <input type="number" id="pi4" value="0.25" step=".01" style="width: 50px;">
-                             <br>
-                             <br>
+                            <input type="number" id="pi4" value="0.25" step=".01" style="width: 50px;"><br><br>
+                             
                              Enter concentration parameters:
                             <input type="number" id="cParameter1" value ="1" style="width: 25px;">
                             <input type="number" id="cParameter2" value ="1" style="width: 25px;">
                             <input type="number" id="cParameter3" value ="1" style="width: 25px;">
-                            <input type="number" id="cParameter4" value ="1" style="width: 25px;">
+                            <input type="number" id="cParameter4" value ="1" style="width: 25px;"><br><br>
                             
                         </div>
 
-
                     </div>
 
-                    <!--CheckBox for Site Model-->
-                    <input type="checkbox" id ="siteModel" onchange="checksiteModel()"> Site Model
-                    <!--If Site Model is checked-->
-                    <div id ="smOptions" style="display:none">
-                        <h4>Fixed</h4>
-                        <input type="number"  id="fixed" value="0.001" style="width: 50px;" onchange="setsmOptions()">
-                        <h4>Estimate:</h4>
-                        <h4>Beta Prior</h4>
-                        <p>Alpha</p>
-                        <input type="number" id="alpha" value="1" style="width: 25px;" onchange="setsmOptions()">
-                        <p>Beta</p>
-                        <input type="number" id="beta" value="1" style="width: 25px;" onchange="setsmOptions()">
-                    </div>
+                    <!--Option Amino Acid from Datatype-->
+                    <div id="A" style="display:none">
                         
+                        <!--Radio Button for Matrix type options-->
+                        Matrix type:<br>
+                        <input type="radio" id ="matrix" name="matrix" value="E" onchange="displayMatrix()">Empirical<br>
+                        <input type="radio" id ="matrix2" name="matrix" value="ES" onchange="displayMatrix()">Estimated<br><br>
+                        
+                        <!--Option Empirical-->
+                        <div id="E" style="display:none">
+                            <!--Options for Base Frequency-->
+                            Base Frequencies:<br>
+                            <input type="radio" id="bfreq" name="BF" value="BE" onchange ="displaybFrequency()">Empirical<br>
+                            <input type="radio" id="bfreq2" name="BF" value="BES" onchange="displaybFrequency()">Estimated<br><br>
+                        
+                            <!--Option Emprical-->
+                            <div id="BE" style="display:none">
+                            </div>
 
+                            <!--Option Estimated-->
+                            <div id="BES" style="display:none">
+                                Enter concentration parameter:<br>
+                                <input type="number" id="cParameter2" value ="1" style="width: 25px;"><br><br>
+                            </div>
+
+                            <!--Select Menu for Models-->
+                            Model <select id="emodel" onchange="">
+                                <option value="W">WAG</option>
+                                <option value="L">LG</option>
+                                <option value="etc">Etc.</option>
+                            </select><br><br>
+                        </div>
+
+                        <!--Option Estimated-->
+                        <div id="ES" style="display:none">
+                            Model <select id="esmodel" onchange="">
+                                <option value="P">Poisson</option>
+                                <option value="esGTR">GTR</option>
+                            </select><br><br>
+                        </div>
+
+                    </div>
+
+                    <!--Options For Site Model-->
+                    <h3>Site Model</h3>
                     
+                    <!--Checkbox for +I-->
+                    +I<input type="checkbox" id ="icheckbox" onchange="displayI()"><br><br>
+                    <!--If +I is checked-->
+                    <div id ="ioptions" style="display:none">
+                        Enter pinv value between 0 and 1:<input type="number"  id="fixed" value="0.01" step=".01" style="width: 50px;"><br><br>
+                        Estimate:<br>
+                        Enter Alpha and Beta:<br>
+                        Alpha:
+                        <input type="number" id="alpha" value="1" style="width: 25px;">
+                        Beta:
+                        <input type="number" id="beta" value="1" style="width: 25px;"><br><br>
+                    </div>
+
+                    <!--Checkbox for +G-->
+                    +G<input type="checkbox" id ="gcheckbox" onchange="displayG()"><br><br>
+                    <!--If +G is checked-->
+                    <div id ="goptions" style="display:none">
+                        Enter number of discrete categories:<input type="number"  id="dcategories" value="4" style="width: 25px;"><br><br>
+                        Enter Shape Value:<input type="number" id="shapevalue" value="1" style="width: 25px;"><br><br>
+                        Estimate:<br>
+                        Enter lambda_shape rate parameter<input type="number" id="beta" value="1" style="width: 25px;"><br><br>
+                    </div>
+                                            
                 </div>
 
                 <!--Tree Model Option-->
