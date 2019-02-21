@@ -219,32 +219,184 @@
         		- File name => enter `tree_file`
 				
 						input_tree = readTrees(tree_file, treetype="non-clock")[1]
-						tree <- input_tree
+						psi <- input_tree
         		              		      
-		- Prior distribution
-			- Uniform
-			- others?
+		- Estimate
+    		- Choose prior distribution
+    			- Uniform Topology
+        			- Outgroup => Enter outgroup name(s) [strings separated by commas] 
+				
+    						out_group = clade(<entered names>)
+    						topology ~ dnUniformTopology(taxa, outgroup=out_group)
+    						moves.append( mvNNI(topology, weight=num_taxa/2.0) )
+    						moves.append( mvSPR(topology, weight=num_taxa/10.0) )
+
+					- No outgroup 
+				
+    						topology ~ dnUniformTopology(taxa)
+    						moves.append( mvNNI(topology, weight=num_taxa/2.0) )
+    						moves.append( mvSPR(topology, weight=num_taxa/10.0) )
+			
+    			- others?
 	- Rooted
 		- Fixed
     		- fix topology only?
+        		- File name => enter `tree_file`
+				
+						input_tree = readTrees(tree_file, treetype="clock")[1]
+						topology <- input_tree
+        		              		      
     		- fix topology and branch lengths?
-		- Prior distribution
-			- Yule
-			- Birth-death
-			- etc.
-- Constraints
-- Calibrations
+        		- File name => enter `tree_file`
+				
+						input_tree = readTrees(tree_file, treetype="clock")[1]
+						psi <- input_tree
+		
+		- Estimated
+    		- Condition on:
+        		- Root age
+            		- Fix, enter value
+            		
+                            root_age <- <value>
+            		
+            		- Estimate, choose prior distribution
+                		- Uniform, enter min and max age, with the following rules: (1) min < max, (2) min >= 0
+                		
+                        		root_age ~ dnUniform(<min>, <max>)
+                		
+                		- Exponential, enter 2 values: (1) rate, (2) offset
+                		
+                        		root_age ~ dnExp(<rate>, <offset>)
+                		
+                		- Gamma, enter 3 values: (1) alpha, (2) beta, (3) offset
+                		
+                        		root_age ~ dnGamma(<alpha>, <beta>, <offset>)
+                		
+
+                		- Lognormal, enter 3 values (1) expected value (mean), (2) sd, (3) offset
+                		
+                        		root_mean_age <- <mean>
+                        		root_stdev_age <- <sd>
+                        		root_LN_mu <- ln(root_mean_age) - ((root_stdev_age* root_stdev_age) * 0.5)
+                        		root_age ~ dnLognormal(root_LN_mu, root_stdev_age, <offset>)
+                		
+        		- Origin time
+            		- Fix, enter value
+            		
+                            root_age <- <value>
+                            
+            		- Estimate, choose prior distribution
+                		- Uniform, enter min and max age, with the following rules: (1) min < max, (2) min >= 0
+                		
+                        		root_age ~ dnUniform(<min>, <max>)
+                		
+                		- Exponential, enter 2 values: (1) rate, (2) offset
+                		
+                        		root_age ~ dnExp(<rate>, <offset>)
+                		
+                		- Gamma, enter 3 values: (1) alpha, (2) beta, (3) offset
+                		
+                        		root_age ~ dnGamma(<alpha>, <beta>, <offset>)
+                		
+
+                		- Lognormal, enter 3 values (1) expected value (mean), (2) sd, (3) offset
+                		
+                        		root_mean_age <- <mean>
+                        		root_stdev_age <- <sd>
+                        		root_LN_mu <- ln(root_mean_age) - ((root_stdev_age* root_stdev_age) * 0.5)
+                        		root_age ~ dnLognormal(root_LN_mu, root_stdev_age, <offset>)
+                		
+
+    		- Choose prior distribution
+    			- Yule
+        			- Speciation rate
+            			- fix (enter decimal value greater than 0)
+		         
+                    	         speciation <- <value>
+		         
+            			- estimate, choose prior distribution
+                			- Uniform, enter min value and max value
+		         
+                        	         speciation ~ dnUniform(<min>, <max>)
+                			
+                			- Exponential, enter rate value
+		         
+                        	         speciation ~ dnExp(<rate value>)
+                			
+                			
+                	- Extant species sampling probability
+                        - fix, enter 0 =< value >= 1 (default = 1)
+                        
+                                rho <- <value>
+                                
+                        - estimate, choose prior distribution
+                            - Beta, enter alpha and beta
+                            
+                                    rho ~ dnBeta(<alpha>, <beta>)
+                
+    			- Birth-death
+        			- Speciation rate
+            			- fix (enter decimal value greater than 0)
+		         
+                    	         speciation <- <value>
+		         
+            			- estimate, choose prior distribution
+                			- Uniform, enter min value and max value
+		         
+                        	         speciation ~ dnUniform(<min>, <max>)
+                			
+                			- Exponential, enter rate value
+		         
+                        	         speciation ~ dnExp(<rate value>)
+                			
+            		- Extinction rate
+            			- fix (enter decimal value greater than 0)
+		         
+                    	         extinction <- <value>
+		         
+            			- estimate, choose prior distribution
+                			- Uniform, enter min value and max value
+		         
+                        	         extinction ~ dnUniform(<min>, <max>)
+                			
+                			- Exponential, enter rate value
+		         
+                        	         extinction ~ dnExp(<rate value>)
+	
+                	- Extant species sampling probability
+                        - fix, enter 0 =< value >= 1 (default = 1)
+                        
+                                rho <- <value>
+                                
+                        - estimate, choose prior distribution
+                            - Beta, enter alpha and beta
+                            
+                                    rho ~ dnBeta(<alpha>, <beta>)
+    			
+    			- there are more...need to add later
+- Constraints & Calibrations
+    - Add monophyly constraint, this should open options to select or enter taxon names, they should also give a name to their constraint (we can give a default name of `clade_i`, where `i` is the the number of the constraint.
+    
+            clade_1 = clade("<taxon name 1>", "<taxon name 2>", ...)
+            
+        - Calibrate constraint (check-box)
+            - This is complicated and will need some thinking...
+    
+    
+        
+
 
 # Branch Length/Rate Model
 
 - If the tree model is unrooted
     - prior distribution on iid branch lengths
-        - Exponential => enter `lambda_shape` rate parameter > 0
+        - Exponential => enter the rate parameter `<value>` (must be > 0)
 				
 						for(i in num_branches){
-    						br_len[i] ~ dnExp(lambda_shape)
+    						br_len[i] ~ dnExp(<value>)
     						moves.append(mvScale(br_len[i])
 						}
+						tree_length := sum(br_len)
     - 
 
 # MCMC
