@@ -16,19 +16,9 @@ var phyloctmcModel;
 var analysis;
 var postProcessing;
 
-
-
-
-
-function getSubstitutionModel(){
-    
-}
-
-
-
 //creates the script that will be generated.
 function createScript(){
-    script = author +"\n"  + fixed + "\n" + alpha + "\n" + beta; 
+    script = author + substitutionmodelTag; 
 }
 
 function resetScript(){

@@ -9,24 +9,21 @@
     <body>
         <div id ="container"> 
             <ul>
-                <li><a class="active" href="#scriptgen.html">Configuration</a></li>
-                <li><a href="controlfile.html">Control File</a></li>
-                <li><a href="sequencedata.html">Sequence Data</a></li>
-                <li><a href="mapfile.html">Map File</a></li>
-                <li><a href="trees.html">Trees</a></li>
-                <li><a href="run.html">Run BPP</a></li>
-                <li><a href="results.html">Results</a></li>
-                <li><a href="notebook.html">Notebook</a></li>
-                <li><a href="preferences.html">Preferences</a></li>
-                <li style="float:right"><a href="#about">About</a></li>
-              </ul>
+                <li><a class="active" href="data.html">Data</a></li>
+                <li><a href="substitutionmodel.html">Substitution Model</a></li>
+                <li><a href="treemodel.html">Tree Model</a></li>
+                <li><a href="branchlength.html">Branch Length/Rate Model</a></li>
+                <li><a href="mcmc.html">MCMC</a></li>
+                <li><a href="script.html">Script</a></li>
+                <li style="float:right"><a href="https://revbayes.github.io/">About</a></li>
+            </ul>
             
             <h1>RevBayes Script Generator</h1>
             <div>
                 <!--Data Options-->
                 <div class="box">
                     <h2>Data</h2>
-                    Datatype <select id="datatype" onchange="displayDatatype()">
+                    Datatype <select id="datatype" onchange="displayDatatype()" onchange="set_num_char_states()">
                         <option value="N">Nucleotide</option>
                         <option value="A">Amino Acid</option>
                     </select>
@@ -41,7 +38,7 @@
                     <div id ="N" style="display:block">
                        
                         <!-- select Menu for Model-->
-                        Model<select id="model" onchange ="displayModel()">
+                        Model <select id="model" onchange ="displayModel()">
                             <option value="JC">Jukes-Cantor</option>
                             <option value="F81">F81</option>
                             <option value="K80">K80</option>
@@ -54,48 +51,99 @@
 
                         <!--F81 Option-->
                         <div id="F81" style="display:none">
-                           Enter pi simplex vector values:
-                           <input type="number" id="pi1" value="0.25" step=".01" style="width: 50px;">
-                           <input type="number" id="pi2" value="0.25" step=".01" style="width: 50px;">
-                           <input type="number" id="pi3" value="0.25" step=".01" style="width: 50px;">
-                           <input type="number" id="pi4" value="0.25" step=".01" style="width: 50px;"><br><br>
-                          
-                           Enter concentration parameters:
-                           <input type="number" id="cParameter1" value ="1" style="width: 25px;">
-                           <input type="number" id="cParameter2" value ="1" style="width: 25px;">
-                           <input type="number" id="cParameter3" value ="1" style="width: 25px;">
-                           <input type="number" id="cParameter4" value ="1" style="width: 25px;"><br><br>
+                            <!-- Base Frequency Options-->
+                            Base Frequencies:<br>
+                            <input type="radio" id ="f81bff" name="f81bf" value="f81f" onchange="displayf81BF()">Fixed<br>
+                            <input type="radio" id ="f81bfe" name="f81bf" value="f81e" onchange="displayf81BF()">Estimated<br><br>
+
+                            <!--Fixed Option-->
+                            <div id="f81f" style="display:none">
+                                Enter pi simplex vector values:
+                                <input type="number" id="pi1" value="0.25" step=".01" style="width: 50px;">
+                                <input type="number" id="pi2" value="0.25" step=".01" style="width: 50px;">
+                                <input type="number" id="pi3" value="0.25" step=".01" style="width: 50px;">
+                                <input type="number" id="pi4" value="0.25" step=".01" style="width: 50px;"><br><br>                          
+                            </div>
+                           
+                           <!--Estimated Option-->
+                           <div id="f81e" style="display:none">
+                                Enter concentration parameters:
+                                <input type="number" id="cParameter1" value ="1" style="width: 25px;">
+                                <input type="number" id="cParameter2" value ="1" style="width: 25px;">
+                                <input type="number" id="cParameter3" value ="1" style="width: 25px;">
+                                <input type="number" id="cParameter4" value ="1" style="width: 25px;"><br><br> 
+                           </div>
+                           
+
                         </div>
 
                         <!--K80 Option-->
                         <div id="K80" style="display:none">
-                            Enter Kappa value:
-                            <input type="number" id="kappa" value="1" style="width: 25px;"><br><br>
+                             
+                             <!-- Transition/Transversion ratio Options-->
+                             Transition/Transversion ratio:<br>
+                             <input type="radio" id ="k80trf" name="k80tr" value="k80f" onchange="displayk80TR()">Fixed<br>
+                             <input type="radio" id ="k80tre" name="k80tr" value="k80e" onchange="displayk80TR()">Estimated<br><br>
+ 
+                             <!--Fixed Option-->
+                             <div id="k80f" style="display:none">
+                                Enter Kappa value:
+                                <input type="number" id="kappa" value="1" style="width: 25px;"><br><br>    
+                             </div>
                             
-                            Enter lamda_kappa rate parameter:
-                            <input type="number" id="lamda_kappa" value="1" style="width: 25px;"><br><br>                        
+                             <!--Estimated Option-->
+                             <div id="k80e" style="display:none">
+                                Enter lamda_kappa rate parameter:
+                                <input type="number" id="lamda_kappa" value="1" style="width: 25px;"><br><br>
+                             </div> 
+                            
                         </div>
 
                         <!--HKY option-->
                         <div id="HKY" style ="display:none">
-                            Enter Kappa value:
-                            <input type="number" id="hkykappa" value="1" style="width: 25px;"><br><br>
                             
-                            Enter lamda_kappa rate parameter:
-                            <input type="number" id="hkylamda_kappa" value="1" style="width: 25px;"><br><br>
-                            
-                            Enter pi simplex vector values:
-                           <input type="number" id="pi1" value="0.25" step=".01" style="width: 50px;">
-                           <input type="number" id="pi2" value="0.25" step=".01" style="width: 50px;">
-                           <input type="number" id="pi3" value="0.25" step=".01" style="width: 50px;">
-                           <input type="number" id="pi4" value="0.25" step=".01" style="width: 50px;"><br><br>
+                            <!-- Transition/Transversion ratio Options-->
+                            Transition/Transversion ratio:<br>
+                            <input type="radio" id ="hkytrf" name="hkytr" value="hkyf" onchange="displayhkyTR()">Fixed<br>
+                            <input type="radio" id ="hkytre" name="hkytr" value="hkye" onchange="displayhkyTR()">Estimated<br><br>
+
+                            <!--Fixed Option-->
+                            <div id="hkyf" style="display:none">
+                                Enter Kappa value:
+                                <input type="number" id="hkykappa" value="1" style="width: 25px;"><br><br>        
+                            </div>
                            
-                           Enter concentration parameters:
-                           <input type="number" id="cParameter1" value ="1" style="width: 25px;">
-                           <input type="number" id="cParameter2" value ="1" style="width: 25px;">
-                           <input type="number" id="cParameter3" value ="1" style="width: 25px;">
-                           <input type="number" id="cParameter4" value ="1" style="width: 25px;"><br><br>
+                            <!--Estimated Option-->
+                            <div id="hkye" style="display:none">
+                                Enter lamda_kappa rate parameter:
+                                <input type="number" id="hkylamda_kappa" value="1" style="width: 25px;"><br><br>    
+                            </div> 
+ 
                             
+                           <!-- Base Frequency Options-->
+                           Base Frequencies:<br>
+                           <input type="radio" id ="hkybff" name="hkybf" value="hkyf2" onchange="displayhkyBF()">Fixed<br>
+                           <input type="radio" id ="hkybfe" name="hkybf" value="hkye2" onchange="displayhkyBF()">Estimated<br><br>
+
+                           <!--Fixed Option-->
+                           <div id="hkyf2" style="display:none">
+                                Enter pi simplex vector values:
+                                <input type="number" id="pi1" value="0.25" step=".01" style="width: 50px;">
+                                <input type="number" id="pi2" value="0.25" step=".01" style="width: 50px;">
+                                <input type="number" id="pi3" value="0.25" step=".01" style="width: 50px;">
+                                <input type="number" id="pi4" value="0.25" step=".01" style="width: 50px;"><br><br>              
+                           </div>
+                          
+                          <!--Estimated Option-->
+                          <div id="hkye2" style="display:none">
+                                Enter concentration parameters:
+                                <input type="number" id="cParameter1" value ="1" style="width: 25px;">
+                                <input type="number" id="cParameter2" value ="1" style="width: 25px;">
+                                <input type="number" id="cParameter3" value ="1" style="width: 25px;">
+                                <input type="number" id="cParameter4" value ="1" style="width: 25px;"><br><br>  
+                          </div>
+
+
                         </div>
 
                         <!--GTR Option-->
@@ -345,6 +393,7 @@
            
                 <script src="scriptgen.js"></script>
                 <script src="substitutionoptions.js"></script>
+                <script src="substitutionoptionsdata.js"></script>
                 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
                 <script src "https://ajax.gooleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
