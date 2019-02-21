@@ -203,10 +203,16 @@
 
 - Topology
 	- Unrooted
+		- Fixed
+    		- fix topology only?
+    		- fix topology and branch lengths?
 		- Prior distribution
 			- Uniform
 			- others?
 	- Rooted
+		- Fixed
+    		- fix topology only?
+    		- fix topology and branch lengths?
 		- Prior distribution
 			- Yule
 			- Birth-death
@@ -215,5 +221,15 @@
 - Calibrations
 
 # Branch Length/Rate Model
+
+- If the tree model is unrooted
+    - prior distribution on iid branch lengths
+        - Exponential => enter `lambda_shape` rate parameter > 0
+				
+						for(i in num_branches){
+    						br_len[i] ~ dnExp(lambda_shape)
+    						moves.append(mvScale(br_len[i])
+						}
+    - 
 
 # MCMC
