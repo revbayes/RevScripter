@@ -2,6 +2,11 @@
 
 ### Datatype (Dropdown)
 
+- Data file name 
+    - enter path to file name `data_file_name `
+			
+					data = readDiscreteCharacterData(file=data_file_name)
+
 - Nucleotide
 		
 		num_char_states <- 4
@@ -91,12 +96,12 @@
 		
 	- GTR
 		- Exchangeabilities
-			- Fixed => Enter `er` simplex vector values (default = (1,1,1,1))
+			- Fixed => Enter `er` simplex vector values (default = (1,1,1,1,1,1))
 			
-					er <- v(<value>, <value>, <value>, <value>)
+					er <- v(<value>, <value>, <value>, <value>, <value>, <value>)
 			
 			- Estimate
-				- Dirichlet prior distribution => Enter concentration parameters > 0 (default = (1,1,1,1))
+				- Dirichlet prior distribution => Enter concentration parameters > 0 (default = (1,1,1,1,1,1))
 		
 						er ~ dnDirichlet(v(<value>, <value>, <value>, <value>, <value>, <value>))
 						moves.append(mvBetaSimplex(er))
