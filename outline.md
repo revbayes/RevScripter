@@ -205,7 +205,17 @@
 	- Unrooted
 		- Fixed
     		- fix topology only?
+        		- File name => enter `tree_file`
+				
+						input_tree = readTrees(tree_file, treetype="non-clock")[1]
+						topology <- input_tree
+        		              		      
     		- fix topology and branch lengths?
+        		- File name => enter `tree_file`
+				
+						input_tree = readTrees(tree_file, treetype="non-clock")[1]
+						tree <- input_tree
+        		              		      
 		- Prior distribution
 			- Uniform
 			- others?
