@@ -65,33 +65,63 @@ function displayhkyBF(){
     }
 }
 
+function displaygtrE(){
+    document.getElementById("gtrf").style.display = "none";
+    document.getElementById("gtre").style.display = "none";
 
-function displayMatrix(){
-    var empirical = document.getElementById("E").style.display = "none";
-    var estimated = document.getElementById("ES").style.display = "none";
-
-    if(document.getElementById("matrix").checked == true){
-        document.getElementById("E").style.display = "block";
+    if(document.getElementById("gtref").checked == true){
+        document.getElementById("gtrf").style.display = "block";
     }
-    if(document.getElementById("matrix2").checked == true){
-        document.getElementById("ES").style.display = "block";
+    if(document.getElementById("gtree").checked == true){
+        document.getElementById("gtre").style.display = "block";
     }
-
 }
 
-function displaybFrequency(){
-    var empirical = document.getElementById("BE").style.display = "none";
-    var estimated = document.getElementById("BES").style.display = "none";
+function displaygtrBF(){
+    document.getElementById("gtrf2").style.display = "none";
+    document.getElementById("gtre2").style.display = "none";
 
-    if(document.getElementById("bfreq").checked == true){
-        document.getElementById("BE").style.display = "block";
+    if(document.getElementById("gtrbff").checked == true){
+        document.getElementById("gtrf2").style.display = "block";
     }
-    if(document.getElementById("bfreq2").checked == true){
-        document.getElementById("BES").style.display = "block";
+    if(document.getElementById("gtrbfe").checked == true){
+        document.getElementById("gtre2").style.display = "block";
     }
-
 }
 
+function displayaaMatrix(){
+    document.getElementById("aamatrixe").style.display = "none";
+    document.getElementById("aamatrixes").style.display = "none";
+
+    if(document.getElementById("aamatrix").checked == true){
+        document.getElementById("aamatrixe").style.display = "block";
+    }
+    if(document.getElementById("aamatrix2").checked == true){
+        document.getElementById("aamatrixes").style.display = "block";
+    }
+}
+
+function displayaamatrixempericalBF(){
+    document.getElementById("aamatrixempericale").style.display = "none";
+    document.getElementById("aamatrixempericales").style.display = "none";
+
+    if(document.getElementById("aamatrixempericalbf").checked == true){
+        document.getElementById("aamatrixempericale").style.display = "block";
+    }
+    if(document.getElementById("aamatrixempericalbf2").checked == true){
+        document.getElementById("aamatrixempericales").style.display = "block";
+    }
+}
+
+
+function displayaamatrixempericalModel(){
+    var model = document.getElementById("emodel").value;
+    var WAG = document.getElementById("WAG").style.display = "none";
+    var LG = document.getElementById("LG").style.display = "none";
+    var ETC = document.getElementById("ETC").style.display = "none";
+    
+    document.getElementById(model).style.display = "block";
+}
 
 function displayI(){
     var icheckbox = document.getElementById("icheckbox");
@@ -103,6 +133,18 @@ function displayI(){
     }
 }
 
+function displayioptionFE(){
+    document.getElementById("ioptionf").style.display = "none";
+    document.getElementById("ioptione").style.display = "none";
+
+    if(document.getElementById("ioptionfef").checked == true){
+        document.getElementById("ioptionf").style.display = "block";
+    }
+    if(document.getElementById("ioptionfee").checked == true){
+        document.getElementById("ioptione").style.display = "block";
+    }
+}
+
 function displayG(){
     var gcheckbox = document.getElementById("gcheckbox");
     if(gcheckbox.checked){
@@ -110,5 +152,18 @@ function displayG(){
     }
     else{
         document.getElementById("goptions").style.display= "none";
+    }
+}
+
+
+function displaygoptionSP(){
+    document.getElementById("goptionf").style.display = "none";
+    document.getElementById("goptione").style.display = "none";
+
+    if(document.getElementById("goptionspf").checked == true){
+        document.getElementById("goptionf").style.display = "block";
+    }
+    if(document.getElementById("goptionspe").checked == true){
+        document.getElementById("goptione").style.display = "block";
     }
 }
