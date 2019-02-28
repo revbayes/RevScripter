@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="scriptgen.css">
-        <title>RevBayes Script Generator</title>    
+        <title>RevBayes Script Generator</title>  
     </head>
     <body>
         <div id ="container"> 
@@ -334,7 +334,7 @@
                 <div class ="box">
                     <h2>Tree Model</h2>
 
-                    <!--Root Options-->
+                    <!--Topology Options-->
                     Topology: <br>
                     <input type="radio" id ="topuru" name="topur" value="topu" onchange="displaytopUR()">Unrooted<br>
                     <input type="radio" id ="topurr" name="topur" value="topr" onchange="displaytopUR()">Rooted<br><br>
@@ -539,86 +539,207 @@
                                     </div>
                             </div>
                             
-
-
-                        </div>
-
-                        <!--Prior Distrivution Menu-->
-                        Choose Prior Distribution: 
-                        <select id="rootedcpd" onchange="display3SelectList('rootedcpd', 'YULE', 'BD', 'Other')">
-                            <option value="YULE">Yule</option>
-                            <option value="BD">Birth-death</option>
-                            <option value="Other">Other</option>
-                        </select>
-                        
-                        <!--Yule Option-->
-                        <div id="YULE" style="display:block">
-                            <!--Yule Option-->
-                            Yule:<br>
-                            <input type="radio" id ="yulesr" name="yulesres" value="ysr" onchange="display2RadioButton('yulesr','ysr','yulees','yes')">Speciation Rate<br>
-                            <input type="radio" id ="yulees" name="yulesres" value="yes" onchange="display2RadioButton('yulesr','ysr','yulees','yes')">Extant species Sampling Probability<br><br>
-                        
-                            <!--Speciation Rate Option-->
-                            <div id="ysr" style="display:none">
-
-                                <!--Speciation Option-->
-                                Speciation Rate:<br>
-                                <input type="radio" id ="srfef" name="srfe" value="srf" onchange="display2RadioButton('srfef','srf','srfee','sre')">Speciation Rate<br>
-                                <input type="radio" id ="srfee" name="srfe" value="sre" onchange="display2RadioButton('srfef','srf','srfee','sre')">Extant species Sampling Probability<br><br>
-
-                                <!--Fixed Option-->
-                                <div id="srf" style="display:none">
-                                    Enter Decimal Value(>0): <input type="number" name="mean" value="0.01" style="width: 100px;"><br><br>
-                                </div>
-
-                                <!--Estimated Option-->
-                                <div id="sre" style="display:none">
-                                    
-                                    <!--Prior Distribution Option-->
-                                    Prior distribution:<br>
-                                    <input type="radio" id ="srepdu" name="srepd" value="sreu" onchange="display2RadioButton('srepdu','sreu','srepde','sree')">Uniform<br>
-                                    <input type="radio" id ="srepde" name="srepd" value="sree" onchange="display2RadioButton('srepdu','sreu','srepde','sree')">Eponential<br><br>
-
-                                    <!--Uniform Option-->
-                                    <div id="sreu" style="display:none">
-                                        Enter Min and Max:<br>
-                                        Min: <input type="number" name="min" value="1" style="width: 25px;"><br>
-                                        Max: <input type="number" name="max" value="2" style="width: 25px;"><br><br>
-                                    </div>
-
-                                    <!--Exponential Option-->
-                                    <div id="sree" style="display:none">
-                                        Enter Rate Value: <input type="number" name="rateval" value="1" style="width: 25px;"><br><br>
-                                    </div>
-
-                                </div>
-                                
-                            </div>
-
-                            <!--Extant Species... Option-->
-                            <div id="yes" style="display:none">
-                                <!--Left off here-->
-
-                                
-                            </div>
+                            <!--Prior Distribution Menu-->
+                            Choose Prior Distribution: 
+                            <select id="rootedcpd" onchange="display3SelectList('rootedcpd', 'YULE', 'BD', 'Other')">
+                                <option value="YULE">Yule</option>
+                                <option value="BD">Birth-death</option>
+                                <option value="Other">Other</option>
+                            </select><br><br>
                             
+                            <!--Yule Option-->
+                            <div id="YULE" style="display:block">
+                                <!--Yule Option-->
+                                Yule:<br>
+                                <input type="radio" id ="yulesr" name="yulesres" value="ysr" onchange="display2RadioButton('yulesr','ysr','yulees','yes')">Speciation Rate<br>
+                                <input type="radio" id ="yulees" name="yulesres" value="yes" onchange="display2RadioButton('yulesr','ysr','yulees','yes')">Extant species Sampling Probability<br><br>
+                            
+                                <!--Speciation Rate Option-->
+                                <div id="ysr" style="display:none">
+
+                                    <!--Speciation Fixed/Estimated Option-->
+                                    Speciation Rate:<br>
+                                    <input type="radio" id ="srfef" name="srfe" value="srf" onchange="display2RadioButton('srfef','srf','srfee','sre')">Fixed<br>
+                                    <input type="radio" id ="srfee" name="srfe" value="sre" onchange="display2RadioButton('srfef','srf','srfee','sre')">Estimate<br><br>
+
+                                    <!--Fixed Option-->
+                                    <div id="srf" style="display:none">
+                                        Enter Decimal Value(>0): <input type="number" name="mean" value="0.01" style="width: 100px;"><br><br>
+                                    </div>
+
+                                    <!--Estimated Option-->
+                                    <div id="sre" style="display:none">
+                                        
+                                        <!--Prior Distribution Option-->
+                                        Prior distribution:<br>
+                                        <input type="radio" id ="srepdu" name="srepd" value="sreu" onchange="display2RadioButton('srepdu','sreu','srepde','sree')">Uniform<br>
+                                        <input type="radio" id ="srepde" name="srepd" value="sree" onchange="display2RadioButton('srepdu','sreu','srepde','sree')">Eponential<br><br>
+
+                                        <!--Uniform Option-->
+                                        <div id="sreu" style="display:none">
+                                            Enter Min and Max:<br>
+                                            Min: <input type="number" name="min" value="1" style="width: 25px;"><br>
+                                            Max: <input type="number" name="max" value="2" style="width: 25px;"><br><br>
+                                        </div>
+
+                                        <!--Exponential Option-->
+                                        <div id="sree" style="display:none">
+                                            Enter Rate Value: <input type="number" name="rateval" value="1" style="width: 25px;"><br><br>
+                                        </div>
+
+                                    </div>
+                                    
+                                </div>
+
+                                <!--Extant Species... Option-->
+                                <div id="yes" style="display:none">
+                                    
+                                    <!--Extant Species Fixed/Estimated Option-->
+                                    Extant species Sampling Probability:<br>
+                                    <input type="radio" id ="esfef" name="esfe" value="esf" onchange="display2RadioButton('esfef','esf','esfee','ese')">Fix<br>
+                                    <input type="radio" id ="esfee" name="esfe" value="ese" onchange="display2RadioButton('esfef','esf','esfee','ese')">Estimate<br><br>
+    
+                                    <!--Fixed Option-->
+                                    <div id="esf" style="display:none">
+                                        Enter Value(0<= and >=1): <input type="number" name="EsFVal" value="1.00" style="width: 100px;"><br><br>
+                                    </div>
+
+                                    <!--Estimate Option-->
+                                    <div id="ese" style="display:none">
+                                        Enter Alpha and Beta:<br>
+                                        Alpha: <input type="number" name="EsEAlpha" value="1" style="width: 25px;"><br>
+                                        Beta: <input type="number" name="EsEBeta" value="1" style="width: 25px;"><br><br>
+                                    </div>
+                                </div>
+                                
+                            </div>
+
+                            <!--BD option-->
+                            <div id="BD" style="display:none">
+
+                                <!--BD Option List-->
+                                Birth-death:
+                                <select id="bdlist" onchange="display4SelectList('bdlist', 'bdsr', 'bder', 'bdes','bdother')">
+                                    <option value="bdsr">Speciation Rate</option>
+                                    <option value="bder">Extinction Rate</option>
+                                    <option value="bdes">Extant Species</option>
+                                    <option value="bdother">Other</option>
+                                </select><br><br>
+                            
+                                <!--Speciation Rate Option-->
+                                <div id="bdsr" style="display:block">
+
+                                    <!--Speciation Fixed/Estimated Option-->
+                                    Speciation Rate:<br>
+                                    <input type="radio" id ="srfef2" name="srfe2" value="srf2" onchange="display2RadioButton('srfef2','srf2','srfee2','sre2')">Fixed<br>
+                                    <input type="radio" id ="srfee2" name="srfe2" value="sre2" onchange="display2RadioButton('srfef2','srf2','srfee2','sre2')">Estimate<br><br>
+
+                                    <!--Fixed Option-->
+                                    <div id="srf2" style="display:none">
+                                        Enter Decimal Value(>0): <input type="number" name="mean" value="0.01" style="width: 100px;"><br><br>
+                                    </div>
+
+                                    <!--Estimated Option-->
+                                    <div id="sre2" style="display:none">
+                                        
+                                        <!--Prior Distribution Option-->
+                                        Prior distribution:<br>
+                                        <input type="radio" id ="srepdu2" name="srepd2" value="sreu2" onchange="display2RadioButton('srepdu2','sreu2','srepde2','sree2')">Uniform<br>
+                                        <input type="radio" id ="srepde2" name="srepd2" value="sree2" onchange="display2RadioButton('srepdu2','sreu2','srepde2','sree2')">Eponential<br><br>
+
+                                        <!--Uniform Option-->
+                                        <div id="sreu2" style="display:none">
+                                            Enter Min and Max:<br>
+                                            Min: <input type="number" name="min" value="1" style="width: 25px;"><br>
+                                            Max: <input type="number" name="max" value="2" style="width: 25px;"><br><br>
+                                        </div>
+
+                                        <!--Exponential Option-->
+                                        <div id="sree2" style="display:none">
+                                            Enter Rate Value: <input type="number" name="rateval" value="1" style="width: 25px;"><br><br>
+                                        </div>
+
+                                    </div>
+                                    
+                                </div>
+
+                                <!--Extiction Rate Option-->
+                                <div id="bder" style="display:none">
+
+                                    <!--Extinction Fixed/Estimated Option-->
+                                    Extinction Rate:<br>
+                                    <input type="radio" id ="erfef" name="erfe" value="erf" onchange="display2RadioButton('erfef','erf','erfee','ere')">Fixed<br>
+                                    <input type="radio" id ="erfee" name="erfe" value="ere" onchange="display2RadioButton('erfef','erf','erfee','ere')">Estimate<br><br>
+
+                                    <!--Fixed Option-->
+                                    <div id="erf" style="display:none">
+                                        Enter Decimal Value(>0): <input type="number" name="mean" value="0.01" style="width: 100px;"><br><br>
+                                    </div>
+
+                                    <!--Estimated Option-->
+                                    <div id="ere" style="display:none">
+                                        
+                                        <!--Prior Distribution Option-->
+                                        Prior distribution:<br>
+                                        <input type="radio" id ="erepdu" name="erepd" value="ereu" onchange="display2RadioButton('erepdu','ereu','erepde','eree')">Uniform<br>
+                                        <input type="radio" id ="erepde" name="erepd" value="eree" onchange="display2RadioButton('erepdu','ereu','erepde','eree')">Eponential<br><br>
+
+                                        <!--Uniform Option-->
+                                        <div id="ereu" style="display:none">
+                                            Enter Min and Max:<br>
+                                            Min: <input type="number" name="min" value="1" style="width: 25px;"><br>
+                                            Max: <input type="number" name="max" value="2" style="width: 25px;"><br><br>
+                                        </div>
+
+                                        <!--Exponential Option-->
+                                        <div id="eree" style="display:none">
+                                            Enter Rate Value: <input type="number" name="rateval" value="1" style="width: 25px;"><br><br>
+                                        </div>
+
+                                    </div>
+                                    
+                                </div>
+
+                                <!--Extant Species... Option-->
+                                <div id="bdes" style="display:none">
+                                    
+                                    <!--Extant Species Fixed/Estimated Option-->
+                                    Extant species Sampling Probability:<br>
+                                    <input type="radio" id ="esfef2" name="esfe2" value="esf2" onchange="display2RadioButton('esfef2','esf2','esfee2','ese2')">Fix<br>
+                                    <input type="radio" id ="esfee2" name="esfe2" value="ese2" onchange="display2RadioButton('esfef2','esf2','esfee2','ese2')">Estimate<br><br>
+    
+                                    <!--Fixed Option-->
+                                    <div id="esf2" style="display:none">
+                                        Enter Value(0<= and >=1): <input type="number" name="EsFVal2" value="1.00" style="width: 100px;"><br><br>
+                                    </div>
+
+                                    <!--Estimate Option-->
+                                    <div id="ese2" style="display:none">
+                                        Enter Alpha and Beta:<br>
+                                        Alpha: <input type="number" name="EsEAlpha2" value="1" style="width: 25px;"><br>
+                                        Beta: <input type="number" name="EsEBeta2" value="1" style="width: 25px;"><br><br>
+                                    </div>
+                                </div>
+
+                                <!--Other Option-->
+                                <div id="bdother" style="display:none">
+                                    Other Option
+                                </div>
+
+                            </div>
+
+                            <!--Other Option-->
+                            <div id="Other" style="display:none">
+                                Other Option.
+                            </div>
+
                         </div>
-
-                        <!--BD option-->
-                        <div id="BD" style="display:none">
-                        hey2
-                        </div>
-
-                        <!--Other Option-->
-                        <div id="Other" style="display:none">
-                        hey3
-                        </div>
-
-
-
 
                     </div>
 
+                    <!--Constraints and calibrations Option-->
+                    Constraints and Calibrations: <br>
+                    <!--Need more information to add-->
 
 
                 </div>
@@ -648,7 +769,8 @@
                 <script src="substitutionoptionsdata.js"></script>
                 <script src="treeoptions.js"></script>
                 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-                <script src "https://ajax.gooleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                <script src= "https://ajax.gooleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                <script src="https://raw.githubusercontent.com/lodash/lodash/4.17.11-npm/core.min.js"></script>
 
             </div>
         </div>

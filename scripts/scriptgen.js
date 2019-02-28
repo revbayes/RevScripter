@@ -1,24 +1,25 @@
 var author = "###Author###\n\n";
 var script = "";
-var fixed = 0;
-var alpha = 0;
-var beta = 0;
+
+
+var scripts=['test1', 'test2', 'test3'];
+var scripts2=['test4','test5','test6']
+
+script = _.concat(scripts,scripts2);
 
 var substitutionmodelTag = "######################\n" +
                            "# Substitution Model #\n" +
                            "######################\n\n";
 
-var sequenceData;
-var variables;
-var substitutionModel;
-var treeModel;
-var phyloctmcModel;
-var analysis;
-var postProcessing;
+var variables = "# Get some useful variables from the data. We need these later on.\n" +
+                 "num_taxa <- data.ntaxa()\n" +
+                 "num_branches <- 2 * num_taxa - 3\n" +
+                 "taxa <- data.taxa()\n\n";
+
 
 //creates the script that will be generated.
 function createScript(){
-    script = author + substitutionmodelTag; 
+    script = author + variables; 
 }
 
 function resetScript(){
@@ -27,6 +28,6 @@ function resetScript(){
 }
 
 function generateScript(){
-	createScript();
+	//createScript();
     document.getElementById('myTextarea').value = script; 
 }

@@ -119,6 +119,16 @@ function display3SelectList(listname,option1,option2,option3){
     document.getElementById(listvalue).style.display = "block";
 }
 
+function display4SelectList(listname,option1,option2,option3, option4){
+    var listvalue = document.getElementById(listname).value;
+    var OP1 = document.getElementById(option1).style.display = "none";
+    var OP2 = document.getElementById(option2).style.display = "none";
+    var OP3 = document.getElementById(option3).style.display = "none";
+    var OP4 = document.getElementById(option4).style.display="none"
+
+    document.getElementById(listvalue).style.display = "block";
+}
+
 function display2RadioButton(option1b,option1, option2b, option2){
     document.getElementById(option1).style.display = "none";
     document.getElementById(option2).style.display = "none";
