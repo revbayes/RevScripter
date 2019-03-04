@@ -4,7 +4,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="scriptgen.css">
+
         <title>RevBayes Script Generator</title>  
+
+        <!--Lodash Library-->
+        <script src="core.min.js"></script>
+        
     </head>
     <body>
         <div id ="container"> 
@@ -20,16 +25,18 @@
             
             <h1>RevBayes Script Generator</h1>
             <div>
+
                 <!--Data Options-->
                 <div class="box">
                     <h2>Data</h2>
                     Enter path to filename:<br>
-                    <textarea id="filepath" name="something" rows="1" cols="80" >Ex.) data/primates_and_galeopterus_cytb.nex</textarea><br><br>
+                    <textarea id="datafilepath" name="something" rows="1" cols="80" style="resize: none;" oninput="getdataFilepath()">Ex.) data/primates_and_galeopterus_cytb.nex</textarea><br><br>
 
-                    Datatype <select id="datatype" onchange="displayDatatype()" onchange="set_num_char_states()">
-                        <option value="N">Nucleotide</option>
+                    Datatype: <select id="datatype" onchange="displayDatatype(); setNumcharstates(); checksubstitutionModel()">
+                        <option value="N" selected>Nucleotide</option>
                         <option value="A">Amino Acid</option>
                     </select>
+
                 </div>
 
                 <!--Substitution Model Option-->
@@ -41,8 +48,8 @@
                     <div id ="N" style="display:block">
                        
                         <!-- select Menu for Model-->
-                        Model <select id="model" onchange ="displayModel()">
-                            <option value="JC">Jukes-Cantor</option>
+                        Model <select id="nucleotideModel" onchange ="displayModel(); updatenucleotideModel()">
+                            <option value="JC" selected>Jukes-Cantor</option>
                             <option value="F81">F81</option>
                             <option value="K80">K80</option>
                             <option value="HKY">HKY</option>
@@ -56,26 +63,26 @@
                         <div id="F81" style="display:none">
                             <!-- Base Frequency Options-->
                             Base Frequencies:<br>
-                            <input type="radio" id ="f81bff" name="f81bf" value="f81f" onchange="displayf81BF()">Fixed<br><br>
+                            <input type="radio" id ="f81bff" name="f81bf" value="f81f" onchange="displayf81BF(); updatenucleotideModel()">Fixed<br><br>
 
                              <!--Fixed Option-->
                              <div id="f81f" style="display:none">
                                 Enter pi simplex vector values:
-                                <input type="number" id="pi1" value="0.25" step=".01" style="width: 50px;">
-                                <input type="number" id="pi2" value="0.25" step=".01" style="width: 50px;">
-                                <input type="number" id="pi3" value="0.25" step=".01" style="width: 50px;">
-                                <input type="number" id="pi4" value="0.25" step=".01" style="width: 50px;"><br><br>                          
+                                <input type="number" id="f81pi1" value="0.25" step=".01" style="width: 50px;" oninput="updatenucleotideModel()">
+                                <input type="number" id="f81pi2" value="0.25" step=".01" style="width: 50px;" oninput="updatenucleotideModel()">
+                                <input type="number" id="f81pi3" value="0.25" step=".01" style="width: 50px;" oninput="updatenucleotideModel()">
+                                <input type="number" id="f81pi4" value="0.25" step=".01" style="width: 50px;" oninput="updatenucleotideModel()"><br><br>                          
                             </div>
 
-                            <input type="radio" id ="f81bfe" name="f81bf" value="f81e" onchange="displayf81BF()">Estimated<br><br>
+                            <input type="radio" id ="f81bfe" name="f81bf" value="f81e" onchange="displayf81BF(); updatenucleotideModel()">Estimated<br><br>
 
                            <!--Estimated Option-->
                            <div id="f81e" style="display:none">
                                 Enter concentration parameters:
-                                <input type="number" id="cParameter1" value ="1" style="width: 25px;">
-                                <input type="number" id="cParameter2" value ="1" style="width: 25px;">
-                                <input type="number" id="cParameter3" value ="1" style="width: 25px;">
-                                <input type="number" id="cParameter4" value ="1" style="width: 25px;"><br><br> 
+                                <input type="number" id="f81cp1" value ="1" style="width: 25px;" oninput="updatenucleotideModel()">
+                                <input type="number" id="f81cp2" value ="1" style="width: 25px;" oninput="updatenucleotideModel()">
+                                <input type="number" id="f81cp3" value ="1" style="width: 25px;" oninput="updatenucleotideModel()">
+                                <input type="number" id="f81cp4" value ="1" style="width: 25px;" oninput="updatenucleotideModel()"><br><br> 
                            </div>
                            
 
@@ -85,20 +92,23 @@
                         <div id="K80" style="display:none">
                              
                              <!-- Transition/Transversion ratio Options-->
+                             <!--Fixed-->
                              Transition/Transversion ratio:<br>
-                             <input type="radio" id ="k80trf" name="k80tr" value="k80f" onchange="displayk80TR()">Fixed<br>
-                             <input type="radio" id ="k80tre" name="k80tr" value="k80e" onchange="displayk80TR()">Estimated<br><br>
- 
+                             <input type="radio" id ="k80trf" name="k80tr" value="k80f" onchange="displayk80TR(); updatenucleotideModel()">Fixed<br><br>
+
                              <!--Fixed Option-->
                              <div id="k80f" style="display:none">
                                 Enter Kappa value:
-                                <input type="number" id="kappa" value="1" style="width: 25px;"><br><br>    
+                                <input type="number" id="k80kappa" value="1" style="width: 25px;"><br><br>    
                              </div>
-                            
+
+                             <!--Estimated-->
+                             <input type="radio" id ="k80tre" name="k80tr" value="k80e" onchange="displayk80TR(); updatenucleotideModel()">Estimated<br><br>
+ 
                              <!--Estimated Option-->
                              <div id="k80e" style="display:none">
                                 Enter lamda_kappa rate parameter:
-                                <input type="number" id="lamda_kappa" value="1" style="width: 25px;"><br><br>
+                                <input type="number" id="k80lamda_kappa" value="1" style="width: 25px;"><br><br>
                              </div> 
                             
                         </div>
@@ -757,20 +767,21 @@
                 
                 <div class="box">
                     <h2>Generated Script:</h2>          
-                    <button onclick ="generateScript()" >Generate Script</button>
+                    <button onclick ="generateScript()">Generate Script</button>
                     <button onclick ="resetScript()">Reset</button>
                     <br>
                     <br>
-                    <textarea id="myTextarea" name="something" rows="30" cols="80" >Example script.....</textarea>
+                    <textarea disabled id="myTextarea" name="something" rows="30" cols="80" style="resize: none;">Example script.....</textarea>
                 </div>
-           
+                
+               
                 <script src="scriptgen.js"></script>
+                <script src="datadata.js"></script>
                 <script src="substitutionoptions.js"></script>
-                <script src="substitutionoptionsdata.js"></script>
+                <script src="substitutionmodeldata.js"></script>
                 <script src="treeoptions.js"></script>
                 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-                <script src= "https://ajax.gooleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-                <script src="https://raw.githubusercontent.com/lodash/lodash/4.17.11-npm/core.min.js"></script>
+                
 
             </div>
         </div>

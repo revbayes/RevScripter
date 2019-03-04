@@ -7,7 +7,7 @@ function displayDatatype(){
 }
 
 function displayModel(){
-    var model = document.getElementById("model").value;
+    var model = document.getElementById("nucleotideModel").value;
     var JC = document.getElementById("JC").style.display = "none";
     var F81 = document.getElementById("F81").style.display = "none";
     var K80 = document.getElementById("K80").style.display = "none";
