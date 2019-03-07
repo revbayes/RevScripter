@@ -1,24 +1,25 @@
-var author = "###Author###\n\n";
+var author = "###Author###";
 var script = "";
-var fixed = 0;
-var alpha = 0;
-var beta = 0;
+var datafilename = "";
+var num_char_states = 4;
+var substitutionModel= "Q <- fnJC(" + num_char_states + ")\n";
 
 var substitutionmodelTag = "######################\n" +
                            "# Substitution Model #\n" +
-                           "######################\n\n";
+                           "######################";
 
-var sequenceData;
-var variables;
-var substitutionModel;
-var treeModel;
-var phyloctmcModel;
-var analysis;
-var postProcessing;
+var variables = "# Get some useful variables from the data. We need these later on.\n" +
+                 "num_taxa <- data.ntaxa()\n" +
+                 "num_branches <- 2 * num_taxa - 3\n" +
+                 "taxa <- data.taxa()\n\n"+
+                 "moves    = VectorMoves()\n" +
+                 "monitors = VectorMonitors()";
+
 
 //creates the script that will be generated.
 function createScript(){
-    script = author + substitutionmodelTag; 
+    var scripts = [author, datafilename, variables,substitutionmodelTag, substitutionModel];
+    script = scripts.join('\n\n');
 }
 
 function resetScript(){

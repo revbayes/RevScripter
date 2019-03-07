@@ -4,7 +4,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="scriptgen.css">
-        <title>RevBayes Script Generator</title>    
+
+        <title>RevBayes Script Generator</title>  
+
+        <!--Lodash Library-->
+        <script src="core.min.js"></script>
+        
     </head>
     <body>
         <div id ="container"> 
@@ -20,13 +25,18 @@
             
             <h1>RevBayes Script Generator</h1>
             <div>
+
                 <!--Data Options-->
                 <div class="box">
                     <h2>Data</h2>
-                    Datatype <select id="datatype" onchange="displayDatatype()" onchange="set_num_char_states()">
-                        <option value="N">Nucleotide</option>
+                    Enter path to filename:<br>
+                    <textarea id="datafilepath" name="something" rows="1" cols="80" style="resize: none;" oninput="getdataFilepath()">Ex.) data/primates_and_galeopterus_cytb.nex</textarea><br><br>
+
+                    Datatype: <select id="datatype" onchange="displayDatatype(); setNumcharstates(); checksubstitutionModel()">
+                        <option value="N" selected>Nucleotide</option>
                         <option value="A">Amino Acid</option>
                     </select>
+
                 </div>
 
                 <!--Substitution Model Option-->
@@ -38,8 +48,8 @@
                     <div id ="N" style="display:block">
                        
                         <!-- select Menu for Model-->
-                        Model <select id="model" onchange ="displayModel()">
-                            <option value="JC">Jukes-Cantor</option>
+                        Model <select id="nucleotideModel" onchange ="displayModel(); updatenucleotideModel()">
+                            <option value="JC" selected>Jukes-Cantor</option>
                             <option value="F81">F81</option>
                             <option value="K80">K80</option>
                             <option value="HKY">HKY</option>
@@ -53,25 +63,26 @@
                         <div id="F81" style="display:none">
                             <!-- Base Frequency Options-->
                             Base Frequencies:<br>
-                            <input type="radio" id ="f81bff" name="f81bf" value="f81f" onchange="displayf81BF()">Fixed<br>
-                            <input type="radio" id ="f81bfe" name="f81bf" value="f81e" onchange="displayf81BF()">Estimated<br><br>
+                            <input type="radio" id ="f81bff" name="f81bf" value="f81f" onchange="displayf81BF(); updatenucleotideModel()">Fixed<br><br>
 
-                            <!--Fixed Option-->
-                            <div id="f81f" style="display:none">
+                             <!--Fixed Option-->
+                             <div id="f81f" style="display:none">
                                 Enter pi simplex vector values:
-                                <input type="number" id="pi1" value="0.25" step=".01" style="width: 50px;">
-                                <input type="number" id="pi2" value="0.25" step=".01" style="width: 50px;">
-                                <input type="number" id="pi3" value="0.25" step=".01" style="width: 50px;">
-                                <input type="number" id="pi4" value="0.25" step=".01" style="width: 50px;"><br><br>                          
+                                <input type="number" id="f81pi1" value="0.25" step=".01" style="width: 50px;" oninput="updatenucleotideModel()">
+                                <input type="number" id="f81pi2" value="0.25" step=".01" style="width: 50px;" oninput="updatenucleotideModel()">
+                                <input type="number" id="f81pi3" value="0.25" step=".01" style="width: 50px;" oninput="updatenucleotideModel()">
+                                <input type="number" id="f81pi4" value="0.25" step=".01" style="width: 50px;" oninput="updatenucleotideModel()"><br><br>                          
                             </div>
-                           
+
+                            <input type="radio" id ="f81bfe" name="f81bf" value="f81e" onchange="displayf81BF(); updatenucleotideModel()">Estimated<br><br>
+
                            <!--Estimated Option-->
                            <div id="f81e" style="display:none">
                                 Enter concentration parameters:
-                                <input type="number" id="cParameter1" value ="1" style="width: 25px;">
-                                <input type="number" id="cParameter2" value ="1" style="width: 25px;">
-                                <input type="number" id="cParameter3" value ="1" style="width: 25px;">
-                                <input type="number" id="cParameter4" value ="1" style="width: 25px;"><br><br> 
+                                <input type="number" id="f81cp1" value ="1" style="width: 25px;" oninput="updatenucleotideModel()">
+                                <input type="number" id="f81cp2" value ="1" style="width: 25px;" oninput="updatenucleotideModel()">
+                                <input type="number" id="f81cp3" value ="1" style="width: 25px;" oninput="updatenucleotideModel()">
+                                <input type="number" id="f81cp4" value ="1" style="width: 25px;" oninput="updatenucleotideModel()"><br><br> 
                            </div>
                            
 
@@ -81,20 +92,23 @@
                         <div id="K80" style="display:none">
                              
                              <!-- Transition/Transversion ratio Options-->
+                             <!--Fixed-->
                              Transition/Transversion ratio:<br>
-                             <input type="radio" id ="k80trf" name="k80tr" value="k80f" onchange="displayk80TR()">Fixed<br>
-                             <input type="radio" id ="k80tre" name="k80tr" value="k80e" onchange="displayk80TR()">Estimated<br><br>
- 
+                             <input type="radio" id ="k80trf" name="k80tr" value="k80f" onchange="displayk80TR(); updatenucleotideModel()">Fixed<br><br>
+
                              <!--Fixed Option-->
                              <div id="k80f" style="display:none">
                                 Enter Kappa value:
-                                <input type="number" id="kappa" value="1" style="width: 25px;"><br><br>    
+                                <input type="number" id="k80kappa" value="1" style="width: 25px;"><br><br>    
                              </div>
-                            
+
+                             <!--Estimated-->
+                             <input type="radio" id ="k80tre" name="k80tr" value="k80e" onchange="displayk80TR(); updatenucleotideModel()">Estimated<br><br>
+ 
                              <!--Estimated Option-->
                              <div id="k80e" style="display:none">
                                 Enter lamda_kappa rate parameter:
-                                <input type="number" id="lamda_kappa" value="1" style="width: 25px;"><br><br>
+                                <input type="number" id="k80lamda_kappa" value="1" style="width: 25px;"><br><br>
                              </div> 
                             
                         </div>
@@ -148,30 +162,53 @@
 
                         <!--GTR Option-->
                         <div id="GTR" style ="display:none">    
-                            Enter er simplex vector values:
-                            <input type="number" id="pi1" value="1" style="width: 25px;">
-                            <input type="number" id="pi2" value="1" style="width: 25px;">
-                            <input type="number" id="pi3" value="1" style="width: 25px;">
-                            <input type="number" id="pi4" value="1" style="width: 25px;"><br><br>
+
+                            <!--Exchangeabilites Options-->
+                            Exchangeabilities:<br>
+                            <input type="radio" id ="gtref" name="gtre" value="gtrf" onchange="displaygtrE()">Fixed<br>
+                            <input type="radio" id ="gtree" name="gtre" value="gtre" onchange="displaygtrE()">Estimated<br><br>
                             
-                            Enter concentration parameters:
-                            <input type="number" id="cParameter1" value ="1" style="width: 25px;">
-                            <input type="number" id="cParameter2" value ="1" style="width: 25px;">
-                            <input type="number" id="cParameter3" value ="1" style="width: 25px;">
-                            <input type="number" id="cParameter4" value ="1" style="width: 25px;"><br><br>
-                             
-                            Enter pi simplex vector values:
-                            <input type="number" id="pi1" value="0.25" step=".01" style="width: 50px;">
-                            <input type="number" id="pi2" value="0.25" step=".01" style="width: 50px;">
-                            <input type="number" id="pi3" value="0.25" step=".01" style="width: 50px;">
-                            <input type="number" id="pi4" value="0.25" step=".01" style="width: 50px;"><br><br>
-                             
-                             Enter concentration parameters:
-                            <input type="number" id="cParameter1" value ="1" style="width: 25px;">
-                            <input type="number" id="cParameter2" value ="1" style="width: 25px;">
-                            <input type="number" id="cParameter3" value ="1" style="width: 25px;">
-                            <input type="number" id="cParameter4" value ="1" style="width: 25px;"><br><br>
+                            <!--Fixed Option-->
+                            <div id="gtrf" style="display:none">
+                                Enter er simplex vector values:
+                                <input type="number" id="pi1" value="1" style="width: 25px;">
+                                <input type="number" id="pi2" value="1" style="width: 25px;">
+                                <input type="number" id="pi3" value="1" style="width: 25px;">
+                                <input type="number" id="pi4" value="1" style="width: 25px;"><br><br>
+                            </div>
                             
+                            <!--Estimated Option-->
+                            <div id="gtre" style="display:none">
+                                Enter concentration parameters:
+                                <input type="number" id="cParameter1" value ="1" style="width: 25px;">
+                                <input type="number" id="cParameter2" value ="1" style="width: 25px;">
+                                <input type="number" id="cParameter3" value ="1" style="width: 25px;">
+                                <input type="number" id="cParameter4" value ="1" style="width: 25px;"><br><br>
+                            </div>
+                            
+                            <!--Base Frequencies Options-->
+                            Base Frequencies:<br>
+                            <input type="radio" id ="gtrbff" name="gtrbf" value="gtrf2" onchange="displaygtrBF()">Fixed<br>
+                            <input type="radio" id ="gtrbfe" name="gtrbf" value="gtre2" onchange="displaygtrBF()">Estimated<br><br>
+                             
+                            <!--Fixed Option-->
+                            <div id="gtrf2" style="display:none">
+                                Enter pi simplex vector values:
+                                <input type="number" id="pi1" value="0.25" step=".01" style="width: 50px;">
+                                <input type="number" id="pi2" value="0.25" step=".01" style="width: 50px;">
+                                <input type="number" id="pi3" value="0.25" step=".01" style="width: 50px;">
+                                <input type="number" id="pi4" value="0.25" step=".01" style="width: 50px;"><br><br>
+                            </div>
+                            
+                            <!--Estimated Option-->
+                            <div id="gtre2" style="display:none">
+                                Enter concentration parameters:
+                                <input type="number" id="cParameter1" value ="1" style="width: 25px;">
+                                <input type="number" id="cParameter2" value ="1" style="width: 25px;">
+                                <input type="number" id="cParameter3" value ="1" style="width: 25px;">
+                                <input type="number" id="cParameter4" value ="1" style="width: 25px;"><br><br>
+                            </div> 
+
                         </div>
 
                     </div>
@@ -181,36 +218,62 @@
                         
                         <!--Radio Button for Matrix type options-->
                         Matrix type:<br>
-                        <input type="radio" id ="matrix" name="matrix" value="E" onchange="displayMatrix()">Empirical<br>
-                        <input type="radio" id ="matrix2" name="matrix" value="ES" onchange="displayMatrix()">Estimated<br><br>
+                        <input type="radio" id ="aamatrix" name="aamatrix" value="aamatrixe" onchange="displayaaMatrix()">Empirical<br>
+                        <input type="radio" id ="aamatrix2" name="aamatrix" value="aamatrixes" onchange="displayaaMatrix()">Estimated<br><br>
                         
                         <!--Option Empirical-->
-                        <div id="E" style="display:none">
+                        <div id="aamatrixe" style="display:none">
                             <!--Options for Base Frequency-->
-                            Base Frequencies:<br>
-                            <input type="radio" id="bfreq" name="BF" value="BE" onchange ="displaybFrequency()">Empirical<br>
-                            <input type="radio" id="bfreq2" name="BF" value="BES" onchange="displaybFrequency()">Estimated<br><br>
+                            Base Frequencies: <br>
+                            <input type="radio" id="aamatrixempericalbf" name="aamatrixempericalbf" value="aamatrixempericale" onchange ="displayaamatrixempericalBF()">Empirical<br>
+                            <input type="radio" id="aamatrixempericalbf2" name="aamatrixempericalbf" value="aamatrixempericales" onchange="displayaamatrixempericalBF()">Estimated<br><br>
                         
                             <!--Option Emprical-->
-                            <div id="BE" style="display:none">
+                            <div id="aamatrixempericale" style="display:none">
                             </div>
 
                             <!--Option Estimated-->
-                            <div id="BES" style="display:none">
+                            <div id="aamatrixempericales" style="display:none">
                                 Enter concentration parameter:<br>
                                 <input type="number" id="cParameter2" value ="1" style="width: 25px;"><br><br>
                             </div>
 
                             <!--Select Menu for Models-->
-                            Model <select id="emodel" onchange="">
-                                <option value="W">WAG</option>
-                                <option value="L">LG</option>
-                                <option value="etc">Etc.</option>
+                            Model <select id="emodel" onchange="displayaamatrixempericalModel()">
+                                <option value="WAG">WAG</option>
+                                <option value="LG">LG</option>
+                                <option value="ETC">Etc.</option>
                             </select><br><br>
+
+                            <!--WAG Option-->
+                            <div id="WAG" style="display:block">
+                                Base Frequencies:<br>
+                                <input type="radio" id ="wagbfe" name="wagbf" value="wagbfe">Empirical<br>
+                                <input type="radio" id ="wagbfes" name="wagbf" value="wagbfes">Estimated<br><br>
+
+                            </div>
+
+                            <!--LG Option-->
+                            <div id="LG" style="display:none">
+                                Base Frequencies:<br>
+                                <input type="radio" id ="lgbfe" name="lgbf" value="lgbfe">Empirical<br>
+                                <input type="radio" id ="lgbfes" name="lgbf" value="lgbfes">Estimated<br><br>
+                                
+                            </div>
+
+                            <!--Etc Option-->
+                            <div id="ETC" style="display:none">
+                                Base Frequencies:<br>
+                                <input type="radio" id ="etcbfe" name="etcbf" value="etcbfe">Empirical<br>
+                                <input type="radio" id ="etcbfes" name="etcbf" value="etcbfes">Estimated<br><br>
+                                
+                            </div>
+
+
                         </div>
 
                         <!--Option Estimated-->
-                        <div id="ES" style="display:none">
+                        <div id="aamatrixes" style="display:none">
                             Model <select id="esmodel" onchange="">
                                 <option value="P">Poisson</option>
                                 <option value="esGTR">GTR</option>
@@ -224,25 +287,55 @@
                     
                     <!--Checkbox for +I-->
                     +I<input type="checkbox" id ="icheckbox" onchange="displayI()"><br><br>
+                    
                     <!--If +I is checked-->
                     <div id ="ioptions" style="display:none">
-                        Enter pinv value between 0 and 1:<input type="number"  id="fixed" value="0.01" step=".01" style="width: 50px;"><br><br>
-                        Estimate:<br>
-                        Enter Alpha and Beta:<br>
-                        Alpha:
-                        <input type="number" id="alpha" value="1" style="width: 25px;">
-                        Beta:
-                        <input type="number" id="beta" value="1" style="width: 25px;"><br><br>
+                        
+                        <!--Fixed Or Estimate Option-->
+                        <input type="radio" id ="ioptionfef" name="ioptionfe" value="ioptionf" onchange="displayioptionFE()">Empirical<br>
+                        <input type="radio" id ="ioptionfee" name="ioptionfe" value="ioptione" onchange="displayioptionFE()">Estimated<br><br>
+                    
+                        <!--Fixed Option-->
+                        <div id="ioptionf" style="display:none">
+                            Enter pinv value between 0 and 1: <input type="number"  id="ioptionf" value="0.01" step=".01" style="width: 25px;"><br><br>
+                        </div>
+
+                        <!--Estimate Option-->
+                        <div id="ioptione" style="display:none">
+                            Enter Alpha and Beta:<br><br>
+                            Alpha:
+                             <input type="number" id="alpha" value="1" style="width: 25px;">
+                            Beta:
+                             <input type="number" id="beta" value="1" style="width: 25px;"><br><br>
+                        </div>
+
                     </div>
 
                     <!--Checkbox for +G-->
                     +G<input type="checkbox" id ="gcheckbox" onchange="displayG()"><br><br>
+                   
                     <!--If +G is checked-->
                     <div id ="goptions" style="display:none">
                         Enter number of discrete categories:<input type="number"  id="dcategories" value="4" style="width: 25px;"><br><br>
-                        Enter Shape Value:<input type="number" id="shapevalue" value="1" style="width: 25px;"><br><br>
-                        Estimate:<br>
-                        Enter lambda_shape rate parameter<input type="number" id="beta" value="1" style="width: 25px;"><br><br>
+                       
+                        <!--Fixed Or Estimate Option For Shape Parameter-->
+                        Shape Parameter:<br>
+                        <input type="radio" id ="goptionspf" name="goptionsp" value="goptionf" onchange="displaygoptionSP()">Empirical<br>
+                        <input type="radio" id ="goptionspe" name="goptionsp" value="goptione" onchange="displaygoptionSP()">Estimated<br><br>
+                    
+                        <!--Fixed Option-->
+                        <div id="goptionf" style="display:none">
+                            Enter Shape Value:<input type="number" id="shapevalue" value="1" style="width: 25px;"><br><br>
+                        </div>
+
+                        <!--Estimate Option-->
+                        <div id="goptione" style="display:none">
+                           Exponential: <select>
+                               <option value = "E">Exponential</option>
+                           </select><br>
+                            Enter lambda_shape rate parameter<input type="number" id="beta" value="1" style="width: 25px;"><br><br>
+                        </div>
+                       
                     </div>
                                             
                 </div>
@@ -250,6 +343,415 @@
                 <!--Tree Model Option-->
                 <div class ="box">
                     <h2>Tree Model</h2>
+
+                    <!--Topology Options-->
+                    Topology: <br>
+                    <input type="radio" id ="topuru" name="topur" value="topu" onchange="displaytopUR()">Unrooted<br>
+                    <input type="radio" id ="topurr" name="topur" value="topr" onchange="displaytopUR()">Rooted<br><br>
+                    
+                    <!--Unrooted Option-->
+                    <div id="topu" style="display:none">
+                        
+                        <!--Fixed or Estimated Option-->
+                        <input type="radio" id ="unrootfef" name="unrootfe" value="unrootf" onchange="displaytopURU()">Fixed<br>
+                        <input type="radio" id ="unrootfee" name="unrootfe" value="unroote" onchange="displaytopURU()">Estimated<br><br>
+                    
+                        <!--Fixed Option-->
+                        <div id="unrootf" style="display:none">
+
+                            <!--Fix Topology Option-->
+                            <input type="radio" id ="ftoptbt" name="ftopbt" value="ftopt" onchange="">Fix Topology Only<br>
+                            <input type="radio" id ="ftoptbb" name="ftopbt" value="ftopb" onchange="">Fix Topology and Branch Length<br><br>
+                        
+                            <!--Filename Option-->
+                            Enter tree_file:<br>
+                            <textarea id="topunrootedfixedfilepath" name="something" rows="1" cols="80" >Ex.) data/primates_and_galeopterus_cytb.nex</textarea><br><br> 
+
+                        </div>
+
+                        <!--Estimated Option-->
+                        <div id="unroote" style="display:none">
+                            
+                            <!--Prior Distribution Option-->
+                            Choose Prior Distribution: 
+                            <select id="topuepriordistribution" onchange="displaytopURUPD()">
+                                <option value="UT">Uniform Topology</option>
+                            </select><br><br>
+
+                            <!--Uniform Topology Option-->
+                            <div id="UT" style="display:block">
+                    
+                                <!--Outgroup Option-->
+                                Uniform Topology: <br>
+                                <input type="radio" id ="utopono" name="utopono" value="utopo" onchange="displayutOG()">Outgroup<br>
+                                <input type="radio" id ="utoponn" name="utopono" value="utopn" onchange="displayutOG()">No Outroup<br><br>
+                            
+                                <!--Outgroup Option-->
+                                <div id="utopo" style="display:none">
+                                    Enter Outgroup name(s)[Strings seperated by commas]: <br>
+                                    <textarea id="outgroupfilepath" name="something" rows="1" cols="80" >Ex.)name,name,name</textarea><br><br>
+
+                                </div>
+
+                                <!--No Outgroup Option-->
+                                <div id="utopn" style="display:none">
+                                
+                                </div>
+
+                            </div>
+
+                            
+                        
+                        
+                        </div>
+                    
+                    </div>
+
+                    <!--Rooted option-->
+                    <div id="topr" style="display:none">
+
+                         <!--Fixed or Estimated Option-->
+                         Rooted:<br>
+                        <input type="radio" id ="rootfef" name="rootfe" value="rootf" onchange="displaytopURR()">Fixed<br>
+                        <input type="radio" id ="rootfee" name="rootfe" value="roote" onchange="displaytopURR()">Estimated<br><br>
+                    
+                        <!--Fixed Option-->
+                        <div id="rootf" style="display:none">
+
+                           <!--Fix Topology Option-->
+                           <input type="radio" id ="ftoptbt2" name="ftopbt2" value="ftopt2" onchange="">Fix Topology Only<br>
+                           <input type="radio" id ="ftoptbb2" name="ftopbt2" value="ftopb2" onchange="">Fix Topology and Branch Length<br><br>
+                       
+                           <!--Filename Option-->
+                           Enter tree_file:<br>
+                           <textarea id="topunrootedfixedfilepath2" name="something" rows="1" cols="80" >Ex.) data/primates_and_galeopterus_cytb.nex</textarea><br><br> 
+
+                        </div>
+                        
+                        <!--Estimated Option-->
+                        <div id="roote" style="display:none">
+
+                            <!--Condition On Option-->
+                            Condition on:<br>
+                            <input type="radio" id ="raotrootage" name="raot" value="rootage" onchange="displaytopURRCO()">Root Age<br>
+                            <input type="radio" id ="raotorigentime" name="raot" value="origentime" onchange="displaytopURRCO()">Origen Time<br><br>
+                        
+                            <!--Root Age option-->
+                            <div id="rootage" style="display:none">
+                                Root Age:<br> 
+                                <input type="radio" id ="rootagefef" name="rootagefe" value="rootagef" onchange="displayCORA()">Fixed<br>
+                                <input type="radio" id ="rootagefee" name="rootagefe" value="rootagee" onchange="displayCORA()">Estimated<br><br>
+                        
+                                <!--Fixed Option-->
+                                <div id="rootagef" style="display:none">
+                                Enter value: <input type="number" name="mean" value="1" style="width: 25px;"><br><br>
+                                </div>
+
+                                <!--Estimated Option-->
+                                <div id="rootagee" style="display:none">
+
+                                <!--Options for Prior Distribution-->
+                                Choose Prior Distribution: 
+                                <select id="rootageelist" onchange="displayrootageEList()">
+                                    <option value="URA">Uniform</option>
+                                    <option value="ERA">Exponential</option>
+                                    <option Value="GRA">Gamma</option>
+                                    <option value="LRA">Lognormal</option>
+                                </select><br><br>
+
+                                <!-- Uniform Option-->
+                                <div id="URA" style="display:block">
+                                    Enter Min and Max Age:<br>
+                                    Min: <input type="number" name="min" value="1" style="width: 25px;"><br>
+                                    Max: <input type="number" name="max" value="2" style="width: 25px;"><br><br>
+                                </div>
+
+                                 <!-- Exponential Option-->
+                                 <div id="ERA" style="display:none">
+                                    Enter 2 Values:<br>
+                                    Rate: <input type="number" name="rate" value="1" style="width: 25px;"><br>
+                                    Offset: <input type="number" name="offset" value="2" style="width: 25px;"><br><br>
+                                </div>
+
+                                 <!-- Gamma Option-->
+                                 <div id="GRA" style="display:none">
+                                    Enter 3 Values:<br>
+                                    Alpha: <input type="number" name="Alpha" value="1" style="width: 25px;"><br>
+                                    Beta: <input type="number" name="Beta" value="2" style="width: 25px;"><br>
+                                    Offset: <input type="number" name="Offset" value="2" style="width: 25px;"><br><br> 
+                                </div>
+
+                                 <!-- Lognormal Option-->
+                                 <div id="LRA" style="display:none">
+                                    Enter 3 Values:<br>
+                                    Expected value: <input type="number" name="EV" value="1" style="width: 25px;"><br>
+                                    SD: <input type="number" name="SD" value="1" style="width: 25px;"><br>
+                                    Offset: <input type="number" name="offset" value="2" style="width: 25px;"><br><br>    
+                                </div>
+                    
+
+                                </div>
+                            </div>
+
+                            <!--Origen Time option-->
+                            <div id="origentime" style="display:none">
+                                    Origen Time:<br> 
+                                    <input type="radio" id ="origentimefef" name="rootagefe" value="rootagef" onchange="displayCOOT()">Fixed<br>
+                                    <input type="radio" id ="origentimefee" name="rootagefe" value="rootagee" onchange="displayCOOT()">Estimated<br><br>
+                            
+                                    <!--Fixed Option-->
+                                    <div id="origentimef" style="display:none">
+                                        Enter value: <input type="number" name="mean" value="1" style="width: 25px;"><br><br>
+                                    </div>
+    
+                                    <!--Estimated Option-->
+                                    <div id="origentimee" style="display:none">
+    
+                                        <!--Options for Prior Distribution-->
+                                        Choose Prior Distribution: 
+                                        <select id="origentimeelist" onchange="displayorigentimeEList()">
+                                            <option value="URA2">Uniform</option>
+                                            <option value="ERA2">Exponential</option>
+                                            <option Value="GRA2">Gamma</option>
+                                            <option value="LRA2">Lognormal</option>
+                                        </select><br><br>
+    
+                                        <!-- Uniform Option-->
+                                        <div id="URA2" style="display:block">
+                                            Enter Min and Max Age:<br>
+                                            Min: <input type="number" name="min" value="1" style="width: 25px;"><br>
+                                            Max: <input type="number" name="max" value="2" style="width: 25px;"><br><br>
+                                        </div>
+    
+                                        <!-- Exponential Option-->
+                                        <div id="ERA2" style="display:none">
+                                            Enter 2 Values:<br>
+                                            Rate: <input type="number" name="rate" value="1" style="width: 25px;"><br>
+                                            Offset: <input type="number" name="offset" value="2" style="width: 25px;"><br><br>
+                                        </div>
+        
+                                        <!-- Gamma Option-->
+                                        <div id="GRA2" style="display:none">
+                                            Enter 3 Values:<br>
+                                            Alpha: <input type="number" name="Alpha" value="1" style="width: 25px;"><br>
+                                            Beta: <input type="number" name="Beta" value="2" style="width: 25px;"><br>
+                                            Offset: <input type="number" name="Offset" value="2" style="width: 25px;"><br><br> 
+                                        </div>
+        
+                                        <!-- Lognormal Option-->
+                                        <div id="LRA2" style="display:none">
+                                            Enter 3 Values:<br>
+                                            Expected value: <input type="number" name="EV" value="1" style="width: 25px;"><br>
+                                            SD: <input type="number" name="SD" value="1" style="width: 25px;"><br>
+                                            Offset: <input type="number" name="offset" value="2" style="width: 25px;"><br><br>    
+                                        </div>
+                    
+                                    </div>
+                            </div>
+                            
+                            <!--Prior Distribution Menu-->
+                            Choose Prior Distribution: 
+                            <select id="rootedcpd" onchange="display3SelectList('rootedcpd', 'YULE', 'BD', 'Other')">
+                                <option value="YULE">Yule</option>
+                                <option value="BD">Birth-death</option>
+                                <option value="Other">Other</option>
+                            </select><br><br>
+                            
+                            <!--Yule Option-->
+                            <div id="YULE" style="display:block">
+                                <!--Yule Option-->
+                                Yule:<br>
+                                <input type="radio" id ="yulesr" name="yulesres" value="ysr" onchange="display2RadioButton('yulesr','ysr','yulees','yes')">Speciation Rate<br>
+                                <input type="radio" id ="yulees" name="yulesres" value="yes" onchange="display2RadioButton('yulesr','ysr','yulees','yes')">Extant species Sampling Probability<br><br>
+                            
+                                <!--Speciation Rate Option-->
+                                <div id="ysr" style="display:none">
+
+                                    <!--Speciation Fixed/Estimated Option-->
+                                    Speciation Rate:<br>
+                                    <input type="radio" id ="srfef" name="srfe" value="srf" onchange="display2RadioButton('srfef','srf','srfee','sre')">Fixed<br>
+                                    <input type="radio" id ="srfee" name="srfe" value="sre" onchange="display2RadioButton('srfef','srf','srfee','sre')">Estimate<br><br>
+
+                                    <!--Fixed Option-->
+                                    <div id="srf" style="display:none">
+                                        Enter Decimal Value(>0): <input type="number" name="mean" value="0.01" style="width: 100px;"><br><br>
+                                    </div>
+
+                                    <!--Estimated Option-->
+                                    <div id="sre" style="display:none">
+                                        
+                                        <!--Prior Distribution Option-->
+                                        Prior distribution:<br>
+                                        <input type="radio" id ="srepdu" name="srepd" value="sreu" onchange="display2RadioButton('srepdu','sreu','srepde','sree')">Uniform<br>
+                                        <input type="radio" id ="srepde" name="srepd" value="sree" onchange="display2RadioButton('srepdu','sreu','srepde','sree')">Eponential<br><br>
+
+                                        <!--Uniform Option-->
+                                        <div id="sreu" style="display:none">
+                                            Enter Min and Max:<br>
+                                            Min: <input type="number" name="min" value="1" style="width: 25px;"><br>
+                                            Max: <input type="number" name="max" value="2" style="width: 25px;"><br><br>
+                                        </div>
+
+                                        <!--Exponential Option-->
+                                        <div id="sree" style="display:none">
+                                            Enter Rate Value: <input type="number" name="rateval" value="1" style="width: 25px;"><br><br>
+                                        </div>
+
+                                    </div>
+                                    
+                                </div>
+
+                                <!--Extant Species... Option-->
+                                <div id="yes" style="display:none">
+                                    
+                                    <!--Extant Species Fixed/Estimated Option-->
+                                    Extant species Sampling Probability:<br>
+                                    <input type="radio" id ="esfef" name="esfe" value="esf" onchange="display2RadioButton('esfef','esf','esfee','ese')">Fix<br>
+                                    <input type="radio" id ="esfee" name="esfe" value="ese" onchange="display2RadioButton('esfef','esf','esfee','ese')">Estimate<br><br>
+    
+                                    <!--Fixed Option-->
+                                    <div id="esf" style="display:none">
+                                        Enter Value(0<= and >=1): <input type="number" name="EsFVal" value="1.00" style="width: 100px;"><br><br>
+                                    </div>
+
+                                    <!--Estimate Option-->
+                                    <div id="ese" style="display:none">
+                                        Enter Alpha and Beta:<br>
+                                        Alpha: <input type="number" name="EsEAlpha" value="1" style="width: 25px;"><br>
+                                        Beta: <input type="number" name="EsEBeta" value="1" style="width: 25px;"><br><br>
+                                    </div>
+                                </div>
+                                
+                            </div>
+
+                            <!--BD option-->
+                            <div id="BD" style="display:none">
+
+                                <!--BD Option List-->
+                                Birth-death:
+                                <select id="bdlist" onchange="display4SelectList('bdlist', 'bdsr', 'bder', 'bdes','bdother')">
+                                    <option value="bdsr">Speciation Rate</option>
+                                    <option value="bder">Extinction Rate</option>
+                                    <option value="bdes">Extant Species</option>
+                                    <option value="bdother">Other</option>
+                                </select><br><br>
+                            
+                                <!--Speciation Rate Option-->
+                                <div id="bdsr" style="display:block">
+
+                                    <!--Speciation Fixed/Estimated Option-->
+                                    Speciation Rate:<br>
+                                    <input type="radio" id ="srfef2" name="srfe2" value="srf2" onchange="display2RadioButton('srfef2','srf2','srfee2','sre2')">Fixed<br>
+                                    <input type="radio" id ="srfee2" name="srfe2" value="sre2" onchange="display2RadioButton('srfef2','srf2','srfee2','sre2')">Estimate<br><br>
+
+                                    <!--Fixed Option-->
+                                    <div id="srf2" style="display:none">
+                                        Enter Decimal Value(>0): <input type="number" name="mean" value="0.01" style="width: 100px;"><br><br>
+                                    </div>
+
+                                    <!--Estimated Option-->
+                                    <div id="sre2" style="display:none">
+                                        
+                                        <!--Prior Distribution Option-->
+                                        Prior distribution:<br>
+                                        <input type="radio" id ="srepdu2" name="srepd2" value="sreu2" onchange="display2RadioButton('srepdu2','sreu2','srepde2','sree2')">Uniform<br>
+                                        <input type="radio" id ="srepde2" name="srepd2" value="sree2" onchange="display2RadioButton('srepdu2','sreu2','srepde2','sree2')">Eponential<br><br>
+
+                                        <!--Uniform Option-->
+                                        <div id="sreu2" style="display:none">
+                                            Enter Min and Max:<br>
+                                            Min: <input type="number" name="min" value="1" style="width: 25px;"><br>
+                                            Max: <input type="number" name="max" value="2" style="width: 25px;"><br><br>
+                                        </div>
+
+                                        <!--Exponential Option-->
+                                        <div id="sree2" style="display:none">
+                                            Enter Rate Value: <input type="number" name="rateval" value="1" style="width: 25px;"><br><br>
+                                        </div>
+
+                                    </div>
+                                    
+                                </div>
+
+                                <!--Extiction Rate Option-->
+                                <div id="bder" style="display:none">
+
+                                    <!--Extinction Fixed/Estimated Option-->
+                                    Extinction Rate:<br>
+                                    <input type="radio" id ="erfef" name="erfe" value="erf" onchange="display2RadioButton('erfef','erf','erfee','ere')">Fixed<br>
+                                    <input type="radio" id ="erfee" name="erfe" value="ere" onchange="display2RadioButton('erfef','erf','erfee','ere')">Estimate<br><br>
+
+                                    <!--Fixed Option-->
+                                    <div id="erf" style="display:none">
+                                        Enter Decimal Value(>0): <input type="number" name="mean" value="0.01" style="width: 100px;"><br><br>
+                                    </div>
+
+                                    <!--Estimated Option-->
+                                    <div id="ere" style="display:none">
+                                        
+                                        <!--Prior Distribution Option-->
+                                        Prior distribution:<br>
+                                        <input type="radio" id ="erepdu" name="erepd" value="ereu" onchange="display2RadioButton('erepdu','ereu','erepde','eree')">Uniform<br>
+                                        <input type="radio" id ="erepde" name="erepd" value="eree" onchange="display2RadioButton('erepdu','ereu','erepde','eree')">Eponential<br><br>
+
+                                        <!--Uniform Option-->
+                                        <div id="ereu" style="display:none">
+                                            Enter Min and Max:<br>
+                                            Min: <input type="number" name="min" value="1" style="width: 25px;"><br>
+                                            Max: <input type="number" name="max" value="2" style="width: 25px;"><br><br>
+                                        </div>
+
+                                        <!--Exponential Option-->
+                                        <div id="eree" style="display:none">
+                                            Enter Rate Value: <input type="number" name="rateval" value="1" style="width: 25px;"><br><br>
+                                        </div>
+
+                                    </div>
+                                    
+                                </div>
+
+                                <!--Extant Species... Option-->
+                                <div id="bdes" style="display:none">
+                                    
+                                    <!--Extant Species Fixed/Estimated Option-->
+                                    Extant species Sampling Probability:<br>
+                                    <input type="radio" id ="esfef2" name="esfe2" value="esf2" onchange="display2RadioButton('esfef2','esf2','esfee2','ese2')">Fix<br>
+                                    <input type="radio" id ="esfee2" name="esfe2" value="ese2" onchange="display2RadioButton('esfef2','esf2','esfee2','ese2')">Estimate<br><br>
+    
+                                    <!--Fixed Option-->
+                                    <div id="esf2" style="display:none">
+                                        Enter Value(0<= and >=1): <input type="number" name="EsFVal2" value="1.00" style="width: 100px;"><br><br>
+                                    </div>
+
+                                    <!--Estimate Option-->
+                                    <div id="ese2" style="display:none">
+                                        Enter Alpha and Beta:<br>
+                                        Alpha: <input type="number" name="EsEAlpha2" value="1" style="width: 25px;"><br>
+                                        Beta: <input type="number" name="EsEBeta2" value="1" style="width: 25px;"><br><br>
+                                    </div>
+                                </div>
+
+                                <!--Other Option-->
+                                <div id="bdother" style="display:none">
+                                    Other Option
+                                </div>
+
+                            </div>
+
+                            <!--Other Option-->
+                            <div id="Other" style="display:none">
+                                Other Option.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!--Constraints and calibrations Option-->
+                    Constraints and Calibrations: <br>
+                    <!--Need more information to add-->
+
+
                 </div>
 
                 <!--Branch Length/ Rate Model-->
@@ -262,140 +764,24 @@
                     <h2>MCMC</h2>
                 </div>
 
-                <!---
-                <div class="box">
-                    <p>Species Delimitation Mixing Parameters</p>
-                    <button class="button">Proposal Method 1</button>
-                    <button class="button">Proposal Method 2</button>
-                </div>
-                <div class="box">
-                    <p>Species Tree Inference</p>
-                    <select>
-                        <option value="FSP">Fix Species Tree</option>
-                        <option value="ISP">Inference Species Tree</option>
-                    </select>
-                </div>
-                <div class="box">
-                    <p>Species and Starting Tree</p>
-                    <button>Generate Random Tree</button>
-                </div>
-                <div class ="box">
-                    <p>Input Files</p>
-                    <form>
-                        <label>Individual to population map file:</label>
-                        <input type="file" name="pic" accept="image/*">
-                        <br>
-                        <label>Sequence data file:</label>
-                        <input type="file" name="pic" accept="image/*">
-                        <br>
-                        <input type="checkbox" name="adata" value="true"> Remove sites with ambiguity data<br>
-                    </form>
-                </div>
-                <div class ="box">
-                    <p>Output Files</p>
-                    <form>
-                        <label>MCMC tree output file:</label>
-                        <input type="file" name="pic" accept="image/*">
-                        <br>
-                        <label>Results output file:</label>
-                        <input type="file" name="pic" accept="image/*">
-                    </form>
-                </div>
-                <div class ="box">
-                    <p>Models</p>
-                    <form>
-                        <p>Locus-Specific Substitution Rates</p>
-                        <select>
-                            <option value="ESR">Equal Substitution Rates</option>
-                            <option value="ESR2">Estimate Substitution Rates</option>
-                            <option value="SSP">Specified Substitution Rates</option>
-                        </select>
-                        <br>
-                        <p>Locus-Specific Heredity Scalars</p>
-                        <select>
-                            <option value="EHS">Equal Heredity Scalars</option>
-                            <option value="EHS2">Estimate Heredity Scalars</option>
-                            <option value="SHS">Specified Heredity Scalars</option>
-                        </select>
-                    </form>
-                </div>
-                <div class ="box">
-                    <p>Prior Distributions</p>
-                    <form>
-                        <p>Root Age</p>
-                        <Label>Mean:</Label>
-                        <input type="number" name="mean" value="0.001" style="width: 100px;">
-                        <Label>Variance:</Label>
-                        <input type="number" name="mean" value="0.000001" style="width: 100px;">
-                        <Label>Dirichlet (alpha):</Label>
-                        <input type="number" name="mean" value="1" style="width: 100px;">
-                        <br>
-                        <p>Theta</p>
-                        <Label>Mean:</Label>
-                        <input type="number" name="mean" value="0.001" style="width: 100px;">
-                        <Label>Variance:</Label>
-                        <input type="number" name="mean" value="0.000001" style="width: 100px;">
-                    </form>
-                </div>
-                <div class ="box">
-                    <p>MCMC Specifications</p>
-                    <form>
-                        <p>Mixing Parameters</p>
-                        <input type="checkbox" name="atparameters" value="true"> Auto-tuning of missing parameters<br>
-                        <Label>GBtj:</Label>
-                        <input type="number" name="mean" value="0.10" style="width: 50px;">
-                        <Label>GBspr:</Label>
-                        <input type="number" name="mean" value="0.10" style="width: 50px;">
-                        <Label>theta:</Label>
-                        <input type="number" name="mean" value="0.10" style="width: 50px;">
-                        <Label>tau:</Label>
-                        <input type="number" name="mean" value="0.10" style="width: 50px;">
-                        <Label>mix:</Label>
-                        <input type="number" name="mean" value="0.10" style="width: 50px;">
-                        <Label>locusrate:</Label>
-                        <input type="number" name="mean" value="0.10" style="width: 50px;">
-                        <Label>seqerr:</Label>
-                        <input type="number" name="mean" value="0.10" style="width: 50px;">
-                        <br>
-                        <p>RNG Seed</p>
-                        <input type="number" name="mean" value="0" style="width: 55px;"> (0 =  seed from system clock)
-                        <br>
-                        <p>MCMC Sampling Files</p>
-                        <Label>Burn-in:</Label>
-                        <input type="number" name="mean" value="5000" style="width: 75px;">
-                        <Label>Replicate:</Label>
-                        <input type="number" name="mean" value="50000" style="width: 75px;">
-                        <Label>Sampling:</Label>
-                        <input type="number" name="mean" value="5" style="width: 75px;">
-                        <br>
-                        <p>MCMC Output Files</p>
-                        <input type="checkbox" name="atparameters" value="true"> Species trees
-                        <input type="checkbox" name="atparameters" value="true"> Gene trees
-                        <input type="checkbox" name="atparameters" value="true"> Locus Rates
-                        <input type="checkbox" name="atparameters" value="true"> Heredity scalars
-                    </form>
-                </div>
-                <div class ="box">
-                    <p>Debugging Options</p>
-                    <form>
-                        <input type="checkbox" name="atparameters" value="true"> Likelihood On (uncheck to sample from priors using no data)
-                    </form>
-                </div>
-            -->
+                
                 <div class="box">
                     <h2>Generated Script:</h2>          
-                    <button onclick ="generateScript()" >Generate Script</button>
+                    <button onclick ="generateScript()">Generate Script</button>
                     <button onclick ="resetScript()">Reset</button>
                     <br>
                     <br>
-                    <textarea id="myTextarea" name="something" rows="30" cols="80" >Example script.....</textarea>
+                    <textarea disabled id="myTextarea" name="something" rows="30" cols="80" style="resize: none;">Example script.....</textarea>
                 </div>
-           
+                
+               
                 <script src="scriptgen.js"></script>
+                <script src="datadata.js"></script>
                 <script src="substitutionoptions.js"></script>
-                <script src="substitutionoptionsdata.js"></script>
+                <script src="substitutionmodeldata.js"></script>
+                <script src="treeoptions.js"></script>
                 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-                <script src "https://ajax.gooleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                
 
             </div>
         </div>
