@@ -238,7 +238,7 @@
     						moves.append( mvSPR(topology, weight=num_taxa/10.0) )
 			
     			- others?
-    		- Branch Length/Rate Model
+    		- Branch Length Model
     			- fixed
     			- estimate
     				- prior distribution on iid branch lengths
