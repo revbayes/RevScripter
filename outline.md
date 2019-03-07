@@ -221,7 +221,7 @@
 						input_tree = readTrees(tree_file, treetype="non-clock")[1]
 						psi <- input_tree
         		              		      
-		- Estimate
+		- Estimate	
     		- Choose prior distribution
     			- Uniform Topology
         			- Outgroup => Enter outgroup name(s) [strings separated by commas] 
@@ -238,6 +238,17 @@
     						moves.append( mvSPR(topology, weight=num_taxa/10.0) )
 			
     			- others?
+    		- Branch Length/Rate Model
+    			- fixed
+    			- estimate
+    				- prior distribution on iid branch lengths
+        				- Exponential => enter the rate parameter `<value>` (must be > 0)
+				
+								for(i in num_branches){
+		    						br_len[i] ~ dnExp(<value>)
+		    						moves.append(mvScale(br_len[i])
+								}
+								tree_length := sum(br_len)
 	- Rooted
 		- Fixed
     		- fix topology only?
@@ -381,22 +392,5 @@
             
         - Calibrate constraint (check-box)
             - This is complicated and will need some thinking...
-    
-    
-        
-
-
-# Branch Length/Rate Model
-
-- If the tree model is unrooted
-    - prior distribution on iid branch lengths
-        - Exponential => enter the rate parameter `<value>` (must be > 0)
-				
-						for(i in num_branches){
-    						br_len[i] ~ dnExp(<value>)
-    						moves.append(mvScale(br_len[i])
-						}
-						tree_length := sum(br_len)
-    - 
 
 # MCMC
