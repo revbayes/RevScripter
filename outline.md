@@ -238,11 +238,11 @@
     						moves.append( mvSPR(topology, weight=num_taxa/10.0) )
 			
     			- others?
-    		- Branch Length Model
-    			- fixed
-    			- estimate
-    				- prior distribution on iid branch lengths
-        				- Exponential => enter the rate parameter `<value>` (must be > 0)
+   		- Branch Length Model
+    		- fixed (only available for fixed topolopy)
+    		- estimate
+    			- prior distribution on iid branch lengths
+        			- Exponential => enter the rate parameter `<value>` (must be > 0)
 				
 								for(i in num_branches){
 		    						br_len[i] ~ dnExp(<value>)
