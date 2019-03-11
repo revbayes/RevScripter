@@ -93,3 +93,12 @@ ul {
   textarea { 
     font-size: 10px;
   }
+
+  .options {
+    display: none;
+    margin-left: 5%;
+  }
+
+  .options2 {
+    display: block;
+  }

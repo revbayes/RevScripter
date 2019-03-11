@@ -109,6 +109,14 @@ function displayorigentimeEList(){
     document.getElementById(priordistribution).style.display = "block";
 }
 
+function display2SelectList(listname,option1,option2){
+    var listvalue = document.getElementById(listname).value;
+    var OP1 = document.getElementById(option1).style.display = "none";
+    var OP2 = document.getElementById(option2).style.display = "none";
+
+    document.getElementById(listvalue).style.display = "block";
+}
+
 function display3SelectList(listname,option1,option2,option3){
     var listvalue = document.getElementById(listname).value;
     var URA = document.getElementById(option1).style.display = "none";
@@ -119,12 +127,25 @@ function display3SelectList(listname,option1,option2,option3){
     document.getElementById(listvalue).style.display = "block";
 }
 
-function display4SelectList(listname,option1,option2,option3, option4){
+
+
+function display4SelectList(listname,option1,option2,option3,option4){
     var listvalue = document.getElementById(listname).value;
     var OP1 = document.getElementById(option1).style.display = "none";
     var OP2 = document.getElementById(option2).style.display = "none";
     var OP3 = document.getElementById(option3).style.display = "none";
-    var OP4 = document.getElementById(option4).style.display="none"
+    var OP4 = document.getElementById(option4).style.display = "none";
+
+    document.getElementById(listvalue).style.display = "block";
+}
+
+function display5SelectList(listname,option1,option2,option3,option4,option5){
+    var listvalue = document.getElementById(listname).value;
+    var OP1 = document.getElementById(option1).style.display = "none";
+    var OP2 = document.getElementById(option2).style.display = "none";
+    var OP3 = document.getElementById(option3).style.display = "none";
+    var OP4 = document.getElementById(option4).style.display = "none";
+    var OP5 = document.getElementById(option5).style.display = "none";
 
     document.getElementById(listvalue).style.display = "block";
 }
