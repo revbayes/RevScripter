@@ -1,6 +1,6 @@
 var author = "###Author###";
 var script = "";
-var datafilename = "";
+var datafilename = "filepath";
 var num_char_states = 4;
 var substitutionModel= "Q <- fnJC(" + num_char_states + ")\n";
 

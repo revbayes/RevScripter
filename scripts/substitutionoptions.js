@@ -1,3 +1,10 @@
+/*function displaymodelMenu(){
+    //var element = document.getElementById("N")
+    var element = document.createElement("select");
+    //element.appendChild(document.createElement('select'));
+    document.getElementById('N').appendChild(element);
+}*/
+
 function displayDatatype(){
     var dataType = document.getElementById("datatype").value;
     var a = document.getElementById("N").style.display = "none";
