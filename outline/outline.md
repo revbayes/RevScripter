@@ -93,7 +93,7 @@
 
 - +I (Proportion of invariant sites) `prop_inv` (Probability)
 - +G (Gamma distributed rates across sites) `site_rates_shape` (RealPos)
-	- `num_rate_categories` number of site rate categories (fixed integer > 0)
+	- `num_rate_categories` number of site rate categories (fixed integer > 0, default = 4)
 				
 	```
 	site_rates := fnDiscretizeGamma(site_rates_shape, site_rates_shape, num_rate_categories)
@@ -157,11 +157,13 @@
 
     		- Choose prior distribution
     			- Yule
-        			- Speciation rate `speciation` (RealPos)                					- Extant species sampling fraction `rho` (Probability)
+        			- Speciation rate `speciation` (RealPos)
+        			- Extant species sampling fraction `rho` (Probability)
         		
     			- Birth-death
-        			- Speciation rate `speciation` (RealPos)
-            		- Extinction rate `extinction` (RealPos)                					- Extant species sampling fraction (Probability)
+    				- Speciation rate `speciation` (RealPos)
+    				- Extinction rate `extinction` (RealPos)
+        			- Extant species sampling fraction `rho` (Probability)
     			
     			- there are more...need to add later
 - Constraints & Calibrations
