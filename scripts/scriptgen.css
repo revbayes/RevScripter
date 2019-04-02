@@ -94,6 +94,10 @@ ul {
     font-size: 10px;
   }
 
+  .radiooptions {
+    margin-left: 5%;
+  }
+
   .options {
     display: none;
     margin-left: 5%;
@@ -102,3 +106,5 @@ ul {
   .options2 {
     display: block;
   }
+
+  

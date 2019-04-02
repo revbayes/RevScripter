@@ -3,7 +3,7 @@ function checksubstitutionModel(){
         updateaminoacidModel();
     }
     else{
-        nucleotideModel();
+        updatenucleotideModel();
     }
 }
 

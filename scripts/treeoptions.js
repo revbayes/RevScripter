@@ -150,7 +150,7 @@ function display5SelectList(listname,option1,option2,option3,option4,option5){
     document.getElementById(listvalue).style.display = "block";
 }
 
-function display2RadioButton(option1b,option1, option2b, option2){
+function display2RadioButton(option1b, option1, option2b, option2){
     document.getElementById(option1).style.display = "none";
     document.getElementById(option2).style.display = "none";
 
