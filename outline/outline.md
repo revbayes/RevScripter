@@ -175,3 +175,19 @@
             - This is complicated and will need some thinking...
 
 # MCMC
+
+- File Monitors
+	- user inputs print frequency
+	- user provides name for paramter log output file
+	- user provides name for tree log output file
+- Screen Monitor
+	- user inputs print frequency
+
+	
+- MCMC
+	- user inputs number of generations
+	- user inputs number of runs (default=1), there should be a warning if they put more than 4 "Warning: running more than 4 MCMC chains is a bad idea"
+
+
+	
+	
