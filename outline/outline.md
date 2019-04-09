@@ -174,20 +174,36 @@
         - Calibrate constraint (check-box)
             - This is complicated and will need some thinking...
 
+Finish the model code
+
+	mymodel =  model(psi)
+
 # MCMC
 
+
 - File Monitors
-	- user inputs print frequency
-	- user provides name for paramter log output file
-	- user provides name for tree log output file
+
+		monitors = MonitorsVector()
+
+	- user inputs print frequency `<printfreq>`
+	- user provides name for paramter log output file `<logfn>`
+	- user provides name for tree log output file `<treefn>` (this opton should not be available if the branch lengths are fixed)
+
+			monitors.append( mnModel(filename="<logfn>", printgen=<printfreq>) )
+			monitors.append( mnFile(filename="<treefn>", printgen=<printfreq>, psi) )
+
+
 - Screen Monitor
-	- user inputs print frequency
+	- user inputs print frequency `<printfreq>`
+
+			monitors.append( mnScreen(printgen=<printfreq>) )
 
 	
 - MCMC
-	- user inputs number of generations
-	- user inputs number of runs (default=1), there should be a warning if they put more than 4 "Warning: running more than 4 MCMC chains is a bad idea"
+	- user inputs number of generations `<num_gens>`
+	- user inputs number of runs (default=1), there should be a warning if they put more than 4 "Warning: running more than 4 MCMC chains is a bad idea" `<num_runs>`
+
+			mymcmc = mcmc(mymodel, monitors, moves, nruns=<num_runs>)
+			mymcmc.run(generations=<num_gens>)
 
 
-	
-	
