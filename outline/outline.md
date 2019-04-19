@@ -7,6 +7,11 @@
 			
 			data = readDiscreteCharacterData(file=data_file_name)
 
+- Number of taxa
+	- enter the number of taxa `<number>`
+
+		num_taxa <- <number>
+
 - Nucleotide
 		
 		num_char_states <- 4
