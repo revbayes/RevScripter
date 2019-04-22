@@ -21,7 +21,6 @@
                 <li><a class="active" href="data.html">Data</a></li>
                 <li><a href="substitutionmodel.html">Substitution Model</a></li>
                 <li><a href="treemodel.html">Tree Model</a></li>
-                <li><a href="branchlength.html">Branch Length/Rate Model</a></li>
                 <li><a href="mcmc.html">MCMC</a></li>
                 <li><a href="script.html">Script</a></li>
                 <li style="float:right"><a href="https://revbayes.github.io/">About</a></li>
@@ -34,13 +33,16 @@
                 <div class="box">
                     <h2>Data</h2>
                     Enter path to filename:<br>
-                    <textarea id="datafilepath" name="something" rows="1" cols="80" style="resize: none;" oninput="getdataFilepath()">Ex.) data/primates_and_galeopterus_cytb.nex</textarea><br><br>
-
+                    <input type="text" id="datafilepath" style="width: 500px;"  placeholder="Ex.) data/primates_and_galeopterus_cytb.nex" value="test" ></input><br><br>
+                    
+                    <!--Only need nucleotide options, if both Nucleotide and Amino Acid are needed-->
+                    <!--
                     Datatype: <select id="datatype" onchange="createModelOptions()">
                         <option value="N" selected= "selected">Nucleotide</option>
                         <option value="A">Amino Acid</option>
                     </select>
-
+                    -->
+                    
                 </div>
 
                 <!--Substitution Model Options-->
@@ -50,23 +52,22 @@
 
                 <!--Tree Model Option-->
                 <div class ="box" id = "treeOptions">
-                    
+                    <script src="treeOptions.js"></script>
                 </div>
 
                 <!--Branch Length/ Rate Model-->
+                <!---
                 <div class ="box">
                     <h2>Branch Length/Rate Model</h2>
                 </div>
+                -->
 
                 <!--MCMC option-->
-                <div class = "box">
-                    <h2>MCMC</h2>
-                    <div id="mcmc">
-
-                    </div>
+                <div class = "box" id="mcmcOptions">
+                    <script src="mcmcOptions.js"></script>
                 </div>
 
-                
+                <!--Scripts Option-->
                 <div class="box">
                     <h2>Generated Script:</h2>          
                     <button onclick ="generateScript()">Generate Script</button>
@@ -76,14 +77,13 @@
                     <textarea disabled id="myTextarea" name="something" rows="30" cols="80" style="resize: none;">Example script.....</textarea>
                 </div>
                 
-               
                 <script src="scriptgen.js"></script>
-                <script src="datadata.js"></script>
-                <script src="substitutionmodeldata.js"></script>
-                <script src="treeoptions.js"></script>
+                <script src="dataData.js"></script>
+                <script src="substitutionmodelData.js"></script>
+                <script src="treemodelData.js"></script>
+                <script src="mcmcData.js"></script>
                 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
                 
-
             </div>
         </div>
 

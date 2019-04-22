@@ -1,3 +1,5 @@
+//Nucleotide with Amino Acid Option
+/*
 function createModelOptions(){
     $("#substitutionOptions").empty();
     var y = document.getElementById("substitutionOptions");
@@ -114,6 +116,112 @@ function createModelOptions(){
 
    
 }
+*/
+
+//Only Nucelotide
+function createModelOptions(){
+    $("#substitutionOptions").empty();
+    var y = document.getElementById("substitutionOptions");
+    
+    //Substitution Model Header
+    var h1 = $("<h2/>");
+    var t = document.createTextNode("Substitution Model");
+    h1[0].append(t);
+
+    //QMatrix Header
+    var h2 = $("<h3/>");
+    var t = document.createTextNode("QMatrix");
+    h2[0].append(t);
+
+    y.append(h1[0]);
+    y.append(h2[0]);  
+    
+    //Nucleotide Option
+
+        //Model Menu
+        var t = document.createTextNode("Model ");
+        y.append(t);
+        var x = $("<select id=\"nucleotideModel\"  />");
+        y.append(x[0]);
+
+        //Model Menu Options
+        var z = $("<option value=\"JC\" selected=\"selected\" />");
+        var t = document.createTextNode("Jukes-Cantor");
+        z[0].append(t);
+        x[0].append(z[0]);
+
+        var z = $("<option value=\"F81\" />");
+        var t = document.createTextNode("F81");
+        z[0].append(t);
+        x[0].append(z[0]);
+        var z = $("<option value=\"K80\"  />");
+        var t = document.createTextNode("K80");
+        z[0].append(t);
+        x[0].append(z[0]);
+        var z = $("<option value=\"HKY\" />");
+        var t = document.createTextNode("HKY");
+        z[0].append(t);
+        x[0].append(z[0]);
+        var z = $("<option value=\"GTR\" />");
+        var t = document.createTextNode("GTR");
+        z[0].append(t);
+        x[0].append(z[0]);
+
+        //Break Line
+        addBreakLine(y.id);
+        addBreakLine(y.id);
+
+       //Space for options from Menu
+       var choices = $("<div id=\"nOptions\" class = \"choiceOption\" />");
+       y.append(choices[0]);
+
+        var temp = "#nucleotideModel";
+        var temp2 = "#nOptions";
+        
+        displaymodelOptions($(temp).val(),choices[0]);
+        
+        x[0].setAttribute("onchange", "displaymodelOptions($(\"" + temp +"\").val(), $(\"" + temp2 + "\"))");
+       
+         
+
+    //Site Model Header
+    var h2 = $("<h3 />");
+    var t = document.createTextNode("Site Model");
+    h2[0].append(t);
+    y.append(h2[0]);
+
+    //+I-Button
+    var i = document.createTextNode("+I");
+    var iButton = $("<input type=\"checkbox\" id =\"icheckbox\"  />");
+    iButton[0].setAttribute("onchange","displayiCheckBoxOp($(\"#icheckbox\"), $(\"#ioptions\"))" );
+    var iOptions = $("<div id= \"ioptions\" class=\"choiceOption\" />");
+
+    y.append(i);
+    y.append(iButton[0]);
+
+    //Break Line
+    addBreakLine(y.id);
+    addBreakLine(y.id);
+
+    y.append(iOptions[0]);
+ 
+    //+G-Button
+    var g = document.createTextNode("+G");
+    var gButton = $("<input type=\"checkbox\" id =\"gcheckbox\" />");
+    gButton[0].setAttribute("onchange","displaygCheckBoxOp($(\"#gcheckbox\"), $(\"#goptions\"))" );
+    var gOptions = $("<div id= \"goptions\" class=\"choiceOption\" />");
+
+    y.append(g);
+    y.append(gButton[0]);
+
+    //Break Line
+    addBreakLine(y.id);
+    addBreakLine(y.id);
+     
+    y.append(gOptions[0]);
+
+   
+}
 
 function displaymodelOptions(value, choices){
     $(choices).empty();//clears choices
@@ -153,7 +261,7 @@ function simplexOptions(fixed, fixedc, estimated, estimatedc, name, n, parameter
         var i;
         for (i = 0; i < n; i++) { 
             var input = $("<input type = \"number\" value=\"0\" step=\".01\" style=\"width: 45px;\" />");       
-            input[0].setAttribute("id", name + n + 1);
+            input[0].setAttribute("id", name + i);
             fixedc.append(input[0]);
         }
 
@@ -211,14 +319,14 @@ function realposOptions(fixed, fixedc, estimated, estimatedc, name, parameter){
     if(fixed.is(':checked')){
         var t = document.createTextNode("Enter a value > 0 for the " + parameter + ": ");
         var y1 = $("<input type = \"number\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");        
-        y1[0].setAttribute("id", name + parameter);
+        y1[0].setAttribute("id", name);
         fixedc.append(t);
         fixedc.append(y1[0]);
     }
 
     if(estimated.is(':checked')){
         //Id name for select menu
-        var sName = "eSelect" + name;
+        var sName = "eMenu" + name;
         var dpOptions = "menuop" + name;
 
         var m = $("<select  />");
@@ -271,7 +379,7 @@ function displayrealposOptions(value, choices, name){
     if(value == "E"){
         var t = document.createTextNode("Enter shape parameter > 0: ");
         var y1 = $("<input type = \"number\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");        
-        y1[0].setAttribute("id", name + "sparameter" );
+        y1[0].setAttribute("id", name);
         choices.append(t);
         choices.append(y1[0]);
     }
@@ -287,7 +395,7 @@ function displayrealposOptions(value, choices, name){
         //Shape
         var t1 = document.createTextNode("Shape: ");
         var y1 = $("<input type = \"number\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");         
-        y1[0].setAttribute("id", name + "sparameter")
+        y1[0].setAttribute("id", name)
         choices.append(t1);
         choices.append(y1[0]);
 
@@ -297,7 +405,7 @@ function displayrealposOptions(value, choices, name){
         //Rate
         var t2 = document.createTextNode("Rate: ");
         var y2 = $("<input type = \"number\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");  
-        y2[0].setAttribute("id", name + "rparameter")
+        y2[0].setAttribute("id", name + "2")
         choices.append(t2);
         choices.append(y2[0]);
 
@@ -313,7 +421,7 @@ function displayrealposOptions(value, choices, name){
         //Mean
         var t1 = document.createTextNode("Mean: ");
         var y1 = $("<input type = \"number\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");         
-        y1[0].setAttribute("id", name + "mparameter");
+        y1[0].setAttribute("id", name);
         choices.append(t1);
         choices.append(y1[0]);
 
@@ -323,7 +431,7 @@ function displayrealposOptions(value, choices, name){
         //Standard Deviation
         var t2 = document.createTextNode("Standard Deviation: ");
         var y2 = $("<input type = \"number\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");  
-        y2[0].setAttribute("id", name + "sdparameter");
+        y2[0].setAttribute("id", name + "2");
         choices.append(t2);
         choices.append(y2[0]);
     }
@@ -338,7 +446,7 @@ function displayrealposOptions(value, choices, name){
         //Min
         var t1 = document.createTextNode("Min: ");
         var y1 = $("<input type = \"number\"value=\"0\" step=\"1\" style=\"width: 40px;\" />");         
-        y1[0].setAttribute("id", name + "minparameter")
+        y1[0].setAttribute("id", name);
         choices.append(t1);
         choices.append(y1[0]);
 
@@ -348,7 +456,7 @@ function displayrealposOptions(value, choices, name){
         //Max
         var t2 = document.createTextNode("Max: ");
         var y2 = $("<input type = \"number\" value=\"100\" step=\"1\" style=\"width: 40px;\" />");  
-        y2[0].setAttribute("id", name + "maxparameter")
+        y2[0].setAttribute("id", name + "2");
         choices.append(t2);
         choices.append(y2[0]);
     }
@@ -506,7 +614,7 @@ function displayFE(choices, name, type, options, n, parameter){
      addBreakLine($(choices).attr("id"));
      addBreakLine($(choices).attr("id"));
      
-     //Estimate choices
+     //Fixed choices
      var f = $("<div class=\"radiooptions\" />");  
      f[0].setAttribute("id", fchoice);
      choices.append(f[0]);
@@ -613,7 +721,7 @@ function displayiCheckBoxOp(checkbox, checkboxoptions){
     $(checkboxoptions).empty();//clears choices
    
     if(checkbox.is(':checked')){
-        displayFE(checkboxoptions, "ii", "Matrix Type", "probabilityOptions", null, "prop_inv");
+        displayFE(checkboxoptions, "ioption", "Matrix Type", "probabilityOptions", null, "prop_inv");
     }
 }
 
@@ -621,12 +729,13 @@ function displaygCheckBoxOp(checkbox, checkboxoptions){
     $(checkboxoptions).empty();//clears choices
    
     if(checkbox.is(':checked')){
-        displayFE(checkboxoptions, "gg", "Shape Parameter ", "realposOptions", null, "site_rates_shape");
+        displayFE(checkboxoptions, "goption", "Shape Parameter ", "realposOptions", null, "site_rates_shape");
 
         //Input box
         var t = document.createTextNode("Enter number of site rate categories (>0): ");
         checkboxoptions.append(t);
         var inputbox = $("<input type = \"number\" value=\"4\" style=\"width: 50px;\" />"); 
+        inputbox[0].setAttribute("id", "numratecategories");
         checkboxoptions.append(inputbox[0]);
 
         //Break Line
@@ -635,7 +744,6 @@ function displaygCheckBoxOp(checkbox, checkboxoptions){
     }
     
 }
-
 
 function addBreakLine(idname){
     var mybr = document.createElement('br');
