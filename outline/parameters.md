@@ -60,7 +60,7 @@ Vector of `<n>` RealPos parameters, each with same prior distribution
 					moves.append(mvScale(<hyperparameter>)
 					
 					for(i in <n>){
-						<parameter>[i] ~ <prior>(<hyperparameter>,...)
+						<parameter>[i] ~ <prior>
 						moves.append(mvScale(<parameter>[i])
 					}		
 
