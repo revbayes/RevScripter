@@ -41,15 +41,16 @@ Vector of `<n>` RealPos parameters, each with same prior distribution
 	- Choose prior distribution
 			- (same options as RealPos), replace `<prior>` with chosen distribution
 			
-					for(i in <n>){
-						<parameter>[i] ~ <prior>
-						moves.append(mvScale(<parameter>[i])
-					}
 	- then for each parameter choose:
 		- fixed
 			- enter fixed `<value>` for the hyperparameter
 				
 					<hyperparameter> <- <value>
+					
+					for(i in <n>){
+						<parameter>[i] ~ <prior>
+						moves.append(mvScale(<parameter>[i])
+					}
 				
 		- estimated
 			- Choose hyperprior distributions for parameters of prior distribution 
@@ -57,14 +58,11 @@ Vector of `<n>` RealPos parameters, each with same prior distribution
 			
 					<hyperparameter> ~ <hyperprior>
 					moves.append(mvScale(<hyperparameter>)
-					...
-						
-	- 
-		
-			for(i in <n>){
-				<parameter>[i] ~ <prior>(<hyperparameter>,...)
-				moves.append(mvScale(<parameter>[i])
-			}		
+					
+					for(i in <n>){
+						<parameter>[i] ~ <prior>(<hyperparameter>,...)
+						moves.append(mvScale(<parameter>[i])
+					}		
 
 # Probability
 
