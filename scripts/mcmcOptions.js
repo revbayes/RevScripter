@@ -22,6 +22,7 @@ function createMCMCOptions(){
 
     //Break Line
     addBreakLine(option.id);
+    addBreakLine(option.id);
 
     //Name for parameter log output file
     var t = document.createTextNode("Enter name for parameter log output file: ")
@@ -30,6 +31,7 @@ function createMCMCOptions(){
     option.append(input[0]);
 
     //Break Line
+    addBreakLine(option.id);
     addBreakLine(option.id);
 
     //Name for tree log outputfile
@@ -63,6 +65,7 @@ function createMCMCOptions(){
     option.append(input[0]);
 
     //Break Line
+    addBreakLine(option.id);
     addBreakLine(option.id);
 
     //Number of runs Input

@@ -189,7 +189,7 @@ function displayunrootedEstimate(choices, name){
     //Break Line
     addBreakLine($(choices).attr("id"));
     addBreakLine($(choices).attr("id"));
-
+ 
     //Outgroup choices
     var oOption = $("<div id=\"outgroupO\" class=\"radiooptions\"  />");
     choices.append(oOption[0]);
@@ -238,18 +238,203 @@ function vectorofrealposOptions(fixed, fixedc, estimated, estimatedc, name, para
     $(estimatedc).empty();
 
     if(fixed.is(':checked')){
-        var t = document.createTextNode("Enter fixed " + parameter + " to be applied to each vector element: ");
-        var y1 = $("<input type = \"number\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");        
-        y1[0].setAttribute("id", name + parameter);
-        fixedc.append(t);
-        fixedc.append(y1[0]);
+        //Fixed branch length has no choices
     }
 
     if(estimated.is(':checked')){
-        displayFE(estimatedc, name + "e", "Branch Length","displayvectorofrealposOptionsEstimated", null, "branch_lengths");
-        //displayFE(choices, name, type, options, n, parameter)
+        var sName = "eMenu" + name;
+        var dpOptions = "menuop" + name;
+
+        var m = $("<select  />");
+        m[0].setAttribute("id", sName);
+        m[0].setAttribute("onchange",  "displayEBranchLength($(\"#" + dpOptions + "\"), \"" + name + "e\", $(\"#" + sName + "\").val())");
+        var t = document.createTextNode("Choose prior distribution: ");
+        estimatedc[0].append(t);
+    
+        //menu options
+        var z = $("<option value=1 selected=\"selected\" />");
+        var t = document.createTextNode("Exponential");
+        z[0].append(t);
+        m[0].append(z[0]);
+        var z = $("<option value=2  />");
+        var t = document.createTextNode("Gamma");
+        z[0].append(t);
+        m[0].append(z[0]);
+        var z = $("<option value=3  />");
+        var t = document.createTextNode("Lognormal");
+        z[0].append(t);
+        m[0].append(z[0]);
+        var z = $("<option value=4  />");
+        var t = document.createTextNode("Uniform");
+        z[0].append(t);
+        m[0].append(z[0]);
+        estimatedc[0].append(m[0]);
+    
+        //Break Line
+        addBreakLine($(estimatedc).attr("id"));
+        addBreakLine($(estimatedc).attr("id"));
+
+        //Menu choices
+        var dpo = $("<div class =\"menuOption\" />");
+        dpo[0].setAttribute("id", dpOptions);
+    
+        estimatedc[0].append(dpo[0]);
+
+        displayEBranchLength($("#" + dpOptions), name + "e", $("#" + sName ).val());
+
     }
 
+}
+
+function displayEBranchLength(choices, name, value){
+    choices.empty()//clear choices
+    displayFE(choices, name, "Hyper Matrix", "displayvectorofrealposOptionsEstimated", value, "branch_length");
+}
+
+
+function displayvectorofrealposOptionsEstimated(iid, iidc, h , hc , name, value, parameter){
+    $(iidc).empty();//clears choices
+    $(hc).empty();
+
+    if(iid.is(':checked')){
+        displayrealposOptions2(value, iidc, name);
+    }
+
+    if(h.is(':checked')){
+         //Id name for select menu
+         var sName = "eMenu" + name;
+         var dpOptions = "menuop" + name;
+ 
+         var m = $("<select  />");
+         m[0].setAttribute("id", sName);
+         var t = document.createTextNode("Choose prior distribution: ");
+         hc[0].append(t);
+     
+         //menu options
+         var z = $("<option value=\"E\" selected=\"selected\" />");
+         var t = document.createTextNode("Exponential");
+         z[0].append(t);
+         m[0].append(z[0]);
+         var z = $("<option value=\"G\"  />");
+         var t = document.createTextNode("Gamma");
+         z[0].append(t);
+         m[0].append(z[0]);
+         var z = $("<option value=\"L\"  />");
+         var t = document.createTextNode("Lognormal");
+         z[0].append(t);
+         m[0].append(z[0]);
+         var z = $("<option value=\"U\"  />");
+         var t = document.createTextNode("Uniform");
+         z[0].append(t);
+         m[0].append(z[0]);
+         hc[0].append(m[0]);
+     
+         //Break Line
+         var mybr = document.createElement('br');
+         hc[0].append(mybr);
+     
+         //menu choices
+         var dpo = $("<div id=\"menuop\" class =\"menuOption\" />");
+         dpo[0].setAttribute("id", dpOptions);
+     
+         hc[0].append(dpo[0]);
+ 
+         //Calls to display the selected        
+         displayrealposOptions($("#"+ sName).val(),dpo[0], name);
+         
+         m[0].setAttribute("onchange", "displayrealposOptions($(\"#" + sName +"\").val(), $(\"#" + dpOptions + "\"), (\"" + name + "\"))");
+
+    }
+
+}
+
+function displayrealposOptions2(value, choices, name){
+    $(choices).empty();//clears choices
+
+    if(value == 1){
+        var t = document.createTextNode("Enter shape parameter > 0: ");
+        var y1 = $("<input type = \"number\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");        
+        y1[0].setAttribute("id", name);
+        choices.append(t);
+        choices.append(y1[0]);
+    }
+
+    if(value == 2){
+        var t = document.createTextNode("Enter shape and rate parameters > 0: ");
+        choices.append(t); 
+        var mybr = document.createElement('br');
+
+        //Break Line
+        addBreakLine($(choices).attr("id"));
+
+        //Shape
+        var t1 = document.createTextNode("Shape: ");
+        var y1 = $("<input type = \"number\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");         
+        y1[0].setAttribute("id", name);
+        choices.append(t1);
+        choices.append(y1[0]);
+
+        //Break Line
+        addBreakLine($(choices).attr("id"));
+
+        //Rate
+        var t2 = document.createTextNode("Rate: ");
+        var y2 = $("<input type = \"number\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");  
+        y2[0].setAttribute("id", name + "2")
+        choices.append(t2);
+        choices.append(y2[0]);
+
+    }
+
+    if(value == 3){
+        var t = document.createTextNode("Enter mean and standard deviation parameters > 0: ");
+        choices.append(t); 
+
+        //Break Line
+        addBreakLine($(choices).attr("id"));
+
+        //Mean
+        var t1 = document.createTextNode("Mean: ");
+        var y1 = $("<input type = \"number\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");         
+        y1[0].setAttribute("id", name);
+        choices.append(t1);
+        choices.append(y1[0]);
+
+        //Break Line
+        addBreakLine($(choices).attr("id"));
+
+        //Standard Deviation
+        var t2 = document.createTextNode("Standard Deviation: ");
+        var y2 = $("<input type = \"number\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");  
+        y2[0].setAttribute("id", name + "2");
+        choices.append(t2);
+        choices.append(y2[0]);
+    }
+
+    if(value == 4){
+        var t = document.createTextNode("Enter min and max parameters > 0: ");
+        choices.append(t); 
+
+        //Break Line
+        addBreakLine($(choices).attr("id"));
+
+        //Min
+        var t1 = document.createTextNode("Min: ");
+        var y1 = $("<input type = \"number\"value=\"0\" step=\"1\" style=\"width: 40px;\" />");         
+        y1[0].setAttribute("id", name);
+        choices.append(t1);
+        choices.append(y1[0]);
+
+        //Break Line
+        addBreakLine($(choices).attr("id"));
+
+        //Max
+        var t2 = document.createTextNode("Max: ");
+        var y2 = $("<input type = \"number\" value=\"100\" step=\"1\" style=\"width: 40px;\" />");  
+        y2[0].setAttribute("id", name + "2")
+        choices.append(t2);
+        choices.append(y2[0]);
+    }
 }
 
 //could be used for vectors of real pos in another option
@@ -316,244 +501,6 @@ function vectorofrealposOptionsEstimated(choices, name, parameter){
     choices.append(e[0]);
     addBreakLine($(choices).attr("id"));
 
-}
-
-function displayvectorofrealposOptionsEstimated(iid, iidc, h , hc , name, parameter){
-    $(iidc).empty();//clears choices
-    $(hc).empty();
-
-    if(iid.is(':checked')){
-        //Id name for select menu
-        var sName = "eMenu" + name;
-        var dpOptions = "menuop" + name;
-
-        var m = $("<select  />");
-        m[0].setAttribute("id", sName);
-        var t = document.createTextNode("Choose prior distribution: ");
-        iidc[0].append(t);
-    
-        //menu options
-        var z = $("<option value=\"E\" selected=\"selected\" />");
-        var t = document.createTextNode("Exponential");
-        z[0].append(t);
-        m[0].append(z[0]);
-        var z = $("<option value=\"G\"  />");
-        var t = document.createTextNode("Gamma");
-        z[0].append(t);
-        m[0].append(z[0]);
-        var z = $("<option value=\"L\"  />");
-        var t = document.createTextNode("Lognormal");
-        z[0].append(t);
-        m[0].append(z[0]);
-        var z = $("<option value=\"U\"  />");
-        var t = document.createTextNode("Uniform");
-        z[0].append(t);
-        m[0].append(z[0]);
-        iidc[0].append(m[0]);
-    
-        //Break Line
-        var mybr = document.createElement('br');
-        iidc[0].append(mybr);
-    
-        //menu choices
-        var dpo = $("<div id=\"menuop\" class =\"menuOption\" />");
-        dpo[0].setAttribute("id", dpOptions);
-    
-        iidc[0].append(dpo[0]);
-
-        //Calls to display the selected        
-        displayrealposOptions($("#"+ sName).val(),dpo[0], name);
-        
-        m[0].setAttribute("onchange", "displayrealposOptions($(\"#" + sName +"\").val(), $(\"#" + dpOptions + "\"), (\"" + name + "\"))");
-    }
-
-    if(h.is(':checked')){
-         //Id name for select menu
-         var sName = "eSelect" + name;
-         var dpOptions = "menuop" + name;
- 
-         var m = $("<select  />");
-         m[0].setAttribute("id", sName);
-         var t = document.createTextNode("Choose prior distribution: ");
-         hc[0].append(t);
-     
-         //menu options
-         var z = $("<option value=\"E\" selected=\"selected\" />");
-         var t = document.createTextNode("Exponential");
-         z[0].append(t);
-         m[0].append(z[0]);
-         var z = $("<option value=\"G\"  />");
-         var t = document.createTextNode("Gamma");
-         z[0].append(t);
-         m[0].append(z[0]);
-         var z = $("<option value=\"L\"  />");
-         var t = document.createTextNode("Lognormal");
-         z[0].append(t);
-         m[0].append(z[0]);
-         var z = $("<option value=\"U\"  />");
-         var t = document.createTextNode("Uniform");
-         z[0].append(t);
-         m[0].append(z[0]);
-         hc[0].append(m[0]);
-     
-         //Break Line
-         var mybr = document.createElement('br');
-         hc[0].append(mybr);
-     
-         //menu choices
-         var dpo = $("<div id=\"menuop\" class =\"menuOption\" />");
-         dpo[0].setAttribute("id", dpOptions);
-     
-         hc[0].append(dpo[0]);
- 
-         //Calls to display the selected        
-         displayrealposOptions($("#"+ sName).val(),dpo[0], name);
-         
-         m[0].setAttribute("onchange", "displayrealposOptions($(\"#" + sName +"\").val(), $(\"#" + dpOptions + "\"), (\"" + name + "\"))");
-
-        //Break Line
-        var mybr = document.createElement('br');
-        hc[0].append(mybr);
-        hc[0].append(mybr);
-
-
-        //Id name for select menu
-        var sName = "eSelect" + name + "2";
-        var dpOptions = "menuop" + name + "2";
-
-        var m = $("<select  />");
-        m[0].setAttribute("id", sName);
-        var t = document.createTextNode("Choose hyperprior distribution: ");
-        hc[0].append(t);
-    
-        //menu options
-        var z = $("<option value=\"E\" selected=\"selected\" />");
-        var t = document.createTextNode("Exponential");
-        z[0].append(t);
-        m[0].append(z[0]);
-        var z = $("<option value=\"G\"  />");
-        var t = document.createTextNode("Gamma");
-        z[0].append(t);
-        m[0].append(z[0]);
-        var z = $("<option value=\"L\"  />");
-        var t = document.createTextNode("Lognormal");
-        z[0].append(t);
-        m[0].append(z[0]);
-        var z = $("<option value=\"U\"  />");
-        var t = document.createTextNode("Uniform");
-        z[0].append(t);
-        m[0].append(z[0]);
-        hc[0].append(m[0]);
-    
-        //Break Line
-        var mybr = document.createElement('br');
-        hc[0].append(mybr);
-    
-        //menu choices
-        var dpo = $("<div id=\"menuop\" class =\"menuOption\" />");
-        dpo[0].setAttribute("id", dpOptions);
-    
-        hc[0].append(dpo[0]);
-
-        //Calls to display the selected        
-        displayrealposOptions($("#"+ sName).val(),dpo[0], name);
-        
-        m[0].setAttribute("onchange", "displayrealposOptions($(\"#" + sName +"\").val(), $(\"#" + dpOptions + "\"), (\"" + name + "\"))");
-
-    }
-
-}
-
-function displayvectorrealposOptions(value, choices, name){
-    $(choices).empty();//clears choices
-
-    // //Break Line
-    addBreakLine($(choices).attr("id"));
-
-    if(value == "E"){
-        var t = document.createTextNode("Enter shape parameter > 0: ");
-        var y1 = $("<input type = \"number\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");        
-        y1[0].setAttribute("id", name + "sparameter" );
-        choices.append(t);
-        choices.append(y1[0]);
-    }
-
-    if(value == "G"){
-        var t = document.createTextNode("Enter shape and rate parameters > 0: ");
-        choices.append(t); 
-        var mybr = document.createElement('br');
-
-        //Break Line
-        addBreakLine($(choices).attr("id"));
-
-        //Shape
-        var t1 = document.createTextNode("Shape: ");
-        var y1 = $("<input type = \"number\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");         
-        y1[0].setAttribute("id", name + "sparameter")
-        choices.append(t1);
-        choices.append(y1[0]);
-
-        //Break Line
-        addBreakLine($(choices).attr("id"));
-
-        //Rate
-        var t2 = document.createTextNode("Rate: ");
-        var y2 = $("<input type = \"number\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");  
-        y2[0].setAttribute("id", name + "rparameter")
-        choices.append(t2);
-        choices.append(y2[0]);
-
-    }
-
-    if(value == "L"){
-        var t = document.createTextNode("Enter mean and standard deviation parameters > 0: ");
-        choices.append(t); 
-
-        //Break Line
-        addBreakLine($(choices).attr("id"));
-
-        //Mean
-        var t1 = document.createTextNode("Mean: ");
-        var y1 = $("<input type = \"number\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");         
-        y1[0].setAttribute("id", name + "mparameter");
-        choices.append(t1);
-        choices.append(y1[0]);
-
-        //Break Line
-        addBreakLine($(choices).attr("id"));
-
-        //Standard Deviation
-        var t2 = document.createTextNode("Standard Deviation: ");
-        var y2 = $("<input type = \"number\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");  
-        y2[0].setAttribute("id", name + "sdparameter");
-        choices.append(t2);
-        choices.append(y2[0]);
-    }
-
-    if(value == "U"){
-        var t = document.createTextNode("Enter min and max parameters > 0: ");
-        choices.append(t); 
-
-        //Break Line
-        addBreakLine($(choices).attr("id"));
-
-        //Min
-        var t1 = document.createTextNode("Min: ");
-        var y1 = $("<input type = \"number\"value=\"0\" step=\"1\" style=\"width: 40px;\" />");         
-        y1[0].setAttribute("id", name + "minparameter")
-        choices.append(t1);
-        choices.append(y1[0]);
-
-        //Break Line
-        addBreakLine($(choices).attr("id"));
-
-        //Max
-        var t2 = document.createTextNode("Max: ");
-        var y2 = $("<input type = \"number\" value=\"100\" step=\"1\" style=\"width: 40px;\" />");  
-        y2[0].setAttribute("id", name + "maxparameter")
-        choices.append(t2);
-        choices.append(y2[0]);
-    }
 }
 
 //Can be used in Rooted-Fixed

@@ -197,7 +197,7 @@ function getSimplexEString(parameter, value1, value2, value3, value4){
 }
 
 //Makes the script for a probabilty parameter when it is fixed 
-//This also works for Real Pos when it estimated
+//This also works for Real Pos when it is fixed
 function getProbabilityFString(parameter, value){
     return parameter + " <- " + value;
 }
@@ -232,23 +232,3 @@ function getRealPosEString(option, parameter, value1, value2){
 
 }
 
-//Makes the script for a Vector of Real Pos parameter when it is fixed
-function getVectorRealPosFString(parameter, n, value){
-    var scripts = ["for(i in " + n + "){", "    " + parameter + "[i] <- " + value, "}"];
-    return scripts.join("\n");
-}
-
-//Makes the script for a Vector of Real Pos parameter when it estimated
-function getVectorRealPosEString(option, parameter, n, prior, hyperprior){
-    var scripts = [];
-
-    if(option == "I"){
-        scripts = ["for(i in " + n + "){", "    " + parameter + "[i] ~ " + prior, "     moves.append(mvscale(" + parameter + "[i])", "}"];
-    }
-
-    if(option == "H"){
-        scripts = [parameter + " ~ " + hyperprior, "moves.append(mvScale(" + parameter + ")", "...","for(i in " + n + "){", "    " + parameter + "[i] ~ " + prior, "     moves.append(mvscale(" + parameter + "[i])", "}"];
-    }
-
-    return scripts.join("\n");
-}

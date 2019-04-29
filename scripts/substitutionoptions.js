@@ -54,7 +54,7 @@ function createModelOptions(){
         addBreakLine(y.id);
 
        //Space for options from Menu
-       var choices = $("<div id=\"nOptions\" class = \"choiceOption\" />");
+       var choices = $("<div id=\"nOptions\" class = \"menuOption\" />");
        y.append(choices[0]);
 
         var temp = "#mySelect";
@@ -71,7 +71,7 @@ function createModelOptions(){
     if(($("#datatype").val()) == "A"){
         
         //Amino Acid Options
-        var aaOptions = $("<div id= \"aaoptions\" class=\"choiceOption\" />");
+        var aaOptions = $("<div id= \"aaoptions\" class=\"menuOption\" />");
         y.append(aaOptions[0]);
 
         displayAAOptions(aaOptions[0], "aa");
@@ -88,7 +88,7 @@ function createModelOptions(){
     var i = document.createTextNode("+I");
     var iButton = $("<input type=\"checkbox\" id =\"iicheckbox\"  />");
     iButton[0].setAttribute("onchange","displayiCheckBoxOp($(\"#iicheckbox\"), $(\"#iioptions\"))" );
-    var iOptions = $("<div id= \"iioptions\" class=\"choiceOption\" />");
+    var iOptions = $("<div id= \"iioptions\" class=\"menuOption\" />");
 
     y.append(i);
     y.append(iButton[0]);
@@ -103,7 +103,7 @@ function createModelOptions(){
     var g = document.createTextNode("+G");
     var gButton = $("<input type=\"checkbox\" id =\"ggcheckbox\" />");
     gButton[0].setAttribute("onchange","displaygCheckBoxOp($(\"#ggcheckbox\"), $(\"#ggoptions\"))" );
-    var gOptions = $("<div id= \"ggoptions\" class=\"choiceOption\" />");
+    var gOptions = $("<div id= \"ggoptions\" class=\"Option\" />");
 
     y.append(g);
     y.append(gButton[0]);
@@ -172,7 +172,7 @@ function createModelOptions(){
         addBreakLine(y.id);
 
        //Space for options from Menu
-       var choices = $("<div id=\"nOptions\" class = \"choiceOption\" />");
+       var choices = $("<div id=\"nOptions\" class = \"menuOption\" />");
        y.append(choices[0]);
 
         var temp = "#nucleotideModel";
@@ -194,7 +194,7 @@ function createModelOptions(){
     var i = document.createTextNode("+I");
     var iButton = $("<input type=\"checkbox\" id =\"icheckbox\"  />");
     iButton[0].setAttribute("onchange","displayiCheckBoxOp($(\"#icheckbox\"), $(\"#ioptions\"))" );
-    var iOptions = $("<div id= \"ioptions\" class=\"choiceOption\" />");
+    var iOptions = $("<div id= \"ioptions\" class=\"menuOption\" />");
 
     y.append(i);
     y.append(iButton[0]);
@@ -209,7 +209,7 @@ function createModelOptions(){
     var g = document.createTextNode("+G");
     var gButton = $("<input type=\"checkbox\" id =\"gcheckbox\" />");
     gButton[0].setAttribute("onchange","displaygCheckBoxOp($(\"#gcheckbox\"), $(\"#goptions\"))" );
-    var gOptions = $("<div id= \"goptions\" class=\"choiceOption\" />");
+    var gOptions = $("<div id= \"goptions\" class=\"menuOption\" />");
 
     y.append(g);
     y.append(gButton[0]);

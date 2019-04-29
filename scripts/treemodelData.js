@@ -1,30 +1,53 @@
 function getTreeOptions(){
-    var treeModel = "";
-    var outGroup = "";
+    var unRooted = "";
     var branchLength = ""
+    var scripts;
     //Unrooted Option
     //Fixed
     if($("#funroot").is(':checked')){
-        //Topology only
-        if($("#tunrooted").is(':checked')){
-            treeModel = getInputTreeString($("#unrootedt").val(), "topology");
-        }
-
-        //Topology and Branch Only
-        if($("#tbunrooted").is(':checked')){
-            treeModel = getInputTreeString($("#unrootedtb").val(), "psi");
-        }
+        unRooted = getInputTreeString($("#unroott").val(), "topology");
     }
 
     //estimated
     if($("#eunroot").is(':checked')){
         //Outgroup
-        treeModel = getOutgroupString($("#eMenuunroot").val(), $("#unrootoutgroup").val())
+        unRooted = getUnrootedEstimateString($("#eMenuunroot").val(), $("#outgroup").val())
     }
 
-    var scripts = [treeModel, outGroup, "mymodel =  model(psi)"];
+    //BranchLength
+    //Fixed
+    if($("#funroot2").is(':checked')){
+        //no string is added
+        branchLength = null;
+    }
 
-    return scripts.join("\n");
+    //Estimated
+    if($("#eunroot2").is(':checked')){
+        //gets the menu value
+        var priordistribution =  $("#eMenuunroot2").val();
+        //Hyper Matrix
+        //Fixed
+        if($("#funroot2e").is(':checked')){
+            //add this string   
+            branchLength = getVectorRealPosEFixedString("branch_lengths", priordistribution, $("#unroot2e").val(), $("#unroot2e2").val());
+        }
+
+        //Estimated
+        if($("#eunroot2e").is(':checked')){
+            //add this string
+            branchLength = getVectorRealPosEEstimateString("branch_lengths", priordistribution , $("#unroot2e").val(), $("#unroot2e2").val(), $("#eMenuunroot2e").val())
+        }
+
+    }
+
+    if(branchLength){
+        scripts = [unRooted, branchLength, "\nmymodel =  model(psi)"];
+    }
+    else{
+        scripts = [unRooted, "\nmymodel =  model(psi)"];
+    }
+
+    return scripts.join("\n\n");
 }
 
 function getInputTreeString(treefile, type){
@@ -32,16 +55,105 @@ function getInputTreeString(treefile, type){
     return scripts.join("\n");
 }
 
-function getOutgroupString(option, names){
+function getUnrootedEstimateString(option, input){
+    var script;
+    if(option == "UT"){
+        script = getOutgroupString(input);
+    }
+    return script;
+}
+
+function getOutgroupString(names){
     var scripts;
-    if(option == "O"){
+    if($("#outgroupB").is(':checked')){
         scripts = ["out_group = clade(" + names + ")", "topology ~ dnUniformTopology(taxa, outgroup=out_group)", "moves.append( mvNNI(topology, weight=num_taxa/2.0) )", "moves.append( mvSPR(topology, weight=num_taxa/10.0) )"];
     }
 
-    if(option == "NO"){
-        scripts = ["topology ~ dnUniformTopology(taxa", "moves.append( mvNNI(topology, weight=num_taxa/2.0) )", "moves.append( mvSPR(topology, weight=num_taxa/10.0) )"];
+    if($("#noutgroupB").is(':checked')){
+        scripts = ["topology ~ dnUniformTopology(taxa)", "moves.append( mvNNI(topology, weight=num_taxa/2.0) )", "moves.append( mvSPR(topology, weight=num_taxa/10.0) )"];
     }
 
+    return scripts.join("\n");
+}
+
+//Makes the script for a Vector of Real Pos parameter when it estimated- Fixed option
+function getVectorRealPosEFixedString(parameter, prior, value1, value2){
+    var hyperparameter1;
+    var hyperparameter2;
+    var pd;
+    var scripts;
+
+    if(prior == 1){
+        hyperparameter1 = "branch_hypershape <- " + value1;
+        hyperparameter2 = null;
+        pd= "dnExponential(branch_hypershape)";
+    }
+
+    if(prior == 2){
+        hyperparameter1 = "branch_hypershape <- " + value1;
+        hyperparameter2 = "branch_hyperrate <- " + value2;
+        pd= "dnGamma(branch_hypershape, branch_hyperrate)";
+    }
+
+    if(prior == 3){
+        hyperparameter1 = "branch_hypermean <- " + value1;
+        hyperparameter2 = "branch_hypersd <- " + value2;
+        pd= "dnLognormal(branch_hypermean, branch_hypersd)";
+    }
+
+    if(prior == 4){
+        hyperparameter1 = "branch_hypermin <- " + value1;
+        hyperparameter2 = "branch_hypermax <- " + value2;
+        pd= "dnUniform(branch_hypermin, branch_hypermax)";
+    }
+
+    if(!hyperparameter2){
+        scripts = [hyperparameter1 + "\n", "for(i in 1:num_branches){", "   " + parameter + "[i] ~ " + pd, "    moves.append(mvScale(" + parameter + "[i]))", "}"];
+    }
+    else{
+        scripts = [hyperparameter1, hyperparameter2 + "\n", "for(i in 1:num_branches){", "  " + parameter + "[i] ~ " + pd, "  moves.append(mvScale(" + parameter + "[i]))", "}"];
+    }
+    return scripts.join("\n");
+
+}
+
+//Makes the script for a Vector of Real Pos parameter when it estimated- Estimate option
+function getVectorRealPosEEstimateString(parameter, prior,value1, value2, hyperprior){
+    var hyperparameter1;
+    var hyperparameter2;
+    var pd;
+    var scripts;
+    
+    if(prior == 1){
+        hyperparameter1 = getRealPosEString(hyperprior, "branch_hypershape", value1, value2);
+        hyperparameter2 = null;
+        pd= "dnExponential(branch_hypershape)";
+    }
+
+    if(prior == 2){
+        hyperparameter1 = getRealPosEString(hyperprior, "branch_hypershape", value1, value2);
+        hyperparameter2 = getRealPosEString(hyperprior, "branch_hyperrate", value1, value2);
+        pd= "dnGamma(branch_hypershape, branch_hyperrate)";
+    }
+
+    if(prior == 3){
+        hyperparameter1 = getRealPosEString(hyperprior, "branch_hypermean", value1, value2);
+        hyperparameter2 = getRealPosEString(hyperprior, "branch_hypersd", value1, value2);
+        pd= "dnLognormal(branch_hypermean, branch_hypersd)";
+    }
+
+    if(prior == 4){
+        hyperparameter1 = getRealPosEString(hyperprior, "branch_hypermin", value1, value2);
+        hyperparameter2 = getRealPosEString(hyperprior, "branch_hypermax", value1, value2);
+        pd= "dnUniform(branch_hypermin, branch_hypermax)";
+    }
+
+    if(!hyperparameter2){
+        scripts = [hyperparameter1 + "\n", "for(i in 1:num_branches){", "   " + parameter + "[i] ~ " + pd, "    moves.append(mvScale(" + parameter + "[i]))", "}"];
+    }
+    else{
+        scripts = [hyperparameter1 + "\n", hyperparameter2 + "\n", "for(i in 1:num_branches){", "  " + parameter + "[i] ~ " + pd, "  moves.append(mvScale(" + parameter + "[i]))", "}"];
+    }
     return scripts.join("\n");
 
 }
