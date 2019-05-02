@@ -176,7 +176,7 @@
 
 Finish the model code
 
-	mymodel =  model(psi)
+	mymodel =  model(topology)
 
 # MCMC
 
