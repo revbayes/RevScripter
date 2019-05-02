@@ -223,6 +223,7 @@ function createModelOptions(){
    
 }
 
+//Creates nucleotide options
 function displaymodelOptions(value, choices){
     $(choices).empty();//clears choices
 
@@ -249,6 +250,7 @@ function displaymodelOptions(value, choices){
     }
 }
 
+//Creates fixed and estimated choices for simplex
 function simplexOptions(fixed, fixedc, estimated, estimatedc, name, n, parameter){
     $(fixedc).empty();//clears choices
     $(estimatedc).empty();
@@ -260,7 +262,7 @@ function simplexOptions(fixed, fixedc, estimated, estimatedc, name, n, parameter
 
         var i;
         for (i = 0; i < n; i++) { 
-            var input = $("<input type = \"number\" value=\"0\" step=\".01\" style=\"width: 45px;\" />");       
+            var input = $("<input type = \"number\" min=\"0.00\" value=\"0\" step=\".01\" style=\"width: 45px;\" />");       
             input[0].setAttribute("id", name + i);
             fixedc.append(input[0]);
         }
@@ -295,13 +297,13 @@ function simplexOptions(fixed, fixedc, estimated, estimatedc, name, n, parameter
         dpo[0].append(mybr);
         dpo[0].append(mybr);
     
-        var y1 = $("<input type = \"number\" value = \"1\" style=\"width: 40px;\" />");
+        var y1 = $("<input type =\"number\" min=\"1\" value = \"1\" style=\"width: 40px;\" />");
         y1[0].setAttribute("id", name + "cparameter1");
-        var y2 = $("<input type = \"number\" value = \"1\" style=\"width: 40px;\" />");
+        var y2 = $("<input type =\"number\" value = \"1\" style=\"width: 40px;\" />");
         y2[0].setAttribute("id", name + "cparameter2");
-        var y3 = $("<input type = \"number\" value = \"1\" style=\"width: 40px;\" />");
+        var y3 = $("<input type =\"number\" min=\"1\" value = \"1\" style=\"width: 40px;\" />");
         y3[0].setAttribute("id", name + "cparameter3");
-        var y4 = $("<input type = \"number\" value = \"1\" style=\"width: 40px;\" />");
+        var y4 = $("<input type =\"number\" min=\"1\" value = \"1\" style=\"width: 40px;\" />");
         y4[0].setAttribute("id", name + "cparameter4");
         dpo[0].append(t);
         dpo[0].append(y1[0]);
@@ -312,13 +314,14 @@ function simplexOptions(fixed, fixedc, estimated, estimatedc, name, n, parameter
     }
 }
 
+//Creates fixed and estimated choices for realpos
 function realposOptions(fixed, fixedc, estimated, estimatedc, name, parameter){
     $(fixedc).empty();//clears choices
     $(estimatedc).empty();
 
     if(fixed.is(':checked')){
         var t = document.createTextNode("Enter a value > 0 for the " + parameter + ": ");
-        var y1 = $("<input type = \"number\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");        
+        var y1 = $("<input type = \"number\" min=\"1\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");        
         y1[0].setAttribute("id", name);
         fixedc.append(t);
         fixedc.append(y1[0]);
@@ -370,6 +373,7 @@ function realposOptions(fixed, fixedc, estimated, estimatedc, name, parameter){
     }
 }
 
+//Creates estimated choices for realpos
 function displayrealposOptions(value, choices, name){
     $(choices).empty();//clears choices
 
@@ -378,7 +382,7 @@ function displayrealposOptions(value, choices, name){
 
     if(value == "E"){
         var t = document.createTextNode("Enter shape parameter > 0: ");
-        var y1 = $("<input type = \"number\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");        
+        var y1 = $("<input type =\"number\" min=\"1\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");        
         y1[0].setAttribute("id", name);
         choices.append(t);
         choices.append(y1[0]);
@@ -394,7 +398,7 @@ function displayrealposOptions(value, choices, name){
 
         //Shape
         var t1 = document.createTextNode("Shape: ");
-        var y1 = $("<input type = \"number\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");         
+        var y1 = $("<input type =\"number\" min=\"1\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");         
         y1[0].setAttribute("id", name)
         choices.append(t1);
         choices.append(y1[0]);
@@ -404,7 +408,7 @@ function displayrealposOptions(value, choices, name){
 
         //Rate
         var t2 = document.createTextNode("Rate: ");
-        var y2 = $("<input type = \"number\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");  
+        var y2 = $("<input type =\"number\" min=\"1\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");  
         y2[0].setAttribute("id", name + "2")
         choices.append(t2);
         choices.append(y2[0]);
@@ -420,7 +424,7 @@ function displayrealposOptions(value, choices, name){
 
         //Mean
         var t1 = document.createTextNode("Mean: ");
-        var y1 = $("<input type = \"number\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");         
+        var y1 = $("<input type =\"number\" min=\"1\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");         
         y1[0].setAttribute("id", name);
         choices.append(t1);
         choices.append(y1[0]);
@@ -430,7 +434,7 @@ function displayrealposOptions(value, choices, name){
 
         //Standard Deviation
         var t2 = document.createTextNode("Standard Deviation: ");
-        var y2 = $("<input type = \"number\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");  
+        var y2 = $("<input type =\"number\" min=\"1\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");  
         y2[0].setAttribute("id", name + "2");
         choices.append(t2);
         choices.append(y2[0]);
@@ -445,7 +449,7 @@ function displayrealposOptions(value, choices, name){
 
         //Min
         var t1 = document.createTextNode("Min: ");
-        var y1 = $("<input type = \"number\"value=\"0\" step=\"1\" style=\"width: 40px;\" />");         
+        var y1 = $("<input type =\"number\" min=\"0\" value=\"0\" step=\"1\" style=\"width: 40px;\" />");         
         y1[0].setAttribute("id", name);
         choices.append(t1);
         choices.append(y1[0]);
@@ -455,126 +459,14 @@ function displayrealposOptions(value, choices, name){
 
         //Max
         var t2 = document.createTextNode("Max: ");
-        var y2 = $("<input type = \"number\" value=\"100\" step=\"1\" style=\"width: 40px;\" />");  
+        var y2 = $("<input type =\"number\" min=\"1\" value=\"100\" step=\"1\" style=\"width: 40px;\" />");  
         y2[0].setAttribute("id", name + "2");
         choices.append(t2);
         choices.append(y2[0]);
     }
 }
 
-function displayAAOptions(choices, name){
-    //Id names for the buttons and element choices
-    var foption = "em" + name;
-    var fchoice = "emc" + name;
-    var eoption = "e" + name;
-    var echoice = "ec" + name;
-
-    //Name attribute for the radio buttons
-    var fename = "eme" + name;
-
-    //Base Frequency Header
-    var t = document.createTextNode("Matrix Type: ");
-    choices.append(t);
-
-    //Break Line
-    addBreakLine($(choices).attr("id"));
-
-    //Emperical option
-    var x = $("<input type=\"radio\"  />");
-    x[0].setAttribute("id", foption);
-    x[0].setAttribute("name", fename);
-    x[0].setAttribute("onchange", "AAOptions($(\"#" + foption +"\"), $(\"#" + fchoice + "\"), $(\"#" + eoption + "\"), $(\"#" + echoice + "\"),\"" + name + "\")");
-    choices.append(x[0]);        
-    var t = document.createTextNode("Empirical");
-    choices.append(t);
-
-    //Break Line
-    addBreakLine($(choices).attr("id"));
-    addBreakLine($(choices).attr("id"));
-    
-    //Empirical choices
-    var f = $("<div class=\"radiooptions\" />");  
-    f[0].setAttribute("id", fchoice);
-    choices.append(f[0]);
-
-    //Break Line
-    addBreakLine($(choices).attr("id"));
-
-    //estimated option
-    var y = $("<input  type=\"radio\"  />");
-    y[0].setAttribute("id", eoption);
-    y[0].setAttribute("name", fename);
-    y[0].setAttribute("onchange", "AAOptions($(\"#" + foption +"\"), $(\"#" + fchoice + "\"), $(\"#" + eoption + "\"), $(\"#" + echoice + "\"),\"" + name + "\")");
-    choices.append(y[0]);                           
-    var t = document.createTextNode("Estimated");
-    choices.append(t);
-
-    //Break Line
-    addBreakLine($(choices).attr("id"));
-    addBreakLine($(choices).attr("id"));
-
-    //estimated choices
-    var e = $("<div class=\"radiooptions\"  />");
-    e[0].setAttribute("id", echoice);
-
-    choices.append(e[0]);
-    addBreakLine($(choices).attr("id"));
-}
-
-function AAOptions(emperical, empericalc, estimated, estimatedc, name){
-    $(empericalc).empty();//clears choices
-    $(estimatedc).empty();
-
-    if(emperical.is(':checked')){
-
-        //Base frequency
-        //baseFrequencySimplex(empericalc, name);
-        displayFE(empericalc, name,"Base Frequency", "simplexOptions", 4, "pi_aa");
-
-        //Menu
-        var m = $("<select />");
-        m[0].setAttribute("id", name + "modelSelect");
-        var t = document.createTextNode("Model ");
-        empericalc[0].append(t);
-    
-        //menu options
-        var z = $("<option value=\"wag\" selected=\"selected\" />");
-        var t = document.createTextNode("WAG");
-        z[0].append(t);
-        m[0].append(z[0]);
-        var z = $("<option value=\"lg\"  />");
-        var t = document.createTextNode("LG");
-        z[0].append(t);
-        m[0].append(z[0]);
-        var z = $("<option value=\"other\" />");
-        var t = document.createTextNode("Other");
-        z[0].append(t);
-        m[0].append(z[0]);
-        empericalc[0].append(m[0]);
-        
-    }
-
-    if(estimated.is(':checked')){
-       //Menu
-       var m = $("<select />");
-       m[0].setAttribute("id", name + "modelSelect");
-       var t = document.createTextNode("Model ");
-       estimatedc[0].append(t);
-   
-       //menu options
-       var z = $("<option value=\"p\" selected=\"selected\" />");
-       var t = document.createTextNode("Poisson");
-       z[0].append(t);
-       m[0].append(z[0]);
-       var z = $("<option value=\"g\" />");
-       var t = document.createTextNode("GTR");
-       z[0].append(t);
-       m[0].append(z[0]);
-
-       estimatedc[0].append(m[0]);
-    }
-}
-
+//Creates a fixed and estimate option with choices
 function displayFE(choices, name, type, options, n, parameter){
      //Id names for the buttons and element choices
      var foption = "f" + name;
@@ -651,13 +543,14 @@ function displayFE(choices, name, type, options, n, parameter){
      addBreakLine($(choices).attr("id"));
 }
 
+//Creares fixed and estimate choices for probability
 function probabilityOptions(fixed, fixedc, estimated, estimatedc, name, parameter){
     $(fixedc).empty();//clears choices
     $(estimatedc).empty();
 
     if(fixed.is(':checked')){
         var t = document.createTextNode("Enter a value between 0 and 1 for the " + parameter + ": ");
-        var y1 = $("<input type = \"number\" value=\"0.00\" step=\".01\" style=\"width: 45px;\" />");       
+        var y1 = $("<input type =\"number\" min=\"0\" value=\"0.00\" step=\".01\" style=\"width: 45px;\" />");       
         y1[0].setAttribute("id", name + "pparameter");
         fixedc.append(t);
         fixedc.append(y1[0]);
@@ -696,9 +589,9 @@ function probabilityOptions(fixed, fixedc, estimated, estimatedc, name, paramete
         //Break Line
         addBreakLine($(dpo[0]).attr("id"));
     
-        //Alph input
+        //Alpha input
         var t = document.createTextNode("Alpha: ");
-        var y1 = $("<input type = \"number\" value = \"1\" style=\"width: 40px;\" />");
+        var y1 = $("<input type =\"number\" min=\"1\" value = \"1\" style=\"width: 40px;\" />");
         y1[0].setAttribute("id", name + "palpha");
         dpo[0].append(t);
         dpo[0].append(y1[0]);
@@ -708,15 +601,15 @@ function probabilityOptions(fixed, fixedc, estimated, estimatedc, name, paramete
 
         //Beta input
         var t1 = document.createTextNode("Beta: ");
-        var y2 = $("<input type = \"number\" value = \"1\" style=\"width: 40px;\" />");
+        var y2 = $("<input type =\"number\" min=\"1\" value = \"1\" style=\"width: 40px;\" />");
         y2[0].setAttribute("id", name + "pbeta");
         dpo[0].append(t1);
         dpo[0].append(y2[0]);
-       
-        
+         
     }
 }
 
+//Creates +I options
 function displayiCheckBoxOp(checkbox, checkboxoptions){
     $(checkboxoptions).empty();//clears choices
    
@@ -725,6 +618,7 @@ function displayiCheckBoxOp(checkbox, checkboxoptions){
     }
 }
 
+//Creates +G options
 function displaygCheckBoxOp(checkbox, checkboxoptions){
     $(checkboxoptions).empty();//clears choices
    
@@ -734,7 +628,7 @@ function displaygCheckBoxOp(checkbox, checkboxoptions){
         //Input box
         var t = document.createTextNode("Enter number of site rate categories (>0): ");
         checkboxoptions.append(t);
-        var inputbox = $("<input type = \"number\" value=\"4\" style=\"width: 50px;\" />"); 
+        var inputbox = $("<input type =\"number\" min=\"1\" value=\"4\" style=\"width: 50px;\" />"); 
         inputbox[0].setAttribute("id", "numratecategories");
         checkboxoptions.append(inputbox[0]);
 
@@ -745,10 +639,126 @@ function displaygCheckBoxOp(checkbox, checkboxoptions){
     
 }
 
+//Adds a break line to the given element by using its id
 function addBreakLine(idname){
     var mybr = document.createElement('br');
     var y = document.getElementById(idname);
     y.appendChild(mybr);
+}
+
+//Creates Amino acid options
+function displayAAOptions(choices, name){
+    //Id names for the buttons and element choices
+    var foption = "em" + name;
+    var fchoice = "emc" + name;
+    var eoption = "e" + name;
+    var echoice = "ec" + name;
+
+    //Name attribute for the radio buttons
+    var fename = "eme" + name;
+
+    //Base Frequency Header
+    var t = document.createTextNode("Matrix Type: ");
+    choices.append(t);
+
+    //Break Line
+    addBreakLine($(choices).attr("id"));
+
+    //Emperical option
+    var x = $("<input type=\"radio\"  />");
+    x[0].setAttribute("id", foption);
+    x[0].setAttribute("name", fename);
+    x[0].setAttribute("onchange", "AAOptions($(\"#" + foption +"\"), $(\"#" + fchoice + "\"), $(\"#" + eoption + "\"), $(\"#" + echoice + "\"),\"" + name + "\")");
+    choices.append(x[0]);        
+    var t = document.createTextNode("Empirical");
+    choices.append(t);
+
+    //Break Line
+    addBreakLine($(choices).attr("id"));
+    addBreakLine($(choices).attr("id"));
+    
+    //Empirical choices
+    var f = $("<div class=\"radiooptions\" />");  
+    f[0].setAttribute("id", fchoice);
+    choices.append(f[0]);
+
+    //Break Line
+    addBreakLine($(choices).attr("id"));
+
+    //estimated option
+    var y = $("<input  type=\"radio\"  />");
+    y[0].setAttribute("id", eoption);
+    y[0].setAttribute("name", fename);
+    y[0].setAttribute("onchange", "AAOptions($(\"#" + foption +"\"), $(\"#" + fchoice + "\"), $(\"#" + eoption + "\"), $(\"#" + echoice + "\"),\"" + name + "\")");
+    choices.append(y[0]);                           
+    var t = document.createTextNode("Estimated");
+    choices.append(t);
+
+    //Break Line
+    addBreakLine($(choices).attr("id"));
+    addBreakLine($(choices).attr("id"));
+
+    //estimated choices
+    var e = $("<div class=\"radiooptions\"  />");
+    e[0].setAttribute("id", echoice);
+
+    choices.append(e[0]);
+    addBreakLine($(choices).attr("id"));
+}
+
+//Creates the choices in Amino Acid
+function AAOptions(emperical, empericalc, estimated, estimatedc, name){
+    $(empericalc).empty();//clears choices
+    $(estimatedc).empty();
+
+    if(emperical.is(':checked')){
+
+        //Base frequency
+        //baseFrequencySimplex(empericalc, name);
+        displayFE(empericalc, name,"Base Frequency", "simplexOptions", 4, "pi_aa");
+
+        //Menu
+        var m = $("<select />");
+        m[0].setAttribute("id", name + "modelSelect");
+        var t = document.createTextNode("Model ");
+        empericalc[0].append(t);
+    
+        //menu options
+        var z = $("<option value=\"wag\" selected=\"selected\" />");
+        var t = document.createTextNode("WAG");
+        z[0].append(t);
+        m[0].append(z[0]);
+        var z = $("<option value=\"lg\"  />");
+        var t = document.createTextNode("LG");
+        z[0].append(t);
+        m[0].append(z[0]);
+        var z = $("<option value=\"other\" />");
+        var t = document.createTextNode("Other");
+        z[0].append(t);
+        m[0].append(z[0]);
+        empericalc[0].append(m[0]);
+        
+    }
+
+    if(estimated.is(':checked')){
+       //Menu
+       var m = $("<select />");
+       m[0].setAttribute("id", name + "modelSelect");
+       var t = document.createTextNode("Model ");
+       estimatedc[0].append(t);
+   
+       //menu options
+       var z = $("<option value=\"p\" selected=\"selected\" />");
+       var t = document.createTextNode("Poisson");
+       z[0].append(t);
+       m[0].append(z[0]);
+       var z = $("<option value=\"g\" />");
+       var t = document.createTextNode("GTR");
+       z[0].append(t);
+       m[0].append(z[0]);
+
+       estimatedc[0].append(m[0]);
+    }
 }
 
 

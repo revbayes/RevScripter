@@ -1,7 +1,7 @@
 function getTreeOptions(){
     var unRooted = "";
     var branchLength = ""
-    var scripts;
+    var treeModel;
     //Unrooted Option
     //Fixed
     if($("#funroot").is(':checked')){
@@ -18,7 +18,6 @@ function getTreeOptions(){
     //Fixed
     if($("#funroot2").is(':checked')){
         //no string is added
-        branchLength = null;
     }
 
     //Estimated
@@ -40,14 +39,14 @@ function getTreeOptions(){
 
     }
 
-    if(branchLength){
-        scripts = [unRooted, branchLength, "\nmymodel =  model(psi)"];
+    if(branchLength != ""){
+        treeModel = [unRooted, branchLength, "mymodel =  model(psi)"];
     }
     else{
-        scripts = [unRooted, "\nmymodel =  model(psi)"];
+        treeModel = [unRooted, "mymodel =  model(topology)"];
     }
 
-    return scripts.join("\n\n");
+    return treeModel.join("\n\n");
 }
 
 function getInputTreeString(treefile, type){

@@ -75,6 +75,7 @@ function treeOptions(unrooted, unrootedc, rooted, rootedc){
 }
 */
 
+//Creates the optins for a tree model
 function createTreeOptions(){
     var option = document.getElementById("treeOptions");
     
@@ -102,13 +103,14 @@ function createTreeOptions(){
 
 }
 
+//Creates unrooted tree choices
 function unrootedOptions(fixed, fixedc, estimated, estimatedc, name, parameter){
     $(fixedc).empty();//clears choices
     $(estimatedc).empty();
 
     if(fixed.is(':checked')){
         var t = document.createTextNode("Enter tree_file filename: ");
-        var y1 = $("<textarea rows=\"1\" cols=\"80\" style=\"resize: none;\"/>");        
+        var y1 = $("<input type=\"text\" style=\"width: 500px;\"  placeholder=\"Ex.) data/primates_and_galeopterus_cytb.nex\" />");        
         y1[0].setAttribute("id", name + "t" );
         fixedc.append(t);
         fixedc.append(y1[0]);
@@ -163,7 +165,7 @@ function unrootedOptions(fixed, fixedc, estimated, estimatedc, name, parameter){
 
 }
 
-//Diplays the options for a estimate
+//creates the choices for a estimate of an unrooted tree
 function unrootedEstimate(value, choices, name){
     $(choices).empty();//clears choices
 
@@ -171,17 +173,17 @@ function unrootedEstimate(value, choices, name){
     addBreakLine($(choices).attr("id"));
 
     if(value == "UT"){
-        displayunrootedEstimate(choices, name);
+        displayunrootedEstimateUT(choices, name);
     }
   
 }
 
-//Displays the choices for the menu of unrooted estimate
-function displayunrootedEstimate(choices, name){
+//Creates the options for Uniform Topology 
+function displayunrootedEstimateUT(choices, name){
     //Outgroup option
     var ob = $("<input  type=\"radio\" id=\"outgroupB\" name=\"oandnoButton\" />");
     //sets the method for onchange
-    ob[0].setAttribute("onchange", "displayunrootedEstimateOptions($(\"#outgroupB\"), $(\"#outgroupO\"), $(\"#noutgroupB\"), $(\"#noutgroupO\"))");
+    ob[0].setAttribute("onchange", "displayunrootedEstimateOptionsUT($(\"#outgroupB\"), $(\"#outgroupO\"), $(\"#noutgroupB\"), $(\"#noutgroupO\"))");
     choices.append(ob[0]);                           
     var t = document.createTextNode("Outgroup");
     choices.append(t);
@@ -200,7 +202,7 @@ function displayunrootedEstimate(choices, name){
     //No outgroup Option
     var nob = $("<input type=\"radio\"  id=\"noutgroupB\" name=\"oandnoButton\" />");
     //sets the method for onchange
-    nob[0].setAttribute("onchange", "displayunrootedEstimateOptions($(\"#outgroupB\"), $(\"#outgroupO\"), $(\"#noutgroupB\"), $(\"#noutgroupO\"))");
+    nob[0].setAttribute("onchange", "displayunrootedEstimateOptionsUT($(\"#outgroupB\"), $(\"#outgroupO\"), $(\"#noutgroupB\"), $(\"#noutgroupO\"))");
     choices.append(nob[0]);        
     var t = document.createTextNode("No Outgroup");
     choices.append(t);
@@ -215,13 +217,14 @@ function displayunrootedEstimate(choices, name){
 
 }
 
-function displayunrootedEstimateOptions(fixed, fixedc, estimated, estimatedc){
+//Creates the choices for Uniform Topology
+function displayunrootedEstimateOptionsUT(fixed, fixedc, estimated, estimatedc){
     $(fixedc).empty();//clears choices
     $(estimatedc).empty();
 
     if(fixed.is(':checked')){
         var t = document.createTextNode("Enter outgroup name(s) (seperated by commas): ");
-        var y1 = $("<textarea id=\"urEstimateOutgroup\"  rows=\"1\" cols=\"80\" style=\"resize: none;\"/>");        
+        var y1 = $("<input type=\"text\" style=\"width: 500px;\"  placeholder=\"example1, example2, example3 \" />");        
         y1[0].setAttribute("id", name + "outgroup" );
         fixedc.append(t);
         fixedc.append(y1[0]);
@@ -233,6 +236,7 @@ function displayunrootedEstimateOptions(fixed, fixedc, estimated, estimatedc){
     
 }
 
+//Creates fixed an estimate choices for Vector  of Realpos
 function vectorofrealposOptions(fixed, fixedc, estimated, estimatedc, name, parameter){
     $(fixedc).empty();//clears choices
     $(estimatedc).empty();
@@ -247,7 +251,7 @@ function vectorofrealposOptions(fixed, fixedc, estimated, estimatedc, name, para
 
         var m = $("<select  />");
         m[0].setAttribute("id", sName);
-        m[0].setAttribute("onchange",  "displayEBranchLength($(\"#" + dpOptions + "\"), \"" + name + "e\", $(\"#" + sName + "\").val())");
+        m[0].setAttribute("onchange",  "displayEvectorofrealpos($(\"#" + dpOptions + "\"), \"" + name + "e\", $(\"#" + sName + "\").val())");
         var t = document.createTextNode("Choose prior distribution: ");
         estimatedc[0].append(t);
     
@@ -280,18 +284,19 @@ function vectorofrealposOptions(fixed, fixedc, estimated, estimatedc, name, para
     
         estimatedc[0].append(dpo[0]);
 
-        displayEBranchLength($("#" + dpOptions), name + "e", $("#" + sName ).val());
+        displayEvectorofrealpos($("#" + dpOptions), name + "e", $("#" + sName ).val());
 
     }
 
 }
 
-function displayEBranchLength(choices, name, value){
+//Creates the estimate option for vector of realpos
+function displayEvectorofrealpos(choices, name, value){
     choices.empty()//clear choices
     displayFE(choices, name, "Hyper Matrix", "displayvectorofrealposOptionsEstimated", value, "branch_length");
 }
 
-
+//Creates the estimate choices for vector of realpos
 function displayvectorofrealposOptionsEstimated(iid, iidc, h , hc , name, value, parameter){
     $(iidc).empty();//clears choices
     $(hc).empty();
@@ -348,12 +353,15 @@ function displayvectorofrealposOptionsEstimated(iid, iidc, h , hc , name, value,
 
 }
 
+
+
+//Same method as displayrealpos, except it takes integers for value
 function displayrealposOptions2(value, choices, name){
     $(choices).empty();//clears choices
 
     if(value == 1){
         var t = document.createTextNode("Enter shape parameter > 0: ");
-        var y1 = $("<input type = \"number\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");        
+        var y1 = $("<input type = \"number\" min=\"1\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");        
         y1[0].setAttribute("id", name);
         choices.append(t);
         choices.append(y1[0]);
@@ -369,7 +377,7 @@ function displayrealposOptions2(value, choices, name){
 
         //Shape
         var t1 = document.createTextNode("Shape: ");
-        var y1 = $("<input type = \"number\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");         
+        var y1 = $("<input type = \"number\" min=\"1\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");         
         y1[0].setAttribute("id", name);
         choices.append(t1);
         choices.append(y1[0]);
@@ -379,7 +387,7 @@ function displayrealposOptions2(value, choices, name){
 
         //Rate
         var t2 = document.createTextNode("Rate: ");
-        var y2 = $("<input type = \"number\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");  
+        var y2 = $("<input type = \"number\" min=\"1\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");  
         y2[0].setAttribute("id", name + "2")
         choices.append(t2);
         choices.append(y2[0]);
@@ -395,7 +403,7 @@ function displayrealposOptions2(value, choices, name){
 
         //Mean
         var t1 = document.createTextNode("Mean: ");
-        var y1 = $("<input type = \"number\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");         
+        var y1 = $("<input type = \"number\" min=\"1\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");         
         y1[0].setAttribute("id", name);
         choices.append(t1);
         choices.append(y1[0]);
@@ -405,7 +413,7 @@ function displayrealposOptions2(value, choices, name){
 
         //Standard Deviation
         var t2 = document.createTextNode("Standard Deviation: ");
-        var y2 = $("<input type = \"number\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");  
+        var y2 = $("<input type = \"number\" min=\"1\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");  
         y2[0].setAttribute("id", name + "2");
         choices.append(t2);
         choices.append(y2[0]);
@@ -420,7 +428,7 @@ function displayrealposOptions2(value, choices, name){
 
         //Min
         var t1 = document.createTextNode("Min: ");
-        var y1 = $("<input type = \"number\"value=\"0\" step=\"1\" style=\"width: 40px;\" />");         
+        var y1 = $("<input type = \"number\" min=\"0\" value=\"0\" step=\"1\" style=\"width: 40px;\" />");         
         y1[0].setAttribute("id", name);
         choices.append(t1);
         choices.append(y1[0]);
@@ -430,7 +438,7 @@ function displayrealposOptions2(value, choices, name){
 
         //Max
         var t2 = document.createTextNode("Max: ");
-        var y2 = $("<input type = \"number\" value=\"100\" step=\"1\" style=\"width: 40px;\" />");  
+        var y2 = $("<input type = \"number\" min=\"1\" value=\"100\" step=\"1\" style=\"width: 40px;\" />");  
         y2[0].setAttribute("id", name + "2")
         choices.append(t2);
         choices.append(y2[0]);

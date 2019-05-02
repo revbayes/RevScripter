@@ -1,7 +1,7 @@
 var author = "###Author###";
 var script = "";
 var dataOptions = "filepath";
-var num_char_states = 4;
+//var num_char_states = 4;
 var substitutionmodelTag = "";
 var substitutionmodelTag = "";
 var substitutionModel= "";
@@ -16,7 +16,8 @@ var variables = "# Get some useful variables from the data. We need these later 
                  "num_branches <- 2 * num_taxa - 3\n" +
                  "taxa <- data.taxa()\n\n"+
                  "moves    = VectorMoves()\n" +
-                 "monitors = VectorMonitors()";
+                 "monitors = VectorMonitors()\n\n" +
+                 "num_char_states <- 4";
 
 //Makes a RevBayes Title Tag with the given string
 function revbayesTag(word){
@@ -36,7 +37,7 @@ function revbayesTag(word){
 function createScript(){
     dataoptions = getdataOptions();
     substitutionmodelTag = revbayesTag("Substitution Model");
-    substitutionModel = getSubstitutionOptions(num_char_states);
+    substitutionModel = getSubstitutionOptions();
     treeTag = revbayesTag("Tree Model");
     treeModel = getTreeOptions();
     mcmcTag = revbayesTag("MCMC");

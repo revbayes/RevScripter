@@ -11,29 +11,30 @@ function checksubstitutionModel(){
 */
 
 //Makes the script for the Substitution Model
-function getSubstitutionOptions(num_char_states){
+function getSubstitutionOptions(){
     
     var substitutionModel = "";
+    var model = "";
     var ioption = "";
-    var goption = ""
+    var goption = "";
 
     //Adds the script for the selected model
     if(document.getElementById("nucleotideModel").value == "JC"){
-        substitutionModel = getQString("JC", num_char_states, null);
+        model = getQString("JC", "num_char_states", null);
     }
     else if(document.getElementById("nucleotideModel").value == "F81"){
         //Checks the basefrequency
         //If it is fixed
         if($("#ff81bf").is(':checked')){
             var n = [$("#f81bf0").val(), $("#f81bf1").val(), $("#f81bf2").val(), $("#f81bf3").val()];
-            substitutionModel = getSimplexFString("pi_F81", n);
+            model = getSimplexFString("pi_F81", n);
         }
         //if it is estimated
         if($("#ef81bf").is(':checked')){
-            substitutionModel = getSimplexEString("pi_F81", $("#f81bfcparameter1").val(), $("#f81bfcparameter2").val(), $("#f81bfcparameter3").val(), $("#f81bfcparameter4").val());
+            model = getSimplexEString("pi_F81", $("#f81bfcparameter1").val(), $("#f81bfcparameter2").val(), $("#f81bfcparameter3").val(), $("#f81bfcparameter4").val());
         }
-        var temp = [substitutionModel, "\n"  + getQString("F81", "pi_F81", null)];
-        substitutionModel = temp.join("\n");
+        var temp = [model, getQString("F81", "pi_F81", null)];
+        model = temp.join("\n");
 
     }
     else if(document.getElementById("nucleotideModel").value == "K80"){
@@ -41,14 +42,14 @@ function getSubstitutionOptions(num_char_states){
         //If it is fixed
         if($("#fk80tt").is(':checked')){
             
-            substitutionModel = getProbabilityFString("kappa_K80", $("#k80tt").val());
+            model = getProbabilityFString("kappa_K80", $("#k80tt").val());
         }
         //if it is estimated
         if($("#ek80tt").is(':checked')){
-            substitutionModel = getRealPosEString($("#eMenuk80tt").val(), "kappa_K80", $("#k80tt").val(), $("#k80tt2").val())
+            model = getRealPosEString($("#eMenuk80tt").val(), "kappa_K80", $("#k80tt").val(), $("#k80tt2").val())
         }
-        var temp = [substitutionModel, "\n"  + getQString("K80", "kappa_K80", null)];
-        substitutionModel = temp.join("\n");
+        var temp = [model, getQString("K80", "kappa_K80", null)];
+        model = temp.join("\n");
     }
     else if(document.getElementById("nucleotideModel").value == "HKY"){
 
@@ -77,9 +78,8 @@ function getSubstitutionOptions(num_char_states){
             bf = getSimplexEString("pi_HKY", $("#hkybfcparameter1").val(), $("#hkybfcparameter2").val(), $("#hkybfcparameter3").val(), $("#hkybfcparameter4").val());
         }
 
-
-        var temp = [tt, "\n" + bf,"\n"  + getQString("HKY", "kappa_HKY", "pi_HKY")];
-        substitutionModel = temp.join("\n");
+        var temp = [tt, bf, getQString("HKY", "kappa_HKY", "pi_HKY")];
+        model = temp.join("\n");
 
     }
     else if(document.getElementById("nucleotideModel").value == "GTR"){
@@ -108,8 +108,8 @@ function getSubstitutionOptions(num_char_states){
             bf = getSimplexEString("pi_GTR", $("#gtrbfcparameter1").val(), $("#gtrbfcparameter2").val(), $("#gtrbfcparameter3").val(), $("#gtrbfcparameter4").val());
         }
 
-        var temp = [er, "\n" + bf,"\n"  + getQString("GTR", "er_GTR", "pi_GTR")];
-        substitutionModel = temp.join("\n");
+        var temp = [er, bf, getQString("GTR", "er_GTR", "pi_GTR")];
+        model = temp.join("\n");
     }
 
     //Adds the script for the i option
@@ -124,8 +124,6 @@ function getSubstitutionOptions(num_char_states){
            ioption = getProbabilityEString("prop_inv", $("#ioptionpalpha").val(), $("#ioptionpbeta").val());
         }
 
-        var temp = [substitutionModel, "\n"  + ioption];
-        substitutionModel = temp.join("\n");
     }
     
     //Adds the script for the g option
@@ -144,14 +142,24 @@ function getSubstitutionOptions(num_char_states){
            site_rates = "site_rates := fnDiscretizeGamma(site_rates_shape, site_rates_shape, num_rate_categories)";
         }
 
-        //site_rates = site_rates + $("#numratecategories").val() + ")";
-       
-        var temp = [substitutionModel, "\n"  + goption, "num_rate_categories <- " + $("#numratecategories").val() ,site_rates];
-        substitutionModel = temp.join("\n");
+        var temp = [goption, "num_rate_categories <- " + $("#numratecategories").val() ,site_rates];
+        goption = temp.join("\n");
     }
 
+    if(ioption == "" && goption == ""){
+        substitutionModel = [model];
+    }
+    else if(ioption != "" && goption == ""){
+        substitutionModel = [model, ioption];
+    }
+    else if(goption != "" && ioption == ""){
+        substitutionModel = [model, goption];
+    }
+    else{
+        substitutionModel = [model, ioption, goption];
+    }
 
-    return substitutionModel;
+    return substitutionModel.join('\n\n');
 
 }
 
@@ -210,7 +218,7 @@ function getProbabilityEString(parameter, alpha, beta){
 
 //Makes the script for a Real Pos parameter when it is estimated
 function getRealPosEString(option, parameter, value1, value2){
-    dn = ""
+    dn = "";
     if(option == "E"){
         dn = "dnExponential(" + value1 + ")";
     }
