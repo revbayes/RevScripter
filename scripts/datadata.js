@@ -1,7 +1,12 @@
 
 function getdataOptions(){
     var filename = document.getElementById("datafilepath").value;
-    return "data = readDiscreteCharacterData(\"" + filename + "\")";
+    if(filename.length < 1){
+        return null;
+    }
+    else{
+        return "data = readDiscreteCharacterData(\"" + filename + "\")";
+    }
 }
 
 //Only if Nucleotide and Amino Acid are both being use

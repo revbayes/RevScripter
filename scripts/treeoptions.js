@@ -223,9 +223,9 @@ function displayunrootedEstimateOptionsUT(fixed, fixedc, estimated, estimatedc){
     $(estimatedc).empty();
 
     if(fixed.is(':checked')){
-        var t = document.createTextNode("Enter outgroup name(s) (seperated by commas): ");
+        var t = document.createTextNode("Enter outgroup name(s) [seperated by commas]: ");
         var y1 = $("<input type=\"text\" style=\"width: 500px;\"  placeholder=\"example1, example2, example3 \" />");        
-        y1[0].setAttribute("id", name + "outgroup" );
+        y1[0].setAttribute("id", "outgroup");
         fixedc.append(t);
         fixedc.append(y1[0]);
     }

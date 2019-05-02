@@ -74,7 +74,6 @@ function createMCMCOptions(){
     option.append(t);
     option.append(input[0]);
 
-
 }
 
 createMCMCOptions();

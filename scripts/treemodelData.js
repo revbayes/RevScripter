@@ -40,7 +40,7 @@ function getTreeOptions(){
     }
 
     if(branchLength != ""){
-        treeModel = [unRooted, branchLength, "mymodel =  model(psi)"];
+        treeModel = [unRooted, branchLength, "mymodel =  model(topology)"];
     }
     else{
         treeModel = [unRooted, "mymodel =  model(topology)"];
@@ -50,7 +50,8 @@ function getTreeOptions(){
 }
 
 function getInputTreeString(treefile, type){
-    var scripts = ["input_tree = readTrees(" + treefile + ", treetype=\"non-clock\")[1]", type + " <- input_tree"];
+    var tree_file = "tree_file = \"" + treefile + "\"";
+    var scripts = [tree_file, "input_tree = readTrees(tree_file, treetype=\"non-clock\")[1]", type + " <- input_tree"];
     return scripts.join("\n");
 }
 
@@ -65,7 +66,7 @@ function getUnrootedEstimateString(option, input){
 function getOutgroupString(names){
     var scripts;
     if($("#outgroupB").is(':checked')){
-        scripts = ["out_group = clade(" + names + ")", "topology ~ dnUniformTopology(taxa, outgroup=out_group)", "moves.append( mvNNI(topology, weight=num_taxa/2.0) )", "moves.append( mvSPR(topology, weight=num_taxa/10.0) )"];
+        scripts = ["out_group = clade(\"" + names + "\")", "topology ~ dnUniformTopology(taxa, outgroup=out_group)", "moves.append( mvNNI(topology, weight=num_taxa/2.0) )", "moves.append( mvSPR(topology, weight=num_taxa/10.0) )"];
     }
 
     if($("#noutgroupB").is(':checked')){

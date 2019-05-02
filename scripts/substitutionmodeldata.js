@@ -36,6 +36,10 @@ function getSubstitutionOptions(){
         var temp = [model, getQString("F81", "pi_F81", null)];
         model = temp.join("\n");
 
+        //Checks to make sure one of the radio buttons is checked
+        if(!$("#ff81bf").is(':checked') && !$("#ef81bf").is(':checked')){
+            return null;
+        }
     }
     else if(document.getElementById("nucleotideModel").value == "K80"){
         //Checks transition/transversion ratio
@@ -50,6 +54,11 @@ function getSubstitutionOptions(){
         }
         var temp = [model, getQString("K80", "kappa_K80", null)];
         model = temp.join("\n");
+
+        //Checks to make sure one of the radio buttons is checked
+        if(!$("#fk80tt").is(':checked') && !$("#ek80tt").is(':checked')){
+            return null;
+        }
     }
     else if(document.getElementById("nucleotideModel").value == "HKY"){
 
@@ -81,6 +90,16 @@ function getSubstitutionOptions(){
         var temp = [tt, bf, getQString("HKY", "kappa_HKY", "pi_HKY")];
         model = temp.join("\n");
 
+        //Checks to make sure one of the radio buttons is checked
+        if(!$("#fhkytt").is(':checked') && !$("#ehkytt").is(':checked')){
+            return null;
+        }
+
+        //Checks to make sure one of the radio buttons is checked
+        if(!$("#fhkybf").is(':checked') && !$("#ehkybf").is(':checked')){
+            return null;
+        }
+
     }
     else if(document.getElementById("nucleotideModel").value == "GTR"){
         var er = "";
@@ -92,7 +111,7 @@ function getSubstitutionOptions(){
             var n = [$("#gtre0").val(), $("#gtre1").val(), $("#gtre2").val(), $("#gtre3").val(), $("#gtre4").val(), $("#gtre5").val()];
             er = getSimplexFString("er_GTR", n);
         }
-        //if it is estimated
+        //If it is estimated
         if($("#egtre").is(':checked')){
             er = getSimplexEString("er_GTR", $("#gtrecparameter1").val(), $("#gtrecparameter2").val(), $("#gtrecparameter3").val(), $("#gtrecparameter4").val());
         }
@@ -110,6 +129,17 @@ function getSubstitutionOptions(){
 
         var temp = [er, bf, getQString("GTR", "er_GTR", "pi_GTR")];
         model = temp.join("\n");
+
+        //Checks to make sure one of the radio buttons is checked
+        if(!$("#fgtre").is(':checked') && !$("#egtre").is(':checked')){
+            return null;
+        }
+
+        //Checks to make sure one of the radio buttons is checked
+        if(!$("#fgtrbf").is(':checked') && !$("#egtrbf").is(':checked')){
+            return null;
+        }
+
     }
 
     //Adds the script for the i option
@@ -122,6 +152,11 @@ function getSubstitutionOptions(){
         //if it is estimated
         if($("#eioption").is(':checked')){
            ioption = getProbabilityEString("prop_inv", $("#ioptionpalpha").val(), $("#ioptionpbeta").val());
+        }
+
+        //Checks to make sure one of the radio buttons is checked
+        if(!$("#fioption").is(':checked') && !$("#eioption").is(':checked')){
+            return null;
         }
 
     }
@@ -144,8 +179,14 @@ function getSubstitutionOptions(){
 
         var temp = [goption, "num_rate_categories <- " + $("#numratecategories").val() ,site_rates];
         goption = temp.join("\n");
+
+        //Checks to make sure one of the radio buttons is checked
+        if(!$("#fgoption").is(':checked') && !$("#egoption").is(':checked')){
+            return null;
+        }
     }
 
+    //Adds the i+ and g+ options that checked to the script
     if(ioption == "" && goption == ""){
         substitutionModel = [model];
     }
