@@ -214,6 +214,6 @@ Finish the model code
 - Boxes where values and users enter things: make blue (#b7cfed), and make text "Courier"
 - Main background: white
 - Tabs: light gray
-- Tab headings (e.g.: "Data", "Substitution Model", etc.): make #337ab7 
+- Tab headings (e.g.: "Data", "Substitution Model", etc.): make #438ac7 
 - Move tabs to sit just above the box outline
 
