@@ -210,9 +210,10 @@ Finish the model code
 # Design Edits
 
 - "RevScripter" in Raleway
-- All other text in Helvetica
+- All other text in Arial
 - Boxes where values and users enter things: make blue (#b7cfed), and make text "Courier"
 - Main background: white
 - Tabs: light gray
-- Tab headings (e.g.: "Data", "Substitution Model", etc.): make blue
+- Tab headings (e.g.: "Data", "Substitution Model", etc.): make #337ab7 
+- Move tabs to sit just above the box outline
 
