@@ -210,10 +210,13 @@ Finish the model code
 # Design Edits
 
 - "RevScripter" in Raleway
-- All other text in Arial
-- Boxes where values and users enter things: make blue (#b7cfed), and make text "Courier"
+- All other text in Helvetica Neue
+- Boxes where values and users enter things: make blue (#b7cfed), and make text "Courier New"
 - Main background: white
 - Tabs: light gray
 - Tab headings (e.g.: "Data", "Substitution Model", etc.): make #438ac7 
 - Move tabs to sit just above the box outline
+- Possible to add an info button for each tab? This would provide a general overivew of the tab and what is currently possible in RevScripter
+- Reset button
+
 
