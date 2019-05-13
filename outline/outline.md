@@ -207,3 +207,12 @@ Finish the model code
 			mymcmc.run(generations=<num_gens>)
 
 
+# Design Edits
+
+- "RevScripter" in Raleway
+- All other text in Helvetica
+- Boxes where values and users enter things: make blue (#b7cfed), and make text "Courier"
+- Main background: white
+- Tabs: light gray
+- Tab headings (e.g.: "Data", "Substitution Model", etc.): make blue
+
