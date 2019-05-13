@@ -42,14 +42,28 @@ function createScript(){
     mcmcTag = revbayesTag("MCMC");
     mcmc = getMCMCOptions();
     var scripts = [authorTag, dataoptions, variables, substitutionmodelTag, substitutionModel, treeTag, treeModel, mcmcTag, mcmc];
+   
+    //Checks to see if there are any missing inputs that the user needs to choose from
     if(!dataoptions){
-        generatedScript = "Missing inputs in the DATA Box";
+        generatedScript = "Missing inputs in the DATA options.";
+        alert("Missing inputs in the DATA options.");
     }
     else if(!substitutionModel){
-        generatedScript = "Missing inputs in the Substitution Model Box"
-    }else{
+        generatedScript = "Missing inputs in the Substitution Model options.";
+        alert("Missing inputs in the Substitution Model options.");
+    }
+    else if(!treeModel){
+        generatedScript = "Missing inputs in the Tree Model options.";
+        alert("Missing inputs in the Tree Model options.");
+    }
+    else if(!mcmc){
+        generatedScript = "Missing inputs in the MCMC options.";
+        alert("Missing inputs in the MCMC options.");
+    }
+    else{
         generatedScript = scripts.join('\n\n');
     }
+
 }
 
 //Resets the script

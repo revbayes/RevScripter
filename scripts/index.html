@@ -18,20 +18,33 @@
     <body>
         
             <ul>
-                <li><a href="index.html">Data</a></li>
-                <li><a class="active" href="substitutionmodel.html">Substitution Model</a></li>
+                <li><a class="active" href="index.html">Data</a></li>
+                <li><a href="substitutionmodel.html">Substitution Model</a></li>
                 <li><a href="treemodel.html">Tree Model</a></li>
                 <li><a href="mcmc.html">MCMC</a></li>
-                <li><a href="script.html">Script</a></li>
+                <li><a href="Script.html">Script</a></li>
                 <li style="float:right"><a href="https://revbayes.github.io/">About</a></li>
             </ul>
             
             <h1>RevScriptor</h1>
             
-                <!--Substitution Model Options-->
-                <div class ="box" id = "substitutionOptions">
-                    <script src="substitutionOptions.js"></script>             
+
+                <!--Data Options-->
+                <div class="box">
+                    <h2>Data</h2>
+                    Enter path to filename:<br>
+                    <input type="text" id="datafilepath" value = "example1" style="width: 500px;"  placeholder="Ex.) data/primates_and_galeopterus_cytb.nex" ></input><br><br>
+                    
+                    <!--Only need nucleotide options, if both Nucleotide and Amino Acid are needed-->
+                    <!--
+                    Datatype: <select id="datatype" onchange="createModelOptions()">
+                        <option value="N" selected= "selected">Nucleotide</option>
+                        <option value="A">Amino Acid</option>
+                    </select>
+                    -->
+                    
                 </div>
+
                 
                 <script src="scriptgen.js"></script>
                 <script src="dataData.js"></script>
@@ -40,8 +53,5 @@
                 <script src="mcmcData.js"></script>
                 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
                 
-            
-        
-
     </body>
 </html>

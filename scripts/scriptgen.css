@@ -1,11 +1,11 @@
+.maintitle2{
+  font-family: 'Stylish', sans-serif;
+}
+
 html,body{
-    width: 100%;
-    height:100%;
-    margin:0;
-    padding:0;
-    font-family: "Times New Roman", Times, serif;
-    background: #9ec3ff;
-    text-align: center;
+  margin:0;
+  padding:0; 
+  text-align: center;
 }
 
 #container {
