@@ -120,7 +120,9 @@ function createModelOptions(){
 
 //Only Nucelotide
 function createModelOptions(){
+
     $("#substitutionOptions").empty();
+
     var y = document.getElementById("substitutionOptions");
     
     //Substitution Model Header
@@ -128,16 +130,15 @@ function createModelOptions(){
     var t = document.createTextNode("Substitution Model");
     h1[0].append(t);
 
-    //QMatrix Header
+    //Rate Matrix Header
     var h2 = $("<h3/>");
-    var t = document.createTextNode("QMatrix");
+    var t = document.createTextNode("Rate Matrix");
     h2[0].append(t);
 
     y.append(h1[0]);
     y.append(h2[0]);  
     
     //Nucleotide Option
-
         //Model Menu
         var t = document.createTextNode("Model ");
         y.append(t);
@@ -150,6 +151,7 @@ function createModelOptions(){
         z[0].append(t);
         x[0].append(z[0]);
 
+        //Options for Menu
         var z = $("<option value=\"F81\" />");
         var t = document.createTextNode("F81");
         z[0].append(t);
@@ -381,7 +383,7 @@ function displayrealposOptions(value, choices, name){
     addBreakLine($(choices).attr("id"));
 
     if(value == "E"){
-        var t = document.createTextNode("Enter shape parameter > 0: ");
+        var t = document.createTextNode("Enter rate parameter > 0: ");
         var y1 = $("<input type =\"number\" min=\"1\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");        
         y1[0].setAttribute("id", name);
         choices.append(t);
@@ -423,7 +425,11 @@ function displayrealposOptions(value, choices, name){
         addBreakLine($(choices).attr("id"));
 
         //Mean
-        var t1 = document.createTextNode("Mean: ");
+        var t1 = document.createElement("p");
+        var p = t1.parentNode;
+        t1.outerHTML = "$\mu$\": \"";
+        t1.parentNode = p;
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
         var y1 = $("<input type =\"number\" min=\"1\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");         
         y1[0].setAttribute("id", name);
         choices.append(t1);
@@ -484,40 +490,71 @@ function displayFE(choices, name, type, options, n, parameter){
      //Break Line
      addBreakLine($(choices).attr("id"));
  
+     //estimated option
+     var y = $("<input  type=\"radio\" checked = \"checked\" />");
+     y[0].setAttribute("id", eoption);
+     y[0].setAttribute("name", fename);
+
+
+     choices.append(y[0]);                           
+     var t = document.createTextNode("Estimated");
+     choices.append(t);
+
      //Fixed option
      var x = $("<input type=\"radio\"  />");
      x[0].setAttribute("id", foption);
      x[0].setAttribute("name", fename);
-
-     //sets the method for onchange
-     if(n != null){
-        x[0].setAttribute("onchange", options + "($(\"#" + foption +"\"), $(\"#" + fchoice + "\"), $(\"#" + eoption + "\"), $(\"#" + echoice + "\"),\"" + name + "\", " + n + ", \"" + parameter + "\" )");
-     }
-     else{
-        x[0].setAttribute("onchange", options + "($(\"#" + foption +"\"), $(\"#" + fchoice + "\"), $(\"#" + eoption + "\"), $(\"#" + echoice + "\"),\"" + name + "\", \"" + parameter + "\" )"); 
-     }
+     x[0].setAttribute("class", "fixed");
 
 
      choices.append(x[0]);        
      var t = document.createTextNode("Fixed");
      choices.append(t);
  
-     //Break Line
-     addBreakLine($(choices).attr("id"));
-     addBreakLine($(choices).attr("id"));
+    //  //Break Line
+    //  addBreakLine($(choices).attr("id"));
+    //  addBreakLine($(choices).attr("id"));
      
+    //  //Fixed choices
+    //  var f = $("<div class=\"radiooptions\" />");  
+    //  f[0].setAttribute("id", fchoice);
+    //  choices.append(f[0]);
+ 
+    //  //Break Line
+    //  addBreakLine($(choices).attr("id"));
+ 
+    //  //Break Line
+    //  addBreakLine($(choices).attr("id"));
+    //  addBreakLine($(choices).attr("id"));
+ 
+     //estimated choices
+     var e = $("<div class=\"radiooptions\"  />");
+     e[0].setAttribute("id", echoice);
+
      //Fixed choices
-     var f = $("<div class=\"radiooptions\" />");  
-     f[0].setAttribute("id", fchoice);
-     choices.append(f[0]);
+      var f = $("<div class=\"radiooptions\" />");  
+      f[0].setAttribute("id", fchoice);
+      choices.append(f[0]);
  
-     //Break Line
+     choices.append(e[0]);
      addBreakLine($(choices).attr("id"));
- 
-     //estimated option
-     var y = $("<input  type=\"radio\"  />");
-     y[0].setAttribute("id", eoption);
-     y[0].setAttribute("name", fename);
+
+    //Calls the method to show the options at the beginning
+    if(n != null){
+        window[options]($("#" + foption), $("#" + fchoice), $("#" + eoption), $("#" + echoice), name, n, parameter);
+    }
+    else{
+        window[options]($("#" + foption), $("#" + fchoice), $("#" + eoption), $("#" + echoice), name, parameter);
+    }
+
+
+    //sets the method for onchange
+    if(n != null){
+        x[0].setAttribute("onchange", options + "($(\"#" + foption +"\"), $(\"#" + fchoice + "\"), $(\"#" + eoption + "\"), $(\"#" + echoice + "\"),\"" + name + "\", " + n + ", \"" + parameter + "\" )");
+     }
+     else{
+        x[0].setAttribute("onchange", options + "($(\"#" + foption +"\"), $(\"#" + fchoice + "\"), $(\"#" + eoption + "\"), $(\"#" + echoice + "\"),\"" + name + "\", \"" + parameter + "\" )"); 
+     }
 
      //sets the method for onchange
      if(n != null){
@@ -527,20 +564,7 @@ function displayFE(choices, name, type, options, n, parameter){
         y[0].setAttribute("onchange", options + "($(\"#" + foption +"\"), $(\"#" + fchoice + "\"), $(\"#" + eoption + "\"), $(\"#" + echoice + "\"),\"" + name + "\", \"" + parameter + "\" )"); 
      }
 
-     choices.append(y[0]);                           
-     var t = document.createTextNode("Estimated");
-     choices.append(t);
- 
-     //Break Line
-     addBreakLine($(choices).attr("id"));
-     addBreakLine($(choices).attr("id"));
- 
-     //estimated choices
-     var e = $("<div class=\"radiooptions\"  />");
-     e[0].setAttribute("id", echoice);
- 
-     choices.append(e[0]);
-     addBreakLine($(choices).attr("id"));
+
 }
 
 //Creares fixed and estimate choices for probability

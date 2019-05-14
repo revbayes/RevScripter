@@ -204,7 +204,7 @@ function getSubstitutionOptions(){
 
 }
 
-//Makes the script for a string like "Q <- fnJC(num_char_states)"
+//Makes the script for a Q string (Ex. "Q <- fnJC(num_char_states)")
 function getQString(name, input, input2){
     if(input2){
         var scripts = ["Q := ", "fn", name, "(", input, ",", input2, ")"];

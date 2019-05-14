@@ -9,97 +9,115 @@ html,body{
 }
 
 #container {
-    width: inherit;
-    height: inherit;
-    margin: 0;
-    padding: 0;
-    background-color: #9ec3ff;
+  width: inherit;
+  height: inherit;
+  margin: 0;
+  padding: 0;
+  background-color: #9ec3ff;
 }
 
 ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
-  }
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
   
-  li {
-    float: left;
-  }
+li {
+  float: left;
+}
   
-  li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-  }
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
   
-  li a:hover {
+li a:hover {
     background-color: #111;
-  }
-
-.tab{
-    border:none;
-    display:
-    inline-block;
-    outline:0;
-    padding:6px 16px;
-    margin-bottom: 2.5px;
-    vertical-align:middle;
-    overflow:hidden;
-    text-decoration:none!important;
-    color:#fff;
-    background-color:#000;
-    text-align:center;
-    cursor:pointer;
-    white-space:nowrap
 }
 
+.tab{
+  border:none;
+  display:
+  inline-block;
+  outline:0;
+  padding:6px 16px;
+  margin-bottom: 2.5px;
+  vertical-align:middle;
+  overflow:hidden;
+  text-decoration:none!important;
+  color:#fff;
+  background-color:#000;
+  text-align:center;
+  cursor:pointer;
+  white-space:nowrap
+}
+
+
+
+
 .box {
-    border: 1px solid black;
-    padding: 5px; 
-    width: 923px;
-    margin-top: 2.5px;
-    margin-bottom: 2.5px;
-    box-sizing: border-box;
-    display:
-    inline-block;
-    font-size: 15px;
-    outline:0;
-    vertical-align:middle; /*was right*/
-    overflow:hidden;
-    text-decoration:none!important;
-    color:black;
-    text-align:left;
-    background-color:white;
-    cursor:pointer;
-    white-space:nowrap
-  }
+  border: 1px solid black;
+  padding: 5px; 
+  width: 923px;
+  margin-top: 2.5px;
+  margin-bottom: 2.5px;
+  box-sizing: border-box;
+  display:
+  inline-block;
+  font-size: 15px;
+  outline:0;
+  vertical-align:middle; /*was right*/
+  overflow:hidden;
+  text-decoration:none!important;
+  color:black;
+  text-align:left;
+  background-color:white;
+  cursor:pointer;
+  white-space:nowrap
+}
 
-  .button {
-    background-color: white;
-    border: .5px solid black;
-    color: black;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 12px;
-    margin: 4px 2px;
-    cursor: pointer;
-  }
+.button {
+  background-color: white;
+  border: .5px solid black;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
 
-  textarea { 
-    font-size: 10px;
-  }
+textarea { 
+  font-size: 10px;
+}
 
-  .radiooptions {
-    margin-left: 5%;
-  }
+.radiooptions {
+  margin-left: 5%;
+}
 
-  .menuOption {
-    margin-left: 3%;
-  }
+.menuOption {
+  margin-left: 3%;
+}
 
+
+/*Takes away the arrows from the number inputs*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+  -moz-appearance:textfield; /* Firefox */
+}
    
+.fixed{
+  margin-left: 50px !important;
+}

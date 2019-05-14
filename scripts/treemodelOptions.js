@@ -293,7 +293,8 @@ function vectorofrealposOptions(fixed, fixedc, estimated, estimatedc, name, para
 //Creates the estimate option for vector of realpos
 function displayEvectorofrealpos(choices, name, value){
     choices.empty()//clear choices
-    displayFE(choices, name, "Hyper Matrix", "displayvectorofrealposOptionsEstimated", value, "branch_length");
+    displayFE(choices, name, "Hyperparameter(s)", "displayvectorofrealposOptionsEstimated", value, "branch_length");
+    
 }
 
 //Creates the estimate choices for vector of realpos
