@@ -1,10 +1,11 @@
+/*Creates the script for Tree Model options */
 function getTreeOptions(){
     var unRooted = "";
     var branchLength = "";
     var treeModel = "";
     var psi = "phylo ~ dnPhyloCTMC(tree=psi, Q=Q, type=\"DNA\")";
     
-    //Unrooted Option
+    //Tree topology  Option
     //Fixed
     if($("#funroot").is(':checked')){
         unRooted = getInputTreeString($("#unroott").val(), "topology");
@@ -53,7 +54,7 @@ function getTreeOptions(){
             branchLength = getVectorRealPosEEstimateString("branch_lengths", priordistribution , $("#unroot2e").val(), $("#unroot2e2").val(), $("#eMenuunroot2e").val())
         }
 
-        //Checks to make sure that an unrooted Option is checked
+        //Checks to make sure that a branch lengths Option is checked
         if(!$("#funroot2e").is(':checked') && !$("#eunroot2e").is(':checked')){
             return null;
         }
@@ -80,6 +81,7 @@ function getTreeOptions(){
     }
 
 
+    //Checks if branch length has any string that needs to be added(if it is fixed there is no string)
     if(branchLength != ""){
         treeModel = [unRooted, branchLength, "psi := fnTreeAssembly(topology, branch_lengths)", psi, "mymodel =  model(topology)"];
     }
@@ -90,12 +92,15 @@ function getTreeOptions(){
     return treeModel.join("\n\n");
 }
 
+
+//Creates the string for Tree topology Fixed Option
 function getInputTreeString(treefile, type){
     var tree_file = "tree_file = \"" + treefile + "\"";
     var scripts = [tree_file, "input_tree = readTrees(tree_file, treetype=\"non-clock\")[1]", type + " <- input_tree"];
     return scripts.join("\n");
 }
 
+//Creates the string for Tree topology when is is estimate
 function getUnrootedEstimateString(option, input){
     var script;
     if(option == "UT"){
@@ -105,25 +110,21 @@ function getUnrootedEstimateString(option, input){
     return script;
 }
 
+//Creates the string if the menu option is Uniform topology
 function getOutgroupString(names){
     var scripts = "";
     if($("#outgroupB").is(':checked')){
         scripts = ["out_group = clade(\"" + names + "\")", "topology ~ dnUniformTopology(taxa, outgroup=out_group)", "moves.append( mvNNI(topology, weight=num_taxa/2.0) )", "moves.append( mvSPR(topology, weight=num_taxa/10.0) )"];
         
-        //Checks to make sure that the Outgroup input is not empty
-        if(name.length < 1){
+        //Checks to make sure that the Outgroup names input is not empty
+        if(names.length < 1){
             return null;
         }
     }
-
-    if($("#noutgroupB").is(':checked')){
+    else{
         scripts = ["topology ~ dnUniformTopology(taxa)", "moves.append( mvNNI(topology, weight=num_taxa/2.0) )", "moves.append( mvSPR(topology, weight=num_taxa/10.0) )"];
     }
 
-    //Checks to make sure that an unrooted Option is checked
-    if(!$("#outgroupB").is(':checked') && !$("#noutgroupB").is(':checked')){
-        return null;
-    }
 
     return scripts.join("\n");
 }

@@ -1,4 +1,10 @@
+/*Used to create the MCMC options*/
 function createMCMCOptions(){
+    
+    //Clears mcmc div
+    $("#mcmcOptions").empty();
+
+    //gets the mcmc div
     var option = document.getElementById("mcmcOptions");
     
     //Tree Model Header
@@ -16,7 +22,7 @@ function createMCMCOptions(){
 
     //Print Frequency Input
     var t = document.createTextNode("Enter print frequency: ");
-    var input = $("<input type =\"number\" min=\"1\" value =\"1\" style=\"width: 40px;\" id=\"fmprintfrequency\" />");
+    var input = $("<input type =\"number\" min=\"1\" value =\"1\" class=\"numberinput\" id=\"fmprintfrequency\" />");
     option.append(t);
     option.append(input[0]);
 
@@ -48,7 +54,7 @@ function createMCMCOptions(){
 
     //Print Frequency Input
     var t = document.createTextNode("Enter print frequency: ");
-    var input = $("<input type =\"number\"  min= \"1\" value =\"1\" style=\"width: 40px;\" id=\"smprintfrequency\" />");
+    var input = $("<input type =\"number\"  min= \"1\" value =\"1\" class=\"numberinput\" id=\"smprintfrequency\" />");
     option.append(t);
     option.append(input[0]);
 
@@ -60,7 +66,7 @@ function createMCMCOptions(){
 
     //Number of Generations Input
     var t = document.createTextNode("Enter number of generations: ");
-    var input = $("<input type =\"number\"  min= \"1\" value =\"1\" style=\"width: 40px;\" id=\"generationnumbers\" />");
+    var input = $("<input type =\"number\"  min= \"1\" value =\"1\" class=\"numberinput\" id=\"generationnumbers\" />");
     option.append(t);
     option.append(input[0]);
 
@@ -70,10 +76,29 @@ function createMCMCOptions(){
 
     //Number of runs Input
     var t = document.createTextNode("Enter number of runs: ");
-    var input = $("<input type =\"number\"  min= \"1\"  value =\"1\" style=\"width: 40px;\" id=\"numberofruns\" />");
+    var input = $("<input type =\"number\"  min= \"1\"  value =\"1\" class=\"numberinput\" id=\"numberofruns\" />");
     option.append(t);
     option.append(input[0]);
 
+    //Break Line
+    addBreakLine(option.id);
+    addBreakLine(option.id);
+
+    //Back button
+    var backbutton = $("<button onclick=\"gotoTab('treetab')\">Back<button/>");
+
+    //Reset button
+    var resetbutton = $("<button onclick=\"createMCMCOptions()\">Reset<button/>");
+
+    //Next button
+    var nextbutton = $("<button onclick=\"gotoTab('scripttab')\" class =\"nextbutton\">Next<button/>");
+
+    //adds the back, reset, and next button
+    option.append(backbutton[0]);
+    option.append(resetbutton[0]);
+    option.append(nextbutton[0]);
+
 }
 
+//Creates the MCMC Options
 createMCMCOptions();

@@ -1,7 +1,10 @@
-
-//With rooted option
-/*
+/*Used to create the Tree  Model options*/
 function createTreeOptions(){
+
+    //Clears the tree model div
+    $("#treeOptions").empty();
+
+    //Gets the tree model div
     var option = document.getElementById("treeOptions");
     
     //Tree Model Header
@@ -11,82 +14,7 @@ function createTreeOptions(){
 
     //Topology Header
     var h2 = $("<h3/>");
-    var t = document.createTextNode("Topology");
-    h2[0].append(t);
-
-    //Adding the headers to page
-    option.append(h1[0]);
-    option.append(h2[0]);  
-
-
-    //Unrooted option
-    var ub = $("<input  type=\"radio\" id=\"uButton\" name=\"randuButton\" />");
-    //sets the method for onchange
-    ub[0].setAttribute("onchange", "treeOptions($(\"#uButton\"), $(\"#uOption\"), $(\"#rButton\"), $(\"#rOption\"))");
-    option.append(ub[0]);                           
-    var t = document.createTextNode("Unrooted");
-    option.append(t);
-
-    //Break Line
-    addBreakLine(option.id);
-    addBreakLine(option.id);
-
-    //Unrooted choices
-    var uOption = $("<div id=\"uOption\" class=\"radiooptions\"  />");
-    option.append(uOption[0]);
-
-
-    //Rooted Option
-    var rb = $("<input type=\"radio\"  id=\"rButton\" name=\"randuButton\" />");
-    //sets the method for onchange
-    rb[0].setAttribute("onchange", "treeOptions($(\"#uButton\"), $(\"#uOption\"), $(\"#rButton\"), $(\"#rOption\"))");
-    option.append(rb[0]);        
-    var t = document.createTextNode("Rooted");
-    option.append(t);
-
-    //Break Line
-    addBreakLine(option.id);
-    addBreakLine(option.id);
-    
-    //Rooted Choices
-    var rOption = $("<div id=\"rOption\" class=\"radiooptions\" />");  
-    option.append(rOption[0]);
-
-    //Break Line
-    addBreakLine(option.id);
-
-}
-*/
-
-//With rooted option
-/*
-function treeOptions(unrooted, unrootedc, rooted, rootedc){
-    $(unrootedc).empty();//clears choices
-    $(rootedc).empty();
-
-    if(unrooted.is(':checked')){
-        displayFE(unrootedc, "unroot", "Fixed or Estimate", "unrootedOptions",null, "tree_file");
-    }
-
-    if(rooted.is(':checked')){
-        displayFE(rootedc, "root", "Rooted", "unrootedOptions",null, "tree_file");
-    }
-
-}
-*/
-
-//Creates the optins for a tree model
-function createTreeOptions(){
-    var option = document.getElementById("treeOptions");
-    
-    //Tree Model Header
-    var h1 = $("<h2/>");
-    var t = document.createTextNode("Tree Model");
-    h1[0].append(t);
-
-    //Topology Header
-    var h2 = $("<h3/>");
-    var t = document.createTextNode("Topology");
+    var t = document.createTextNode("Unrooted Topology and Branch Lengths");
     h2[0].append(t);
 
     //Adding the headers to page
@@ -97,29 +25,53 @@ function createTreeOptions(){
     var uOption = $("<div id=\"uOption\"  />");
     option.append(uOption[0]);
 
-    displayFE(uOption[0], "unroot", "Unrooted", "unrootedOptions", null, "tree_file");
+    //Fixed and Estimate for Tree Topology
+    displayFE(uOption[0], "unroot", "Tree Topology", "unrootedOptions", null, "tree_file");
 
+    //Fixed and Estimate for Branch Lengths
     displayFE(uOption[0],"unroot2", "Branch Lengths", "vectorofrealposOptions", null,  "branch_length");
+
+    //Calls the method that generates the Tree toplogy one time to make sure that fixed is hidden, since the default option is estimated
+    displayFixedBranchLength();
+
+    //Back button
+    var backbutton = $("<button onclick=\"gotoTab('substitutiontab')\">Back<button/>");
+
+    //Reset button
+    var resetbutton = $("<button onclick=\"createTreeOptions()\">Reset<button/>");
+
+    //Next button
+    var nextbutton = $("<button  onclick=\"gotoTab('mcmctab')\" class =\"nextbutton\">Next<button/>");
+
+    //Adding the back, reset, next button
+    option.append(backbutton[0]);
+    option.append(resetbutton[0]);
+    option.append(nextbutton[0]);
 
 }
 
 //Creates unrooted tree choices
+//Takes, in fixed radio button, fixed choices div, estimated radio button, estimaded choice div, name used for id, n if needed, and parameter used for input
 function unrootedOptions(fixed, fixedc, estimated, estimatedc, name, parameter){
-    $(fixedc).empty();//clears choices
+    //clears choices
+    $(fixedc).empty();
     $(estimatedc).empty();
 
+    //if fixed is chosen
     if(fixed.is(':checked')){
-        var t = document.createTextNode("Enter tree_file filename: ");
+        //File path to the tree file input
+        //Name
+        var t = document.createTextNode("Enter the path to the tree file: ");
+        //Input
         var y1 = $("<input type=\"text\" style=\"width: 500px;\"  placeholder=\"Ex.) data/primates_and_galeopterus_cytb.nex\" />");        
         y1[0].setAttribute("id", name + "t" );
         fixedc.append(t);
         fixedc.append(y1[0]);
-
-        //Enables(if disabled) the branch length option of fixed
-        $("#funroot2").attr('disabled', false);
     }
 
+    //if estimate is chosen
     if(estimated.is(':checked')){
+        
         //Id name for select menu
         var sName = "eMenu" + name;
         var menuOptions = "menuop" + name;
@@ -127,7 +79,7 @@ function unrootedOptions(fixed, fixedc, estimated, estimatedc, name, parameter){
         //Menu
         var m = $("<select  />");
         m[0].setAttribute("id", sName);
-        var t = document.createTextNode("Choose Prior Distribution: ");
+        var t = document.createTextNode("Choose prior distribution on topology: ");
         estimatedc[0].append(t);
         
         //menu options
@@ -150,28 +102,54 @@ function unrootedOptions(fixed, fixedc, estimated, estimatedc, name, parameter){
         estimatedc[0].append(dpo[0]);
 
         //Calls to display the selected        
-        unrootedEstimate($("#"+ sName).val(),dpo[0], name);
+        unrootedEstimate($("#"+ sName).val(), dpo[0],name);
         
+        //Sets attribute to show options on change
         m[0].setAttribute("onchange", "unrootedEstimate($(\"#" + sName +"\").val(), $(\"#" + menuOptions + "\"), (\"" + name + "\"))");
-       
-        //Disables, unchecks, and clears the option of the branch length option of fixed
-        $("#funroot2").prop('checked', false);
-        $("#fcunroot2").empty();
-        $("#funroot2").attr('disabled', true);
-        
+         
     }
 
-
+    //Used to display fixed depending on what option is chosen for Tree topology
+    displayFixedBranchLength();
 
 }
 
+//This method shows or hides the fixed option for Branch Lengths, depending on which Tree topology choice is chosen
+function displayFixedBranchLength(){
+    
+    if($("#funroot").is(':checked')){
+        //Enables(if disabled) the branch length option of fixed
+        $("#funroot2").prop('checked', false);
+        $("#funroot2").attr('disabled', false);
+        $("#funroot2").show();
+        $("#funroot2label").show();
+        
+    }
+
+    if($("#eunroot").is(':checked')){
+        //Disables, unchecks, hides, and clears the option of the branch length option of fixed
+        $("#funroot2").prop('checked', false);
+        $("#fcunroot2").empty();
+        $("#funroot2").attr('disabled', true);
+        $("#funroot2").hide();
+        $("#funroot2label").hide();
+
+        //Makes Estimated be checked by default
+        $("#eunroot2").prop('checked', true);
+        vectorofrealposOptions($("#funroot2"), $("#fcunroot2"), $("#eunroot2"), $("#ecunroot2"), "unroot2", "branch_length");
+       
+    }
+}
+
 //creates the choices for a estimate of an unrooted tree
+//Takes in menu value, choices div,and name
 function unrootedEstimate(value, choices, name){
     $(choices).empty();//clears choices
 
     // //Break Line
     addBreakLine($(choices).attr("id"));
 
+    //If menu is Uniform Topology
     if(value == "UT"){
         displayunrootedEstimateUT(choices, name);
     }
@@ -179,13 +157,16 @@ function unrootedEstimate(value, choices, name){
 }
 
 //Creates the options for Uniform Topology 
+//Takes in choices div, and a name
 function displayunrootedEstimateUT(choices, name){
     //Outgroup option
-    var ob = $("<input  type=\"radio\" id=\"outgroupB\" name=\"oandnoButton\" />");
+    //Check box
+    var ob = $("<input  type=\"checkbox\" id=\"outgroupB\" name=\"oandnoButton\" />");
     //sets the method for onchange
-    ob[0].setAttribute("onchange", "displayunrootedEstimateOptionsUT($(\"#outgroupB\"), $(\"#outgroupO\"), $(\"#noutgroupB\"), $(\"#noutgroupO\"))");
-    choices.append(ob[0]);                           
-    var t = document.createTextNode("Outgroup");
+    ob[0].setAttribute("onchange", "displayunrootedOutgroup($(\"#outgroupB\"), $(\"#outgroupO\"))");
+    choices.append(ob[0]);     
+    //Name                      
+    var t = document.createTextNode("Include Outgroup");
     choices.append(t);
 
     //Break Line
@@ -196,63 +177,56 @@ function displayunrootedEstimateUT(choices, name){
     var oOption = $("<div id=\"outgroupO\" class=\"radiooptions\"  />");
     choices.append(oOption[0]);
 
-    //Break Line
-    addBreakLine($(choices).attr("id"));
-
-    //No outgroup Option
-    var nob = $("<input type=\"radio\"  id=\"noutgroupB\" name=\"oandnoButton\" />");
-    //sets the method for onchange
-    nob[0].setAttribute("onchange", "displayunrootedEstimateOptionsUT($(\"#outgroupB\"), $(\"#outgroupO\"), $(\"#noutgroupB\"), $(\"#noutgroupO\"))");
-    choices.append(nob[0]);        
-    var t = document.createTextNode("No Outgroup");
-    choices.append(t);
-    
-    // //Break Line
-    addBreakLine($(choices).attr("id"));
-    addBreakLine($(choices).attr("id"));
-    
-    //No Outgroup Choices
-    var noOption = $("<div id=\"noutgroupO\" class=\"radiooptions\" />");  
-    choices.append(noOption[0]);
 
 }
 
 //Creates the choices for Uniform Topology
-function displayunrootedEstimateOptionsUT(fixed, fixedc, estimated, estimatedc){
-    $(fixedc).empty();//clears choices
-    $(estimatedc).empty();
+//Takes in outgroup chekcbox and options div
+function displayunrootedOutgroup(outgroup, outgroupc){
+    $(outgroupc).empty();//clears choices
 
-    if(fixed.is(':checked')){
+    //If outgroup is checked
+    if(outgroup.is(':checked')){
+        //Input name
         var t = document.createTextNode("Enter outgroup name(s) [seperated by commas]: ");
+        outgroupc.append(t);
+
+        //Break Line
+        addBreakLine($(outgroupc).attr("id"));
+
+        //Input box
         var y1 = $("<input type=\"text\" style=\"width: 500px;\"  placeholder=\"example1, example2, example3 \" />");        
         y1[0].setAttribute("id", "outgroup");
-        fixedc.append(t);
-        fixedc.append(y1[0]);
+        outgroupc.append(y1[0]);
     }
 
-    if(estimated.is(':checked')){
-        //No Outgroup has no options
-    }
-    
 }
 
 //Creates fixed an estimate choices for Vector  of Realpos
+//Takes, in fixed radio button, fixed choices div, estimated radio button, estimaded choice div, name used for id, n if needed, and parameter used for input
 function vectorofrealposOptions(fixed, fixedc, estimated, estimatedc, name, parameter){
-    $(fixedc).empty();//clears choices
+    //Clears choices
+    $(fixedc).empty();
     $(estimatedc).empty();
 
+    //If fixed is chosen
     if(fixed.is(':checked')){
         //Fixed branch length has no choices
     }
 
+    //If estimate is chosen
     if(estimated.is(':checked')){
+        //Id names for menu and menu optoins div
         var sName = "eMenu" + name;
         var dpOptions = "menuop" + name;
-
+       
+        //Menu
         var m = $("<select  />");
         m[0].setAttribute("id", sName);
+        //Sets on change method to change with menu
         m[0].setAttribute("onchange",  "displayEvectorofrealpos($(\"#" + dpOptions + "\"), \"" + name + "e\", $(\"#" + sName + "\").val())");
-        var t = document.createTextNode("Choose prior distribution: ");
+        //Menu name
+        var t = document.createTextNode("Choose prior distribution on branch length: ");
         estimatedc[0].append(t);
     
         //menu options
@@ -284,6 +258,7 @@ function vectorofrealposOptions(fixed, fixedc, estimated, estimatedc, name, para
     
         estimatedc[0].append(dpo[0]);
 
+        //Callse method to display options
         displayEvectorofrealpos($("#" + dpOptions), name + "e", $("#" + sName ).val());
 
     }
@@ -291,6 +266,7 @@ function vectorofrealposOptions(fixed, fixedc, estimated, estimatedc, name, para
 }
 
 //Creates the estimate option for vector of realpos
+//takes in choices div, name , and menu value
 function displayEvectorofrealpos(choices, name, value){
     choices.empty()//clear choices
     displayFE(choices, name, "Hyperparameter(s)", "displayvectorofrealposOptionsEstimated", value, "branch_length");
@@ -298,23 +274,25 @@ function displayEvectorofrealpos(choices, name, value){
 }
 
 //Creates the estimate choices for vector of realpos
-function displayvectorofrealposOptionsEstimated(iid, iidc, h , hc , name, value, parameter){
-    $(iidc).empty();//clears choices
-    $(hc).empty();
+//Takes, in fixed radio button, fixed choices div, estimated radio button, estimaded choice div, name used for id, n if needed, and parameter used for input
+function displayvectorofrealposOptionsEstimated(fixed, fixedc, estimated , estimatedc , name, value, parameter){
+    $(fixedc).empty();//clears choices
+    $(estimatedc).empty();
 
-    if(iid.is(':checked')){
-        displayrealposOptions2(value, iidc, name);
+    //If fixed is chosen
+    if(fixed.is(':checked')){
+        displayrealposOptions2(value, fixedc, name);
     }
 
-    if(h.is(':checked')){
+    //if estimate is chosen
+    if(estimated.is(':checked')){
          //Id name for select menu
          var sName = "eMenu" + name;
          var dpOptions = "menuop" + name;
  
+         //Creates the Menu
          var m = $("<select  />");
          m[0].setAttribute("id", sName);
-         var t = document.createTextNode("Choose prior distribution: ");
-         hc[0].append(t);
      
          //menu options
          var z = $("<option value=\"E\" selected=\"selected\" />");
@@ -333,269 +311,121 @@ function displayvectorofrealposOptionsEstimated(iid, iidc, h , hc , name, value,
          var t = document.createTextNode("Uniform");
          z[0].append(t);
          m[0].append(z[0]);
-         hc[0].append(m[0]);
+         estimatedc[0].append(m[0]);
+
+        //Label for Menu
+        $("#" + sName).before("<label for='radio' id=" + sName + "label" + ">Choose prior distribution: </label>");
      
          //Break Line
          var mybr = document.createElement('br');
-         hc[0].append(mybr);
+         estimatedc[0].append(mybr);
      
          //menu choices
          var dpo = $("<div id=\"menuop\" class =\"menuOption\" />");
          dpo[0].setAttribute("id", dpOptions);
      
-         hc[0].append(dpo[0]);
+         estimatedc[0].append(dpo[0]);
  
          //Calls to display the selected        
          displayrealposOptions($("#"+ sName).val(),dpo[0], name);
          
+         //Sets the onchange attribute to show options
          m[0].setAttribute("onchange", "displayrealposOptions($(\"#" + sName +"\").val(), $(\"#" + dpOptions + "\"), (\"" + name + "\"))");
 
     }
 
 }
 
-
-
-//Same method as displayrealpos, except it takes integers for value
+//Same method as displayrealpos, except it takes integers for value so that this can be used in vectors of realpos
 function displayrealposOptions2(value, choices, name){
     $(choices).empty();//clears choices
 
+    //Break Line
+    addBreakLine($(choices).attr("id"));
+
     if(value == 1){
-        var t = document.createTextNode("Enter shape parameter > 0: ");
-        var y1 = $("<input type = \"number\" min=\"1\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");        
+        //Creates the number input
+        var y1 = $("<input type =\"number\" min=\"1\" value=\"1\" step=\"1\" class=\"numberinput\" />");        
         y1[0].setAttribute("id", name);
-        choices.append(t);
         choices.append(y1[0]);
+ 
+        //Creates the header for the inputs
+        $("#" + name).before("<label for='radio' id=" + name + "label" + ">Enter rate parameter (>0):  </label>");
     }
 
     if(value == 2){
-        var t = document.createTextNode("Enter shape and rate parameters > 0: ");
-        choices.append(t); 
-        var mybr = document.createElement('br');
+       //Shape
+       var y1 = $("<input type =\"number\" min=\"1\" value=\"1\" step=\"1\" class=\"numberinput\" />");         
+       y1[0].setAttribute("id", name)
+       choices.append(y1[0]);
 
-        //Break Line
-        addBreakLine($(choices).attr("id"));
+       //Label for shape
+       $("#" + name).before("<label for='radio' id=" + name + "label" + ">Shape: </label>");
 
-        //Shape
-        var t1 = document.createTextNode("Shape: ");
-        var y1 = $("<input type = \"number\" min=\"1\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");         
-        y1[0].setAttribute("id", name);
-        choices.append(t1);
-        choices.append(y1[0]);
+       //Rate
+       var y2 = $("<input type =\"number\" min=\"1\" value=\"1\" step=\"1\" class=\"numberinput\" />");  
+       y2[0].setAttribute("id", name + "2");
+       choices.append(y2[0]);
 
-        //Break Line
-        addBreakLine($(choices).attr("id"));
+       //Label for rate
+       $("#" + name + "2").before("<label for='radio' id=" + name + "2" + "label" + ">Rate: </label>");
 
-        //Rate
-        var t2 = document.createTextNode("Rate: ");
-        var y2 = $("<input type = \"number\" min=\"1\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");  
-        y2[0].setAttribute("id", name + "2")
-        choices.append(t2);
-        choices.append(y2[0]);
+       //Creates the label for the inputs
+       $("#" + name + "label").before("<label for='label' id=" + name + "header" + ">Enter shape and rate parameters (> 0): </label> <br />");
+
 
     }
 
     if(value == 3){
-        var t = document.createTextNode("Enter mean and standard deviation parameters > 0: ");
-        choices.append(t); 
-
-        //Break Line
-        addBreakLine($(choices).attr("id"));
-
-        //Mean
-        var t1 = document.createTextNode("Mean: ");
-        var y1 = $("<input type = \"number\" min=\"1\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");         
+        
+        //Mean 
+        var y1 = $("<input type =\"number\" min=\"1\" value=\"1\" step=\"1\" class=\"numberinput\" />");         
         y1[0].setAttribute("id", name);
-        choices.append(t1);
         choices.append(y1[0]);
 
-        //Break Line
-        addBreakLine($(choices).attr("id"));
+        //Label for Mean
+        $("#" + name).before("<label for='radio' id=" + name + "label" + ">Mean: </label>");
 
         //Standard Deviation
-        var t2 = document.createTextNode("Standard Deviation: ");
-        var y2 = $("<input type = \"number\" min=\"1\" value=\"1\" step=\"1\" style=\"width: 40px;\" />");  
+        var y2 = $("<input type =\"number\" min=\"1\" value=\"1\" step=\"1\" class=\"numberinput\" />");  
         y2[0].setAttribute("id", name + "2");
-        choices.append(t2);
         choices.append(y2[0]);
+
+        //Label for Standard Deviation
+        $("#" + name + "2").before("<label for='radio' id=" + name + "2" +"label" + ">Standard Deviation: </label>");
+
+        //Label for both
+        $("#" + name + "label").before("<label for='radio' id=" + name  +"header" + ">Enter mean and standard deviation parameters (> 0): </label> <br />");
+
     }
 
     if(value == 4){
-        var t = document.createTextNode("Enter min and max parameters > 0: ");
-        choices.append(t); 
-
-        //Break Line
-        addBreakLine($(choices).attr("id"));
-
-        //Min
-        var t1 = document.createTextNode("Min: ");
-        var y1 = $("<input type = \"number\" min=\"0\" value=\"0\" step=\"1\" style=\"width: 40px;\" />");         
-        y1[0].setAttribute("id", name);
-        choices.append(t1);
-        choices.append(y1[0]);
-
-        //Break Line
-        addBreakLine($(choices).attr("id"));
-
-        //Max
-        var t2 = document.createTextNode("Max: ");
-        var y2 = $("<input type = \"number\" min=\"1\" value=\"100\" step=\"1\" style=\"width: 40px;\" />");  
-        y2[0].setAttribute("id", name + "2")
-        choices.append(t2);
-        choices.append(y2[0]);
+         //Min
+         var y1 = $("<input type =\"number\" min=\"0\" value=\"0\" step=\"1\" class=\"numberinput\" />");         
+         y1[0].setAttribute("id", name);
+         choices.append(y1[0]);
+ 
+         //Label for Min
+         $("#" + name).before("<label for='radio' id=" + name + "label" + ">Min: </label>");
+ 
+ 
+         //Max
+         var y2 = $("<input type =\"number\" min=\"1\" value=\"100\" step=\"1\" class=\"numberinput\" />");  
+         y2[0].setAttribute("id", name + "2");
+         choices.append(y2[0]);
+ 
+         //Label for Max
+         $("#" + name + "2").before("<label for='radio' id=" + name + "2" + "label" + ">Max: </label>");
+ 
+         //Creates the label for the inputs
+         $("#" + name + "label").before("<label for='label' id=" + name + "header" + ">Enter min and max parameters (> 0): </label> <br />");
+ 
     }
 }
 
-//could be used for vectors of real pos in another option
-function vectorofrealposOptionsEstimated(choices, name, parameter){
-    //Id names for the buttons and element choices
-    var foption = "iid" + name;
-    var fchoice = "iidc" + name;
-    var eoption = "h" + name;
-    var echoice = "hc" + name;
- 
-    //Name attribute for the radio buttons
-    var fename = "iidh" + name;
- 
-    //  //Base Frequency Header
-    //  var t = document.createTextNode(type + " : ");
-    //  choices.append(t);
- 
-    //  //Break Line
-    //  addBreakLine($(choices).attr("id"));
-    
-    //IID option
-    var x = $("<input type=\"radio\"  />");
-    x[0].setAttribute("id", foption);
-    x[0].setAttribute("name", fename);
-    //sets the method for onchange 
-    x[0].setAttribute("onchange", "displayvectorofrealposOptionsEstimated($(\"#" + foption +"\"), $(\"#" + fchoice + "\"), $(\"#" + eoption + "\"), $(\"#" + echoice + "\"),\"" + name + "\", \"" + parameter + "\" )"); 
-     
-    choices.append(x[0]);        
-    var t = document.createTextNode("IID");
-    choices.append(t);
- 
-    //Break Line
-    addBreakLine($(choices).attr("id"));
-    addBreakLine($(choices).attr("id"));
-     
-    //IID choices
-    var f = $("<div class=\"radiooptions\" />");  
-    f[0].setAttribute("id", fchoice);
-    choices.append(f[0]);
- 
-    //Break Line
-    addBreakLine($(choices).attr("id"));
- 
-    //Hierarchical option
-    var y = $("<input  type=\"radio\"  />");
-    y[0].setAttribute("id", eoption);
-    y[0].setAttribute("name", fename);
-    //sets the method for onchange
-    y[0].setAttribute("onchange", "displayvectorofrealposOptionsEstimated($(\"#" + foption +"\"), $(\"#" + fchoice + "\"), $(\"#" + eoption + "\"), $(\"#" + echoice + "\"),\"" + name + "\", \"" + parameter + "\" )"); 
-     
- 
-    choices.append(y[0]);                           
-    var t = document.createTextNode("Hierarchical");
-    choices.append(t);
- 
-    //Break Line
-    addBreakLine($(choices).attr("id"));
-    addBreakLine($(choices).attr("id"));
- 
-    //Hierarchical choices
-    var e = $("<div class=\"radiooptions\"  />");
-    e[0].setAttribute("id", echoice);
- 
-    choices.append(e[0]);
-    addBreakLine($(choices).attr("id"));
 
-}
 
-//Can be used in Rooted-Fixed
-function displayTopology(choices, name){
-    //Id names for the buttons and element choices
-    var foption = "t" + name;
-    var fchoice = "tc" + name;
-    var eoption = "tb" + name;
-    var echoice = "tbc" + name;
-
-    //Name attribute for the radio buttons
-    var fename = "ttb" + name;
-
-    // //Topology Header
-    // var t = document.createTextNode(type + " : ");
-    // choices.append(t);
-
-    // //Break Line
-    // addBreakLine($(choices).attr("id"));
-
-    //Topology option
-    var x = $("<input type=\"radio\"  />");
-    x[0].setAttribute("id", foption);
-    x[0].setAttribute("name", fename);
-    //sets the method for onchange
-    x[0].setAttribute("onchange", "topologyOptions($(\"#" + foption +"\"), $(\"#" + fchoice + "\"), $(\"#" + eoption + "\"), $(\"#" + echoice + "\"),\"" + name + "\")"); 
-    
-    choices.append(x[0]);        
-    var t = document.createTextNode("Topology Only");
-    choices.append(t);
-
-    //Break Line
-    addBreakLine($(choices).attr("id"));
-    addBreakLine($(choices).attr("id"));
-    
-    //Fixed choices
-    var f = $("<div class=\"radiooptions\" />");  
-    f[0].setAttribute("id", fchoice);
-    choices.append(f[0]);
-
-    //Break Line
-    addBreakLine($(choices).attr("id"));
-
-    //estimated option
-    var y = $("<input  type=\"radio\"  />");
-    y[0].setAttribute("id", eoption);
-    y[0].setAttribute("name", fename);
-    //sets the method for onchange
-    y[0].setAttribute("onchange", "topologyOptions($(\"#" + foption +"\"), $(\"#" + fchoice + "\"), $(\"#" + eoption + "\"), $(\"#" + echoice + "\"),\"" + name + "\")"); 
-  
-    choices.append(y[0]);                           
-    var t = document.createTextNode("Topology and Branch Lengths");
-    choices.append(t);
-
-    //Break Line
-    addBreakLine($(choices).attr("id"));
-    addBreakLine($(choices).attr("id"));
-
-    //estimated choices
-    var e = $("<div class=\"radiooptions\"  />");
-    e[0].setAttribute("id", echoice);
-
-    choices.append(e[0]);
-    addBreakLine($(choices).attr("id"));
-}
-
-function topologyOptions(topology, topologyc, topologybranch, topologybranchc, name){
-    $(topologyc).empty();//clears choices
-    $(topologybranchc).empty();
-
-    if(topology.is(':checked')){
-        var t = document.createTextNode("Enter tree_file filename: ");
-        var y1 = $("<textarea rows=\"1\" cols=\"80\" style=\"resize: none;\"/>");        
-        y1[0].setAttribute("id", name + "t" );
-        topologyc.append(t);
-        topologyc.append(y1[0]);
-    }
-
-    if(topologybranch.is(':checked')){
-        var t = document.createTextNode("Enter tree_file filename: ");
-        var y1 = $("<textarea rows=\"1\" cols=\"80\" style=\"resize: none;\"/>");        
-        y1[0].setAttribute("id", name + "tb" );
-        topologybranchc.append(t);
-        topologybranchc.append(y1[0]);
-    }
-
-}
-
+//Creates the Tree Model Options
 createTreeOptions();
+
+

@@ -1,3 +1,4 @@
+/*Creates the script for MCMC options */
 function getMCMCOptions(){
     var filemonitor = ["monitors.append( mnModel(filename=\"" + $("#parameterlogoutputfile").val() + "\", printgen=" + $("#fmprintfrequency").val() + ") )",
                          "monitors.append( mnFile(filename=\"" + $("#treelogoutputfile").val() + "\", printgen=" + $("#fmprintfrequency").val() + ", psi) )"];

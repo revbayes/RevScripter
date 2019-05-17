@@ -1,18 +1,7 @@
-//Only if Nucleotide and Amino Acid are both being use
-/*
-function checksubstitutionModel(){
-    if(document.getElementById("datatype").value == "A"){
-        updateaminoacidModel();
-    }
-    else{
-        updatenucleotideModel();
-    }
-}
-*/
-
-//Makes the script for the Substitution Model
+/*Creates the script for Substitution Model options */
 function getSubstitutionOptions(){
     
+    //variable for each part
     var substitutionModel = "";
     var model = "";
     var ioption = "";

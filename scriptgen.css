@@ -58,8 +58,6 @@ li a:hover {
 }
 
 
-
-
 .box {
   border: 1px solid black;
   padding: 5px; 
@@ -105,7 +103,6 @@ textarea {
   margin-left: 3%;
 }
 
-
 /*Takes away the arrows from the number inputs*/
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -119,5 +116,23 @@ input[type=number] {
 }
    
 .fixed{
-  margin-left: 50px !important;
+  margin-left: 5% !important; /*was 50px*/
+}
+
+.numberinput{
+  margin-right: .5%;
+  width: 6%;
+}
+
+.decimalnumberinput{
+  margin-right: .5%;
+  width: 8%;
+}
+
+.checkboxbutton{
+  margin-left:1% !important; 
+}
+
+label {
+  font-weight: normal !important;
 }

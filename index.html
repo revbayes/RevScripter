@@ -5,115 +5,119 @@
         <meta charset="utf-8">
         <meta http-equiv=“X-UA-Compatible” content=“IE=edge”>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="script.css">
+        <title>RevScripter</title>  
 
+        <!--Google font:Raleway-->
+        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
+        <!--Revscripter style sheet-->
+        <link rel="stylesheet" type="text/css" href="revscripter.css">
+
+        <!--Revbayes style sheets-->
         <link rel="stylesheet" type="text/css" href="https://revbayes.github.io/assets/css/syntax.css">
         <link rel="stylesheet" type="text/css" href="https://revbayes.github.io/assets/css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="https://revbayes.github.io/assets/css/bootstrap-theme.css">
         <link rel="stylesheet" type="text/css" href="https://revbayes.github.io/assets/css/main.css">
         
-        <title>RevScripter</title>  
-
         <!--Lodash Library-->
         <script src="core.min.js"></script>
 
         <!--JQuery Library-->
-        <script src "https://ajax.gooleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+        <!--Revbayes base.js-->
         <script src="https://revbayes.github.io/assets/js/base.js"></script>
         
     </head>
     <body>
-        
-            <h1 class="maintitle">RevScripter</h1>
-         <!-- 
-            <ul>
-                <li><a class="active" href="data.html">Data</a></li>
-                <li><a href="substitutionmodel.html">Substitution Model</a></li>
-                <li><a href="treemodel.html">Tree Model</a></li>
-                <li><a href="mcmc.html">MCMC</a></li>
-                <li><a href="script.html">Script</a></li>
-                <li style="float:right"><a href="https://revbayes.github.io/">About</a></li>
-            </ul>
-        -->
 
-     
+        <h1 class="maintitle" href="#test1">RevScripter</h1>
+
         <div class="tabs">
-                <ul class="tab-links">
-                    <li class="active"><a href="#dataOptions">Data</a></li>
-                    <li><a href="#substitutionOptions">Substitution Model</a></li>
-                    <li><a href="#treeOptions">Tree Model</a></li>
-                    <li><a href="#mcmcOptions">MCMC</a></li>
-                    <li><a href="#scriptsGenerated">Scripts</a></li>
-                </ul>
-            
-                <div class="tab-content">
-                    <!--Data Options-->
-                    <div id = "dataOptions" class = "box" class="tab active">
-                        <h2>Data</h2>
-                        Enter path to filename:<br>
-                        <input type="text" id="datafilepath" value = "example1" style="width: 500px;"  placeholder="e.g., myfilename.nex" ></input><br><br>
-                        
-                        <!--Only need nucleotide options, if both Nucleotide and Amino Acid are needed-->
-                        <!--
-                        Datatype: <select id="datatype" onchange="createModelOptions()">
-                            <option value="N" selected= "selected">Nucleotide</option>
-                            <option value="A">Amino Acid</option>
-                        </select>
-                        -->
-                        
-                    </div>
-            
-                   <!--Substitution Model Options-->
-                    <div class="tab" class ="box" id = "substitutionOptions">
-                        <script src="substitutionmodelOptions.js"></script>             
-                    </div>
-            
-                    <!--Tree Model Option-->
-                    <div class="tab" class ="box" id = "treeOptions">
-                        <script src="treemodelOptions.js"></script>
-                    </div>
-            
-                    <!--MCMC option-->
-                    <div class="tab" class ="box" id="mcmcOptions">
-                        <script src="mcmcOptions.js"></script>
-                    </div>
 
-                    <!--Scripts Option-->
-                    <div class="tab" class ="box" id ="scriptsGenerated">
-                        <h2>Generated Script:</h2>          
-                        <button onclick ="generateScript()">Generate Script</button>
-                        <button onclick ="resetScript()">Reset</button>
-                        <br>
-                        <br>
-                        <textarea disabled id="myTextarea" name="something" rows="30" cols="80" style="resize: none;">Example script.....</textarea>
-                    </div>
+            <!--Tabs for each section-->
+            <ul class="tab-links">
+                    <li class="active" ><a id="hometab" href="#homeOptions">Home</a></li>
+                    <li><a id="datatab" href="#dataOptions" >Data</a></li>
+                    <li><a id="substitutiontab" href="#substitutionOptions">Substitution Model</a></li>
+                    <li><a id="treetab" href="#treeOptions">Tree Model</a></li>
+                    <li><a id="mcmctab" href="#mcmcOptions">MCMC</a></li>
+                    <li><a id="scripttab" href="#scriptsGenerated">Scripts</a></li>
+            </ul>
+            
+            <!--Options for each tab-->
+            <div class="tab-content">
+                <!--Home tab-->
+                <div id = "homeOptions"  class="tab active">
+                    <h2>Get started.</h2><br><br>
+                    <button onclick="gotoTab('datatab')">Start</button>
+                </div>
+
+                <!--Data Options-->
+                <div id = "dataOptions" class="tab">
+                    <script src="dataOptions.js"></script>
+                </div>
+            
+                <!--Substitution Model Options-->
+                <div id = "substitutionOptions" class="tab" >
+                    <script src="substitutionmodelOptions.js"></script>
+                </div>
+            
+                <!--Tree Model Option-->
+                <div class="tab"  id = "treeOptions">
+                    <script src="treemodelOptions.js"></script>
+                </div>
+            
+                <!--MCMC option-->
+                <div class="tab"  id="mcmcOptions">
+                    <script src="mcmcOptions.js"></script>
+                </div>
+
+                <!--Scripts Option-->
+                <div class="tab" id ="scriptsGenerated">
+                    <h2>Generated Script:</h2>          
+                    <button onclick ="generateScript()">Generate Script</button>
+                    <button onclick ="copyScript()">Copy Script</button>
+                    <button onclick ="downloadScript()">Download Script</button>
+                    <br>
+                    <br>
+                    <textarea id="scriptBox" rows="30" cols="80"  readonly>Generated script goes here.</textarea>
+                    <br>
+                    <button onclick="gotoTab('mcmctab')" >Back</button> 
+                    <button onclick ="resetScript()">Reset</button>
+                </div>
 
                 </div>
             </div>
                        
-                <script src="scriptData.js"></script>
-                <script src="dataData.js"></script>
-                <script src="substitutionmodelData.js"></script>
-                <script src="treemodelData.js"></script>
-                <script src="mcmcData.js"></script>
-                <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-                <script>
+            <script src="scriptData.js"></script>
+            <script src="dataData.js"></script>
+            <script src="substitutionmodelData.js"></script>
+            <script src="treemodelData.js"></script>
+            <script src="mcmcData.js"></script>
+            <!--Functions to move from tab to tab-->
+            <script>
+                    //Used to move from a tab by clicking on it 
                     jQuery(document).ready(function() {
 	                jQuery('.tabs .tab-links a').on('click', function(e) {
 		            var currentAttrValue = jQuery(this).attr('href');
-
 		            // Show/Hide Tabs
                     jQuery('.tabs ' + currentAttrValue).show().siblings().hide();
-
 		            // Change/remove current tab to active
 		            jQuery(this).parent('li').addClass('active').siblings().removeClass('active');
-
 		            e.preventDefault();
 	                });
                     });
-                </script>
-                
+
+                    //Used by the buttons to go to a certain tab, takes in the tabs id name
+                    function gotoTab(tabname){
+                        var currentAttrValue = $('#' + tabname).attr('href');
+                        // Show/Hide Tabs
+                        jQuery('.tabs ' + currentAttrValue).show().siblings().hide();
+                        // Change/remove current tab to active
+                        $('#' + tabname).parent('li').addClass('active').siblings().removeClass('active');
+                    }
+            </script>
+        
     </body>
 </html>
