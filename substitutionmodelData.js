@@ -101,7 +101,7 @@ function getSubstitutionOptions(){
         }
         //If it is estimated
         if($("#egtre").is(':checked')){
-            er = getSimplexEString("er_GTR", $("#gtrecparameter0").val(), $("#gtrecparameter1").val(), $("#gtrecparameter2").val(), $("#gtrecparameter3").val(), $("#gtrecparameter4").val(), $("#gtrecparameter5").val());
+            er = getSimplex6EString("er_GTR", $("#gtrecparameter0").val(), $("#gtrecparameter1").val(), $("#gtrecparameter2").val(), $("#gtrecparameter3").val(), $("#gtrecparameter4").val(), $("#gtrecparameter5").val());
         }
 
         //Checks the basefrequency
@@ -230,6 +230,12 @@ function getSimplexFString(parameter, n){
 //Makes the script for a simplex parameter when it is estimataed
 function getSimplexEString(parameter, value1, value2, value3, value4){
     var scripts = [parameter + " ~ dnDirichlet(v(" + value1 + ", " + value2 + ", " + value3 + ", " + value4 + "))", "moves.append(mvBetaSimplex(" + parameter + "))"];
+    return scripts.join("\n");
+}
+
+//Makes the script for a 6-simplex parameter when it is estimataed
+function getSimplex6EString(parameter, value1, value2, value3, value4, value5, value6){
+    var scripts = [parameter + " ~ dnDirichlet(v(" + value1 + ", " + value2 + ", " + value3 + ", " + value4 + ", " + value5 + ", " + value6 + "))", "moves.append(mvBetaSimplex(" + parameter + "))"];
     return scripts.join("\n");
 }
 
