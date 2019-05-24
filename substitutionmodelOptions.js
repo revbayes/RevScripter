@@ -304,24 +304,17 @@ function simplexOptions(fixed, fixedc, estimated, estimatedc, name, n, parameter
         dpo[0].append(mybr);
     
         //Inputs for Direchlet option
-        var y1 = $("<input type =\"number\" min=\"1\" value = \"1\" class=\"numberinput\" />");
-        y1[0].setAttribute("id", name + "cparameter1");
-        var y2 = $("<input type =\"number\" min =\"1\" value = \"1\" class=\"numberinput\" />");
-        y2[0].setAttribute("id", name + "cparameter2");
-        var y3 = $("<input type =\"number\" min=\"1\" value = \"1\" class=\"numberinput\" />");
-        y3[0].setAttribute("id", name + "cparameter3");
-        var y4 = $("<input type =\"number\" min=\"1\" value = \"1\" class=\"numberinput\" />");
-        y4[0].setAttribute("id", name + "cparameter4");
-        dpo[0].append(y1[0]);
-        dpo[0].append(y2[0]);
-        dpo[0].append(y3[0]);
-        dpo[0].append(y4[0]);
+        for (i = 0; i < n; i++) { 
+            var y = $("<input type =\"number\" min=\"1\" value = \"1\" class=\"numberinput\" />");
+            y[0].setAttribute("id", name + "cparameter" + i);
+            dpo[0].append(y[0]);
+        }
 
         //adding those options
         estimatedc[0].append(dpo[0]);
 
         //Creates the label for the inputs
-        $("#" + name + "cparameter1").before("<label for='radio' id=" + name + "label" + ">Enter concentration parameters (> 0): </label>");
+        $("#" + name + "cparameter0").before("<label for='radio' id=" + name + "label" + ">Enter concentration parameters (> 0): </label>");
     }
 }
 
