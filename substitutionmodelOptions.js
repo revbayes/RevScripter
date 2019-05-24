@@ -144,7 +144,7 @@ function displaymodelOptions(value, choices){
     }
 
     if(value == "F81"){
-        displayFE(choices,"f81bf","Base Frequency", "simplexOptions", 4, "pi_F81");    
+        displayFE(choices,"f81bf","Base Frequencies", "simplexOptions", 4, "pi_F81");    
     }
 
     if(value == "K80"){
@@ -153,12 +153,12 @@ function displaymodelOptions(value, choices){
 
     if(value == "HKY"){
         displayFE(choices,"hkytt", "Transition/Transversion Ratio", "realposOptions", null, "kappa_HKY");
-        displayFE(choices,"hkybf", "Base Frequency", "simplexOptions", 4, "pi_HKY");
+        displayFE(choices,"hkybf", "Base Frequencies", "simplexOptions", 4, "pi_HKY");
     }
 
     if(value == "GTR"){
         displayFE(choices,"gtre", "Exchangeabilities", "simplexOptions", 6, "er_GTR");
-        displayFE(choices,"gtrbf", "Base Frequency", "simplexOptions", 4, "pi_GTR");
+        displayFE(choices,"gtrbf", "Base Frequencies", "simplexOptions", 4, "pi_GTR");
     }
 }
 
