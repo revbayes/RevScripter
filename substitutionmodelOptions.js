@@ -80,7 +80,7 @@ function createModelOptions(){
 
     //+I-Button
     //Name
-    var i = document.createTextNode("Proportion of Invariant Sites(+I)");
+    var i = document.createTextNode("Invariant Sites (+I)");
     //Button
     var iButton = $("<input type=\"checkbox\" id =\"icheckbox\" class=\"checkboxbutton\" />");
     //sets attribute so that options show on change
