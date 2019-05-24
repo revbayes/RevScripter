@@ -22,7 +22,7 @@ function createMCMCOptions(){
 
     //Print Frequency Input
     var t = document.createTextNode("Enter print frequency: ");
-    var input = $("<input type =\"number\" min=\"1\" value =\"1\" class=\"numberinput\" id=\"fmprintfrequency\" />");
+    var input = $("<input type =\"number\" min=\"1\" value =\"10\" class=\"numberinput\" id=\"fmprintfrequency\" />");
     option.append(t);
     option.append(input[0]);
 
@@ -32,7 +32,7 @@ function createMCMCOptions(){
 
     //Name for parameter log output file
     var t = document.createTextNode("Enter name for parameter log output file: ")
-    var input = $("<input type=\"text\" placeholder=\"Name\" id=\"parameterlogoutputfile\"  style =\"width: 300px;\" />");
+    var input = $("<input type=\"text\" placeholder=\"myfile.log\" id=\"parameterlogoutputfile\"  style =\"width: 300px;\" />");
     option.append(t);
     option.append(input[0]);
 
@@ -42,7 +42,7 @@ function createMCMCOptions(){
 
     //Name for tree log outputfile
     var t = document.createTextNode("Enter name for tree log output file: ")
-    var input = $("<input type=\"text\" placeholder=\"Name\" id=\"treelogoutputfile\"  style =\"width: 300px;\" />");
+    var input = $("<input type=\"text\" placeholder=\"myfile.trees\" id=\"treelogoutputfile\"  style =\"width: 300px;\" />");
     option.append(t);
     option.append(input[0]);
 
@@ -54,7 +54,7 @@ function createMCMCOptions(){
 
     //Print Frequency Input
     var t = document.createTextNode("Enter print frequency: ");
-    var input = $("<input type =\"number\"  min= \"1\" value =\"1\" class=\"numberinput\" id=\"smprintfrequency\" />");
+    var input = $("<input type =\"number\"  min= \"1\" value =\"10\" class=\"numberinput\" id=\"smprintfrequency\" />");
     option.append(t);
     option.append(input[0]);
 
@@ -66,7 +66,7 @@ function createMCMCOptions(){
 
     //Number of Generations Input
     var t = document.createTextNode("Enter number of generations: ");
-    var input = $("<input type =\"number\"  min= \"1\" value =\"1\" class=\"numberinput\" id=\"generationnumbers\" />");
+    var input = $("<input type =\"number\"  min= \"1\" value =\"10000\" class=\"numberinput\" id=\"generationnumbers\" />");
     option.append(t);
     option.append(input[0]);
 

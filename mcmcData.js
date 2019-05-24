@@ -18,8 +18,8 @@ function getMCMCOptions(){
     }
 
     //Gives an alert if Number of Generations is bigger than 4
-    if( $("#generationnumbers").val() > 4){
-        alert("Having Number of Generations bigger than 4 will make the program run slower.");
+    if( $("#numberofruns").val() > 4){
+        alert("Running more than 4 runs simultaneously may lead to a large computational burden.");
     }
 
 
