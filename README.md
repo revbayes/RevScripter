@@ -12,3 +12,15 @@ Currently, the options available in RevScripter are limited and the tool is stil
 ## Developers
 
 The development of RevScripter is led by [Lorenzo Chavarria](https://github.com/LorenzoCh11), with contributions from Walker Pett, Tracy Heath, and Sebastian Höhna.
+
+## Design
+
+The design of RevScripter is very much inspired by the BEAUti tool in the BEAST[1,2] package and the graphical user interface for the program BPP[3].
+
+### References
+
+[1] BEAST 1: [http://beast.community](http://beast.community)
+
+[2] BEAST 2: [http://www.beast2.org](http://www.beast2.org)
+
+[3] BPPg: [http://www.rannala.org/software/](http://www.rannala.org/software/)
