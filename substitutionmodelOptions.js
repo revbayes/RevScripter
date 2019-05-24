@@ -562,7 +562,7 @@ function displayiCheckBoxOp(checkbox, checkboxoptions){
     //Checks if checkbox is checked
     if(checkbox.is(':checked')){
         //Creates the fixed and estimate options
-        displayFE(checkboxoptions, "ioption", "Matrix Type", "probabilityOptions", null, "prop_inv");
+        displayFE(checkboxoptions, "ioption", "Proportion of invariant sites", "probabilityOptions", null, "prop_inv");
     }
 }
 
