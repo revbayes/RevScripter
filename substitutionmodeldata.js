@@ -1,6 +1,5 @@
 /*Creates the script for Substitution Model options */
 function getSubstitutionOptions(){
-    
     //variable for each part
     var substitutionModel = "";
     var model = "";
