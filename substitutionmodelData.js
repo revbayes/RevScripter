@@ -19,7 +19,7 @@ function getSubstitutionOptions(){
         }
         //if it is estimated
         if($("#ef81bf").is(':checked')){
-            model = getSimplexEString("pi_F81", $("#f81bfcparameter1").val(), $("#f81bfcparameter2").val(), $("#f81bfcparameter3").val(), $("#f81bfcparameter4").val());
+            model = getSimplexEString("pi_F81", $("#f81bfcparameter0").val(), $("#f81bfcparameter0").val(), $("#f81bfcparameter0").val(), $("#f81bfcparameter0").val());
         }
         var temp = [model, getQString("F81", "pi_F81", null)];
         model = temp.join("\n");
@@ -72,7 +72,7 @@ function getSubstitutionOptions(){
         }
         //if it is estimated
         if($("#ehkybf").is(':checked')){
-            bf = getSimplexEString("pi_HKY", $("#hkybfcparameter1").val(), $("#hkybfcparameter2").val(), $("#hkybfcparameter3").val(), $("#hkybfcparameter4").val());
+            bf = getSimplexEString("pi_HKY", $("#hkybfcparameter0").val(), $("#hkybfcparameter1").val(), $("#hkybfcparameter2").val(), $("#hkybfcparameter3").val());
         }
 
         var temp = [tt, bf, getQString("HKY", "kappa_HKY", "pi_HKY")];
@@ -101,7 +101,7 @@ function getSubstitutionOptions(){
         }
         //If it is estimated
         if($("#egtre").is(':checked')){
-            er = getSimplexEString("er_GTR", $("#gtrecparameter1").val(), $("#gtrecparameter2").val(), $("#gtrecparameter3").val(), $("#gtrecparameter4").val());
+            er = getSimplexEString("er_GTR", $("#gtrecparameter0").val(), $("#gtrecparameter1").val(), $("#gtrecparameter2").val(), $("#gtrecparameter3").val(), $("#gtrecparameter4").val(), $("#gtrecparameter5").val());
         }
 
         //Checks the basefrequency
@@ -112,7 +112,7 @@ function getSubstitutionOptions(){
         }
         //if it is estimated
         if($("#egtrbf").is(':checked')){
-            bf = getSimplexEString("pi_GTR", $("#gtrbfcparameter1").val(), $("#gtrbfcparameter2").val(), $("#gtrbfcparameter3").val(), $("#gtrbfcparameter4").val());
+            bf = getSimplexEString("pi_GTR", $("#gtrbfcparameter0").val(), $("#gtrbfcparameter1").val(), $("#gtrbfcparameter2").val(), $("#gtrbfcparameter3").val());
         }
 
         var temp = [er, bf, getQString("GTR", "er_GTR", "pi_GTR")];
