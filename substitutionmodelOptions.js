@@ -100,7 +100,7 @@ function createModelOptions(){
  
     //+G-Button
     //Name
-    var g = document.createTextNode("Gamma-distributed Rates(+G)");
+    var g = document.createTextNode("Gamma-distributed Rates (+G)");
     //Button
     var gButton = $("<input type=\"checkbox\" id =\"gcheckbox\" class=\"checkboxbutton\" />");
     //Sets attribute so that options show on change
