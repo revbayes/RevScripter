@@ -242,7 +242,7 @@ function getProbabilityFString(parameter, value){
 
 //Makes the script for a probability parameter when it is estimated
 function getProbabilityEString(parameter, alpha, beta){
-    var scripts = [parameter + " ~ " + "dnBeta(" + alpha + ", " + beta + ")", "moves.append(mvBetaSimplex(" + parameter + "))"];
+    var scripts = [parameter + " ~ " + "dnBeta(" + alpha + ", " + beta + ")", "moves.append(mvScale(" + parameter + "))"];
     return scripts.join("\n");
 }
 
