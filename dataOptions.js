@@ -27,7 +27,7 @@ function createdataOptions(){
 
 
     //Label for the textbox
-    $("#datafilepath").before("<label for='radio' id=\"datafilepathlabel\" >Enter path to filename: </label><br/>");
+    $("#datafilepath").before("<label for='radio' id=\"datafilepathlabel\" >Enter the name of your data file (NEXUS format): </label><br/>");
     
     //Break Line
     addBreakLine(dataOptions.id);
