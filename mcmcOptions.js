@@ -66,7 +66,7 @@ function createMCMCOptions(){
 
     //Number of Generations Input
     var t = document.createTextNode("Enter number of generations: ");
-    var input = $("<input type =\"number\"  min= \"1\" value =\"10000\" class=\"numberinput\" id=\"generationnumbers\" />");
+    var input = $("<input type =\"number\"  min= \"1\" value =\"10000\" class=\"numberinput\" id=\"generationnumbers\" style =\"width: 200px;\" />");
     option.append(t);
     option.append(input[0]);
 
