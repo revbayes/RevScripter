@@ -260,13 +260,13 @@ function simplexOptions(fixed, fixedc, estimated, estimatedc, name, n, parameter
         //Generates the number of input boxes depending on n
         var i;
         for (i = 0; i < n; i++) { 
-            var input = $("<input type = \"number\" min=\"0.00\" value=\"0.00\" step=\".01\" class=\"decimalnumberinput\" />");       
+            var input = $("<input type = \"number\" min=\"0.00\" value=\"0.0\" step=\".01\" class=\"decimalnumberinput\" />");       
             input[0].setAttribute("id", name + i);
             fixedc.append(input[0]);
         }
 
         //Adds the label to the inputs
-        $("#" + name + 0).before("<label for='radio' id=" + name + "label" + ">"+ "Enter " + n + " values for the " + parameter + " simplex vector (Values must add up to 1): " +"</label><br/>");
+        $("#" + name + 0).before("<label for='radio' id=" + name + "label" + ">"+ "Enter " + n + " values for the " + parameter + " simplex vector (values must sum to 1): " +"</label><br/>");
 
 
     }
