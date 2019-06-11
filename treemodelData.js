@@ -80,7 +80,7 @@ function getTreeOptions(){
     if(($("#icheckbox").is(':checked')) && ($("#gcheckbox").is(':checked'))){
         psi = ["phylo ~ dnPhyloCTMC(tree=psi, Q=Q, type=\"DNA\", pInv=prop_inv, siteRates=site_rates)",clamp];
     }
-//    psi.join("\nphylo.clamp(data)");
+    psi.join("\n\n");
 
 
     //Checks if branch length has any string that needs to be added(if it is fixed there is no string)
