@@ -4,7 +4,7 @@ function getTreeOptions(){
     var branchLength = "";
     var treeModel = "";
     var clamp = "phylo.clamp(data)";
-    var psi = ["phylo ~ dnPhyloCTMC(tree=psi, Q=Q, type=\"DNA\")",clamp];
+    var psi = ["phylo ~ dnPhyloCTMC(tree=psi, Q=Q, type=\"DNA\")"];
     
     //Tree topology  Option
     //Fixed
@@ -70,25 +70,24 @@ function getTreeOptions(){
     //Create the psi variables
     //If +I is checked
     if(($("#icheckbox").is(':checked'))){
-        psi = ["phylo ~ dnPhyloCTMC(tree=psi, Q=Q, type=\"DNA\", pInv=prop_inv)",clamp];
+        psi = ["phylo ~ dnPhyloCTMC(tree=psi, Q=Q, type=\"DNA\", pInv=prop_inv)"];
     }
     //If +G is checked
     if(($("#gcheckbox").is(':checked'))){
-        psi = ["phylo ~ dnPhyloCTMC(tree=psi, Q=Q, type=\"DNA\", siteRates=site_rates)",clamp];
+        psi = ["phylo ~ dnPhyloCTMC(tree=psi, Q=Q, type=\"DNA\", siteRates=site_rates)"];
     }
     //If both +I and +G are checked
     if(($("#icheckbox").is(':checked')) && ($("#gcheckbox").is(':checked'))){
-        psi = ["phylo ~ dnPhyloCTMC(tree=psi, Q=Q, type=\"DNA\", pInv=prop_inv, siteRates=site_rates)",clamp];
+        psi = ["phylo ~ dnPhyloCTMC(tree=psi, Q=Q, type=\"DNA\", pInv=prop_inv, siteRates=site_rates)"];
     }
-    psi.join("\n\n");
 
 
     //Checks if branch length has any string that needs to be added(if it is fixed there is no string)
     if(branchLength != ""){
-        treeModel = [unRooted, branchLength, "psi := fnTreeAssembly(topology, branch_lengths)", psi, "mymodel =  model(topology)"];
+        treeModel = [unRooted, branchLength, "psi := fnTreeAssembly(topology, branch_lengths)", psi, clamp,  "mymodel =  model(topology)"];
     }
     else{
-        treeModel = [unRooted, "psi := fnTreeAssembly(topology, branch_lengths)", psi, "mymodel =  model(topology)"];
+        treeModel = [unRooted, "psi := fnTreeAssembly(topology, branch_lengths)", psi, clamp, "mymodel =  model(topology)"];
     }
 
     return treeModel.join("\n\n");

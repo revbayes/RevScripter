@@ -349,7 +349,11 @@ function realposOptions(fixed, fixedc, estimated, estimatedc, name, parameter){
         m[0].setAttribute("id", sName);
     
         //Menu options
-        var z = $("<option value=\"E\" selected=\"selected\" />");
+        var z = $("<option value=\"U\" selected=\"selected\" />");
+        var t = document.createTextNode("Uniform");
+        z[0].append(t);
+        m[0].append(z[0]);
+        var z = $("<option value=\"E\"  />");
         var t = document.createTextNode("Exponential");
         z[0].append(t);
         m[0].append(z[0]);
@@ -359,10 +363,6 @@ function realposOptions(fixed, fixedc, estimated, estimatedc, name, parameter){
         m[0].append(z[0]);
         var z = $("<option value=\"L\"  />");
         var t = document.createTextNode("Lognormal");
-        z[0].append(t);
-        m[0].append(z[0]);
-        var z = $("<option value=\"U\"  />");
-        var t = document.createTextNode("Uniform");
         z[0].append(t);
         m[0].append(z[0]);
         estimatedc[0].append(m[0]);
@@ -463,7 +463,7 @@ function displayrealposOptions(value, choices, name){
 
 
         //Max
-        var y2 = $("<input type =\"number\" min=\"1\" value=\"100\" step=\"1\" class=\"numberinput\" />");  
+        var y2 = $("<input type =\"number\" min=\"1\" value=\"1E7\" step=\"1\" class=\"numberinput\" />");  
         y2[0].setAttribute("id", name + "2");
         choices.append(y2[0]);
 
