@@ -3,8 +3,8 @@ function getTreeOptions(){
     var unRooted = "";
     var branchLength = "";
     var treeModel = "";
-    var psi = "phylo ~ dnPhyloCTMC(tree=psi, Q=Q, type=\"DNA\")";
     var clamp = "phylo.clamp(data)";
+    var psi = ["phylo ~ dnPhyloCTMC(tree=psi, Q=Q, type=\"DNA\")",clamp];
     
     //Tree topology  Option
     //Fixed
