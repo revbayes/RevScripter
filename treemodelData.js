@@ -4,6 +4,7 @@ function getTreeOptions(){
     var branchLength = "";
     var treeModel = "";
     var psi = "phylo ~ dnPhyloCTMC(tree=psi, Q=Q, type=\"DNA\")";
+    var clamp = "phylo.clamp(data)";
     
     //Tree topology  Option
     //Fixed
@@ -69,15 +70,15 @@ function getTreeOptions(){
     //Create the psi variables
     //If +I is checked
     if(($("#icheckbox").is(':checked'))){
-        psi = "phylo ~ dnPhyloCTMC(tree=psi, Q=Q, type=\"DNA\", pInv=prop_inv)";
+        psi = ["phylo ~ dnPhyloCTMC(tree=psi, Q=Q, type=\"DNA\", pInv=prop_inv)",clamp];
     }
     //If +G is checked
     if(($("#gcheckbox").is(':checked'))){
-        psi = "phylo ~ dnPhyloCTMC(tree=psi, Q=Q, type=\"DNA\", siteRates=site_rates)";
+        psi = ["phylo ~ dnPhyloCTMC(tree=psi, Q=Q, type=\"DNA\", siteRates=site_rates)",clamp];
     }
     //If both +I and +G are checked
     if(($("#icheckbox").is(':checked')) && ($("#gcheckbox").is(':checked'))){
-        psi = "phylo ~ dnPhyloCTMC(tree=psi, Q=Q, type=\"DNA\", pInv=prop_inv, siteRates=site_rates)";
+        psi = ["phylo ~ dnPhyloCTMC(tree=psi, Q=Q, type=\"DNA\", pInv=prop_inv, siteRates=site_rates)",clamp];
     }
     psi.join("\nphylo.clamp(data)");
 
