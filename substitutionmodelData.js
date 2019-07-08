@@ -203,7 +203,7 @@ function getQString(name, input, input2){
             var scripts = ["Q <- ", "fn", name, "(", input, ")"];
         }
         else{
-            var scripts = ["Q :- ", "fn", name, "(", input, ")"];
+            var scripts = ["Q := ", "fn", name, "(", input, ")"];
         }
         return scripts.join('');
     }
