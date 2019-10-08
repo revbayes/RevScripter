@@ -20,7 +20,7 @@ function handleFileLoad(event){
 }
 
 function parseFile(){
-    // var temparray = filecontent.split('\n');
+    var temparray = filecontent.split('\n');
     // // var nexusdata = getNexusData(temparray);
     //Testing class
     var n = new NexusReader(temparray);
@@ -130,12 +130,16 @@ class NexusReader {
     
             if(filecontent[i].includes('DIMENSIONS')){
                 //Sets NTAXA Value
-                var n= filecontent[i].indexOf("NTAX");
-                this.NTAXA = parseInt(filecontent[i].substring(n+5, n+8), 10);
+                if(filecontent[i].includes('NTAX')){
+                    var n= filecontent[i].indexOf("NTAX");
+                    this.NTAXA = parseInt(filecontent[i].substring(n+5, n+8), 10);
+                }
     
                 //Sets NCHAR Value
-                var n=filecontent[i].indexOf("NCHAR");
-                this.NCHAR = parseInt(filecontent[i].substring(n+6,n+12),10);
+                if(filecontent[i].includes('NCHAR')){
+                    var n=filecontent[i].indexOf("NCHAR");
+                    this.NCHAR = parseInt(filecontent[i].substring(n+6,n+12),10);
+                }
     
             }
     
