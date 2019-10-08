@@ -3,7 +3,7 @@
 
 BEGIN TAXA;
 	TITLE Taxa;
-	DIMENSIONS NTAX=66;
+	DIMENSIONS ntax=66;
 	TAXLABELS
 		Anthropornis_grandis Anthropornis_nordenskjoeldi Aptenodytes_forsteri Aptenodytes_patagonicus Aptenodytes_ridgeni Archaeospheniscus_lopdelli Archaeospheniscus__lowei 'Burnside "Palaeeudyptes"' Delphinornis_arctowskii Delphinornis_gracilis Delphinornis_larseni Eretiscus_tonnii Eudyptes_calauina Eudyptes_chrysocome Eudyptes_chrysolophus Eudyptes_filholi Eudyptes_moseleyi Eudyptes_pachyrhynchus Eudyptes_robustus Eudyptes_schlegeli Eudyptes_sclateri Eudyptes_warhami Eudyptula_minor Eudyptula_novaehollandiae Icadyptes_salasi Inguza_predemersus Inkayacu_paracasensis Kairuku_grebneffi Kairuku_waitaki Madrynornis_mirandus Marambiornis_exilis Marplesornis_novaezealandiae Megadyptes_antipodes Megadyptes_antipodes_richdalei Megadyptes_antipodes_waitaha Mesetaornis_polaris Notodyptes_wimani Nucleornis_insolitus Pachydyptes_ponderosus Palaeeudyptes_gunnari Palaeeudyptes_klekowskii Palaeospheniscus_bergi Palaeospheniscus_biloculata Palaeospheniscus_patagonicus Paraptenodytes_antarcticus Perudyptes_devriesi 'Platydyptes marplesi (with Ando material)' 'Platydyptes novaezealandiae (with Ando material)' Pygoscelis_adeliae Pygoscelis_antarcticus Pygoscelis_calderensis Pygoscelis_grandis Pygoscelis_papua Pygoscelis_tyreii Sequiwaimanu_rosieae Spheniscus_chilensis Spheniscus_demersus Spheniscus_humboldti Spheniscus_magellanicus Spheniscus_megaramphus Spheniscus_mendiculus Spheniscus_muizoni Spheniscus_urbinai Taranaki_Penguin_COMPOSITE Waimanu_manneringi 'Waimanu tuatahi (OU, Zfa, and CM 2009)' 
 	;
@@ -11,10 +11,10 @@ BEGIN TAXA;
 END;
 
 
-BEGIN CHARACTERS;
+begin CHARACTERS;
 	TITLE  'Matrix in file "Master Penguin Matrix.nexus"';
-	DIMENSIONS  NCHAR=274;
-	FORMAT DATATYPE = STANDARD RESPECTCASE GAP = - MISSING = ? SYMBOLS = "  0 1 2 3 4 5";
+	DIMENSIONS  nchar=274;
+	format datatype = STANDARD RESPECTCASE GAP = - MISSING = ? SYMBOLS = "012345";
 	CHARSTATELABELS 
 		1 'Tip of mandibular rhamphotheca, profile in lateral view (GB1)' /  pointed slightly_truncated 'strongly_truncated,_squared_off' 'truncated_but_with_a_rounded_margin_(procellariiform-like)',
 		2 'Longitudinal grooves on base of culmen (GB2)' /  absent present,
