@@ -51,3 +51,15 @@ While RevScripter is intended for use on the web and only to build scripts for s
 [2] BEAST 2: [http://www.beast2.org](http://www.beast2.org)
 
 [3] BPPg: [http://www.rannala.org/software/](http://www.rannala.org/software/)
+
+## License
+
+RevScripter is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
