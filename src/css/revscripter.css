@@ -102,6 +102,13 @@ input[type=number] {
 	list-style:none;
 }
 
+.tab-links lr {
+	margin:0px 5px;
+	float:right;
+    list-style:none;
+    margin-right: 2%;
+}
+
 .tab-links a {
 	padding:9px 15px;
 	display:inline-block;
