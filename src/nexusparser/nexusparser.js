@@ -27,13 +27,27 @@ function parseFile(){
     // console.log("NTax: " + n.getNTAX);
     // console.log("Nchar: " + n.getNCHAR);
     // console.log("Datatype: " + n.getdataType);
-    console.log("Taxa Size: " + n.getTaxa.length);
+    // console.log("Taxa Size: " + n.getTaxa.length);
     // for(var i = 0; i < n.getTaxa.length; i++){
     //     console.log(n.getTaxa[i]);
     // }
-    for(var i = 0; i < n.getDNASequence.length; i++){
-        console.log(n.getDNASequence[i].length);
+    // for(var i = 0; i < n.getDNASequence.length; i++){
+    //     console.log(n.getDNASequence[i].length);
+    // }
+    // console.log("Taxalabel Size: " + n.getTaxLabel.length);
+    // for(var i = 0; i < n.getTaxLabel.length; i++){
+    //     console.log(n.getTaxLabel[i]);
+    // }
+    // console.log("Trees Size: " + n.getTrees.length);
+    // for(var i = 0; i < n.getTrees.length; i++){
+    //     console.log(n.getTrees[i]);
+    // }
+    console.log("Matrix Size: " + n.getMatrix.length);
+    for(var i = 0; i < n.getMatrix.length; i++){
+        console.log(n.getMatrix[i].taxa);
+        console.log(n.getMatrix[i].sequence);
     }
+    
     // document.getElementById('data').textContent = nexusdata;
 }
 
@@ -50,6 +64,9 @@ class NexusReader {
         this.DATATYPE = "none";
         this.TAXA = [];
         this.DNASequence = []
+        this.TAXLABEL = [];
+        this.TREES = [];
+        this.MATRIX = [];
    
         //Loop to iterate through file and get contents 
         for(var i = 0; i < filecontent.length; i++){
@@ -156,9 +173,59 @@ class NexusReader {
                 }
             }
             
-    
+            //Sets the Taxlabel
+            if(filecontent[i].includes('taxlabels')){
+                i++;
+                while(!filecontent[i].includes(';')){
+                    if(filecontent[i] && filecontent[i] !== ';' && /\S/.test(filecontent[i])){
+                        var tax = filecontent[i].match(/\S+/g);
+                        if(tax.length > 0){
+
+                            for(var n = 0; n < tax.length; n++){
+                                if(tax[n].charAt(0) !== '\''){
+                                    this.TAXLABEL.push(tax[n]);
+                                }else{
+                                    
+                                    var qtax = [];
+                                    qtax.push(tax[n].substring(1, tax[n].length));
+                                    n++;
+                                    while(tax[n].indexOf('\'') == -1){
+                                        qtax.push(tax[n]);
+                                        n++;
+                                    }
+                                    qtax.push(tax[n].substring(0, tax[n].indexOf('\'')));
+                                    this.TAXLABEL.push(qtax.join(' '));
+ 
+                                }
+                            }
+
+                        }else{
+
+                            this.TAXLABEL.push(tax[0]);
+
+                        }
+                    }
+                    i++;
+                }
+            }
+
+            //Sets the trees
+            if(filecontent[i].includes('trees')){
+                i++;
+                while(!filecontent[i].toLowerCase().includes('end;')){
+                    this.TREES.push(filecontent[i].substring(filecontent[i].indexOf('=') + 1, filecontent[i].length - 2));
+                    i++;
+                }
+            }
+            
         }
         
+        //Sets the Matrix
+        for(var j = 0; j < this.TAXA.length; j++){
+            var taxa = {taxa: this.TAXA[j], sequence: this.DNASequence[j]}
+            this.MATRIX.push(taxa);
+        }
+
     }
     
     parseDimension(line, type){
@@ -195,15 +262,16 @@ class NexusReader {
     }
 
     get getTaxLabel(){
-        return this.getTaxLabel;
+        return this.TAXLABEL;
     }
 
     get getTrees(){
-        return this.getTrees;
+        return this.TREES;
     }
 
+    //This would just be Taxa with DNA Sequence Array combined.
     get getMatrix(){
-        return this.Matrix;
+        return this.MATRIX;
     }
 
 }
