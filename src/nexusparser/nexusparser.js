@@ -3,6 +3,7 @@
 // var TAXA = [];
 // var DATATYPE = "";
 
+//Used for debuggin nexustest.html
 function init(){
     document.getElementById('file').addEventListener('change', handleFileSelect, false);
 }
@@ -13,43 +14,49 @@ function handleFileSelect(event){
     reader.readAsText(event.target.files[0])
 }
 
-function handleFileLoad(event){
-    console.log(event);
-    filecontent = event.target.result;
-    document.getElementById('data').textContent = event.target.result;
-}
+// function handleFileLoad(event){
+//     console.log(event);
+//     filecontent = event.target.result;
+//     // document.getElementById('data').textContent = event.target.result;
+//     var temparray = filecontent.split('\n');
+//     // var nexusdata = getNexusData(temparray);
+//     //Testing class
+//     var temparray = filecontent.split('\n');
+//     var n = new NexusReader(temparray);
+//     console.log("Taxa Size: " + n.getTaxa.length);
+// }
 
-function parseFile(){
-    var temparray = filecontent.split('\n');
-    // // var nexusdata = getNexusData(temparray);
-    //Testing class
-    var n = new NexusReader(temparray);
-    // console.log("NTax: " + n.getNTAX);
-    // console.log("Nchar: " + n.getNCHAR);
-    // console.log("Datatype: " + n.getdataType);
-    // console.log("Taxa Size: " + n.getTaxa.length);
-    // for(var i = 0; i < n.getTaxa.length; i++){
-    //     console.log(n.getTaxa[i]);
-    // }
-    // for(var i = 0; i < n.getDNASequence.length; i++){
-    //     console.log(n.getDNASequence[i].length);
-    // }
-    // console.log("Taxalabel Size: " + n.getTaxLabel.length);
-    // for(var i = 0; i < n.getTaxLabel.length; i++){
-    //     console.log(n.getTaxLabel[i]);
-    // }
-    // console.log("Trees Size: " + n.getTrees.length);
-    // for(var i = 0; i < n.getTrees.length; i++){
-    //     console.log(n.getTrees[i]);
-    // }
-    console.log("Matrix Size: " + n.getMatrix.length);
-    for(var i = 0; i < n.getMatrix.length; i++){
-        console.log(n.getMatrix[i].taxa);
-        console.log(n.getMatrix[i].sequence);
-    }
+// function parseFile(){
+//     var temparray = filecontent.split('\n');
+//     // // var nexusdata = getNexusData(temparray);
+//     //Testing class
+//     var n = new NexusReader(temparray);
+//     // console.log("NTax: " + n.getNTAX);
+//     // console.log("Nchar: " + n.getNCHAR);
+//     // console.log("Datatype: " + n.getdataType);
+//     // console.log("Taxa Size: " + n.getTaxa.length);
+//     // for(var i = 0; i < n.getTaxa.length; i++){
+//     //     console.log(n.getTaxa[i]);
+//     // }
+//     // for(var i = 0; i < n.getDNASequence.length; i++){
+//     //     console.log(n.getDNASequence[i].length);
+//     // }
+//     // console.log("Taxalabel Size: " + n.getTaxLabel.length);
+//     // for(var i = 0; i < n.getTaxLabel.length; i++){
+//     //     console.log(n.getTaxLabel[i]);
+//     // }
+//     // console.log("Trees Size: " + n.getTrees.length);
+//     // for(var i = 0; i < n.getTrees.length; i++){
+//     //     console.log(n.getTrees[i]);
+//     // }
+//     console.log("Matrix Size: " + n.getMatrix.length);
+//     for(var i = 0; i < n.getMatrix.length; i++){
+//         console.log(n.getMatrix[i].taxa);
+//         console.log(n.getMatrix[i].sequence);
+//     }
     
-    // document.getElementById('data').textContent = nexusdata;
-}
+//     // document.getElementById('data').textContent = nexusdata;
+// }
 
 class NexusReader {
 
@@ -67,11 +74,11 @@ class NexusReader {
         this.TAXLABEL = [];
         this.TREES = [];
         this.MATRIX = [];
-   
+        
         //Loop to iterate through file and get contents 
         for(var i = 0; i < filecontent.length; i++){
             filecontent[i] = filecontent[i].toLowerCase();
-            if(filecontent[i].includes('dimensions')){
+            //if(filecontent[i].includes('dimensions')){
                 //Sets NTAXA Value
                 if(filecontent[i].includes('ntax')){
                     this.NTAX = this.parseDimension(filecontent[i], 'ntax');
@@ -81,7 +88,7 @@ class NexusReader {
                 if(filecontent[i].includes('nchar')){
                     this.NCHAR = this.parseDimension(filecontent[i], 'nchar');
                 }
-            }
+            //}
             
             //Sets DATATYPE Value
             if(filecontent[i].includes('datatype')){
@@ -89,7 +96,8 @@ class NexusReader {
             }
     
             //Sets the matrix data
-            if(filecontent[i].includes('matrix')){
+            // if(filecontent[i].includes('matrix')){
+            if(filecontent[i].trim() === 'matrix'){
                 i++;
 
                 while(!filecontent[i].includes(';')){
@@ -250,7 +258,8 @@ class NexusReader {
     }
 
     get getdataType(){
-        return this.DATATYPE;
+        //checks if it is DNA, else it sends an error message
+        return this.DATATYPE.toUpperCase();
     }
 
     get getTaxa(){

@@ -27,11 +27,15 @@
 
         <!--Revbayes base.js-->
         <script src="https://revbayes.github.io/assets/js/base.js"></script>
+
+        <!--Nexus Parser -->
+        <script src="./src/nexusparser/nexusparser.js"></script>
         
     </head>
     <body>
-
-        <h1 class="maintitle" href="#test1">RevScripter</h1>
+        <button href="https://revbayes.github.io/">R</button>
+        
+        <h1 class="maintitle">RevScripter</h1>
 
         <div class="tabs">
 
@@ -43,7 +47,7 @@
                     <li><a id="treetab" href="#treeOptions">Tree Model</a></li>
                     <li><a id="mcmctab" href="#mcmcOptions">MCMC</a></li>
                     <li><a id="scripttab" href="#scriptsGenerated">Scripts</a></li>
-                    <lr><a id="scripttab" href="https://revbayes.github.io/">RevBayes</a></lr>
+                    <!-- <lr><a id="scripttab" href="https://revbayes.github.io/">RevBayes</a></lr> -->
             </ul>
             
             <!--Options for each tab-->
@@ -105,6 +109,7 @@
             <script src="./src/js/substitutionmodelData.js"></script>
             <script src="./src/js/treemodelData.js"></script>
             <script src="./src/js/mcmcData.js"></script>
+
             <!--Functions to move from tab to tab-->
             <script>
                     //Used to move from a tab by clicking on it 
