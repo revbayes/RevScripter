@@ -10,14 +10,14 @@
         <!--Google font:Raleway-->
         <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 
-        <!--Revscripter style sheet-->
-        <link rel="stylesheet" type="text/css" href="./src/css/revscripter.css">
-
         <!--Revbayes style sheets-->
         <link rel="stylesheet" type="text/css" href="https://revbayes.github.io/assets/css/syntax.css">
         <link rel="stylesheet" type="text/css" href="https://revbayes.github.io/assets/css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="https://revbayes.github.io/assets/css/bootstrap-theme.css">
         <link rel="stylesheet" type="text/css" href="https://revbayes.github.io/assets/css/main.css">
+
+        <!--Revscripter style sheet-->
+        <link rel="stylesheet" type="text/css" href="./src/css/revscripter.css">
         
         <!--Lodash Library-->
         <script src="./src/js/core.min.js"></script>
@@ -27,11 +27,19 @@
 
         <!--Revbayes base.js-->
         <script src="https://revbayes.github.io/assets/js/base.js"></script>
+
+        <!--Nexus Parser -->
+        <script src="./src/js/nexusparser.js"></script>
         
     </head>
     <body>
-
-        <h1 class="maintitle" href="#test1">RevScripter</h1>
+    
+        <h1 class="maintitle" align="center">
+            <a href="https://revbayes.github.io/" style="color: inherit; text-decoration: none;">
+                <img src="./src/img/revbayessymbol.png" alt="RevBayes" width="40px" height="40px" href="https://revbayes.github.io/" >
+                <div style="display: inline;">RevScripter</div>
+            </a>
+        </h1>
 
         <div class="tabs">
 
@@ -104,6 +112,7 @@
             <script src="./src/js/substitutionmodelData.js"></script>
             <script src="./src/js/treemodelData.js"></script>
             <script src="./src/js/mcmcData.js"></script>
+
             <!--Functions to move from tab to tab-->
             <script>
                     //Used to move from a tab by clicking on it 

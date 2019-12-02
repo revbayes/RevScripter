@@ -1,9 +1,7 @@
-
-html,body{
-    margin:0;
-    padding:0; 
-    text-align: center;
-}
+ 
+body{
+    padding-top: 5px;
+} 
   
 /*Used for the Fixed radio button option*/
 .fixed{
@@ -102,6 +100,13 @@ input[type=number] {
 	list-style:none;
 }
 
+.tab-links lr {
+	margin:0px 5px;
+	float:right;
+    list-style:none;
+    margin-right: 2%;
+}
+
 .tab-links a {
 	padding:9px 15px;
 	display:inline-block;
@@ -145,4 +150,3 @@ li.active a, li.active a:hover {
     border: 1px solid black;
     padding: 5px; 
 }
-
