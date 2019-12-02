@@ -23,7 +23,7 @@ function createdataOptions(){
     var nextbutton = $("<button onclick=\"gotoTab('substitutiontab')\" class =\"nextbutton\">Next<button/>");
 
     //Adding the information that will be displayed from parsed file
-    var parsedData = $("<textarea id=\"parseddata\" rows=\"6\" cols=\"40\" wrap=\"soft\" readonly></textarea>");
+    var parsedData = $("<textarea id=\"parseddata\" style=\"font-size: 16px;\" rows=\"6\" cols=\"40\"  wrap=\"soft\" readonly></textarea>");
 
     //Adding Header and textbox
     dataOptions.append(dataHeader[0]);
@@ -34,13 +34,10 @@ function createdataOptions(){
     $("#datafilepath").before("<label id=\"datafilepathlabel\" >Enter the name of your data file (NEXUS format): </label><br/>");
     
      //Label for the file input
-     $("#parseddata").before("<label id=\"parseddatalabel\" style=\"margin-top: 40px;\">Parsed data: </label><br/>");
+     $("#parseddata").before("<label id=\"parseddatalabel\" style=\"margin-top: 40px; font-size: 18px;\">Parsed Data: </label><br/>");
 
     //Parsed file data
     document.getElementById('datafilepath').addEventListener('change', handleFileSelect, false);
-
-    // var temparray = filecontent.split('\n');
-    // var n = new NexusReader(temparray);
 
     //Break Line
     addBreakLine(dataOptions.id);
@@ -60,12 +57,9 @@ function handleFileSelect(event){
 
 //Handles the data from the inputed file
 function handleFileLoad(event){
-    console.log(event);
-    filecontent = event.target.result;
-    var temparray = filecontent.split('\n');
-    // var n = new NexusReader(temparray);
-    // console.log("Taxa Size: " + n.getTaxa.length);
-    parseData(temparray);
+    var filedata = event.target.result;
+    var filecontent = filedata.split('\n');
+    parseData(filecontent);
 }
 
 function parseData(data){

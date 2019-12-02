@@ -1,70 +1,11 @@
-// var NTAX = "";
-// var NCHAR = "";
-// var TAXA = [];
-// var DATATYPE = "";
-
-//Used for debuggin nexustest.html
-function init(){
-    document.getElementById('file').addEventListener('change', handleFileSelect, false);
-}
-
-function handleFileSelect(event){
-    const reader = new FileReader();
-    reader.onload = handleFileLoad;
-    reader.readAsText(event.target.files[0])
-}
-
-// function handleFileLoad(event){
-//     console.log(event);
-//     filecontent = event.target.result;
-//     // document.getElementById('data').textContent = event.target.result;
-//     var temparray = filecontent.split('\n');
-//     // var nexusdata = getNexusData(temparray);
-//     //Testing class
-//     var temparray = filecontent.split('\n');
-//     var n = new NexusReader(temparray);
-//     console.log("Taxa Size: " + n.getTaxa.length);
-// }
-
-// function parseFile(){
-//     var temparray = filecontent.split('\n');
-//     // // var nexusdata = getNexusData(temparray);
-//     //Testing class
-//     var n = new NexusReader(temparray);
-//     // console.log("NTax: " + n.getNTAX);
-//     // console.log("Nchar: " + n.getNCHAR);
-//     // console.log("Datatype: " + n.getdataType);
-//     // console.log("Taxa Size: " + n.getTaxa.length);
-//     // for(var i = 0; i < n.getTaxa.length; i++){
-//     //     console.log(n.getTaxa[i]);
-//     // }
-//     // for(var i = 0; i < n.getDNASequence.length; i++){
-//     //     console.log(n.getDNASequence[i].length);
-//     // }
-//     // console.log("Taxalabel Size: " + n.getTaxLabel.length);
-//     // for(var i = 0; i < n.getTaxLabel.length; i++){
-//     //     console.log(n.getTaxLabel[i]);
-//     // }
-//     // console.log("Trees Size: " + n.getTrees.length);
-//     // for(var i = 0; i < n.getTrees.length; i++){
-//     //     console.log(n.getTrees[i]);
-//     // }
-//     console.log("Matrix Size: " + n.getMatrix.length);
-//     for(var i = 0; i < n.getMatrix.length; i++){
-//         console.log(n.getMatrix[i].taxa);
-//         console.log(n.getMatrix[i].sequence);
-//     }
-    
-//     // document.getElementById('data').textContent = nexusdata;
-// }
-
 class NexusReader {
 
+    //Takes in file as an array of lines
     constructor(filecontent) {
         this.getNexusData(filecontent);
     }
 
-    getNexusData(filecontent){//has file content as an array for each line
+    getNexusData(filecontent){
     
         this.NTAX = 0;
         this.NCHAR = 0;
@@ -78,37 +19,37 @@ class NexusReader {
         //Loop to iterate through file and get contents 
         for(var i = 0; i < filecontent.length; i++){
             filecontent[i] = filecontent[i].toLowerCase();
-            //if(filecontent[i].includes('dimensions')){
-                //Sets NTAXA Value
-                if(filecontent[i].includes('ntax')){
-                    this.NTAX = this.parseDimension(filecontent[i], 'ntax');
-                }
+
+            //Sets NTAXA Value
+            if(filecontent[i].includes('ntax')){
+                this.NTAX = this.parseDimension(filecontent[i], 'ntax');
+            }
                 
-                //Sets NCHAR Value
-                if(filecontent[i].includes('nchar')){
-                    this.NCHAR = this.parseDimension(filecontent[i], 'nchar');
-                }
-            //}
+            //Sets NCHAR Value
+            if(filecontent[i].includes('nchar')){
+                this.NCHAR = this.parseDimension(filecontent[i], 'nchar');
+            }
             
             //Sets DATATYPE Value
             if(filecontent[i].includes('datatype')){
                 this.DATATYPE = this.parseDataType(filecontent[i]);
             }
     
-            //Sets the matrix data
-            // if(filecontent[i].includes('matrix')){
+            //Sets the Matrix data
             if(filecontent[i].trim() === 'matrix'){
                 i++;
 
                 while(!filecontent[i].includes(';')){
-                    //Checks that string is not empty
-                    //checks if the line is not empty, is not ';', and is not any sort of empty
+                    
+                    //checks if the line is not empty, is not ';', and is not any sort of empty space
                     if(filecontent[i] && filecontent[i] !== ';' && /\S/.test(filecontent[i])){
                         //Method of splitting words: https://blog.abelotech.com/posts/split-string-into-tokens-javascript/
                         var taxa = filecontent[i].match(/\S+/g);
                         
-                        //Checks if it is in [1] format
+                        //Checks if it is in format with numbered [1]
                         if(taxa[0].charAt(0) === '['){
+                            
+                            //Skips the [1] label
                             taxa.shift();
 
                             //This is if the taxa has quotes in its name('')
@@ -131,6 +72,7 @@ class NexusReader {
                             var sequenceline = []
                             var n;
                             var temp = filecontent[i].match(/\S+/g);
+                            //Finds the next taxa name numbered with [1]
                             while(temp[0] && temp[0].charAt(0) !== '[' && temp[0].charAt(0) !== ';'){
                                 for(n = 0; n < temp.length; n++){
                                     sequenceline.push(temp[n]);
@@ -228,7 +170,7 @@ class NexusReader {
             
         }
         
-        //Sets the Matrix
+        //Sets the Matrix array
         for(var j = 0; j < this.TAXA.length; j++){
             var taxa = {taxa: this.TAXA[j], sequence: this.DNASequence[j]}
             this.MATRIX.push(taxa);
@@ -258,7 +200,6 @@ class NexusReader {
     }
 
     get getdataType(){
-        //checks if it is DNA, else it sends an error message
         return this.DATATYPE.toUpperCase();
     }
 
