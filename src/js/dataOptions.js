@@ -1,3 +1,6 @@
+//Stores the taxa from parsed file
+var taxa = [];
+
 /*This is used to generate the Data options*/
 function createdataOptions(){
 
@@ -33,8 +36,8 @@ function createdataOptions(){
     //Label for the file input
     $("#datafilepath").before("<label id=\"datafilepathlabel\" >Enter the name of your data file (NEXUS format): </label><br/>");
     
-     //Label for the file input
-     $("#parseddata").before("<label id=\"parseddatalabel\" style=\"margin-top: 40px; font-size: 18px;\">Parsed Data: </label><br/>");
+    //Label for the parsed data
+    $("#parseddata").before("<label id=\"parseddatalabel\" style=\"margin-top: 40px; font-size: 18px;\">Parsed Data: </label><br/>");
 
     //Parsed file data
     document.getElementById('datafilepath').addEventListener('change', handleFileSelect, false);
@@ -64,7 +67,10 @@ function handleFileLoad(event){
 
 function parseData(data){
     var n = new NexusReader(data);
+    taxa = n.getTaxa;
+    console.log("Taxa:" + n.getTaxa);
     document.getElementById('parseddata').textContent = "Datatype: " + n.getdataType + "\n\nNumber of Taxa: " + n.getNTAX + "\n\nNumber of Characters: " + n.getNCHAR;
+    createTaxaOptions();
 }
 
 //Adds a break line to the given element by using its given id
@@ -72,6 +78,11 @@ function addBreakLine(idname){
     var mybr = document.createElement('br');
     var y = document.getElementById(idname);
     y.appendChild(mybr);
+}
+
+//Returns Taxa
+function getTaxa(){
+  return taxa;  
 }
 
 //Creates the Data options

@@ -56,78 +56,82 @@
             
             <!--Options for each tab-->
             <div class="tab-content">
-                <!--Home tab-->
-                <div id = "homeOptions"  class="tab active">
-                    <h2>RevScripter: An Introductory Tool for Creating RevBayes Analysis Scripts</h2><br>
-                    <p>RevScripter is a web-based tool that enables researchers to create scripts describing phylogenetic models and analyses in the Rev language. These script files then can be executed in the program <a href="https://revbayes.github.io">RevBayes</a>. RevBayes is a statistical inference tool for Bayesian phylogenetics.</p>
-                    <p>RevBayes is extremely flexible and the Rev language and graphical model framework enable researchers to apply a very rich set of complex evolutionary models. The development of RevScripter was motivated by a need to provide a familiar introductory interface for RevBayes and the Rev language. It will not be possible to maintain a menu-driven graphical user interface that encompasses the wide range of models and methods available in RevBayes. Thus, this tool will be useful for those new to RevBayes to set up standard analyses and easily see how elements of the model are reflected in the generated Rev language script. </p>
-                    <p>Currently, the options available in RevScripter are limited and the tool is still very much in development. The tool can create scripts for running an unrooted analysis using nucleotide data under standard substitution models. For more details about the available models and analyses, please see the README file in the <a href="https://github.com/revbayes/revscripter">RevScripter source repository</a>.</p>
-                    <h3>How to use RevScripter</h3>
-                    <p>RevScripter is set up to guide you through the options that must be specified in the script. Start with the <i>Data</i> tab or click the <i>Get Started</i> button below. Complete your model specification and MCMC options. When you have specified a complete analysis, go to the <i>Scripts</i> tab and generate the Rev script. You will then be able to download the script as a text file or copy it to a file that you have saved locally. With a completed analysis script for RevBayes, you can run the file on your own computer (or HPC resources).</p>
-                    <p>To run the generated script in RevBayes, be sure that the file names and paths in the generated script are correct. Then open RevBayes and type the command: <tt>source myscript.Rev</tt>, where <tt>myscript.Rev</tt> is the name of the file you downloaded from RevScripter.</p>
-                    <h3>Source</h3>
-                    <p>The source code (Javascript) for RevScripter is hosted on GitHub at <a href="https://github.com/revbayes/revscripter">https://github.com/revbayes/revscripter</a></p>
-                    <br>
-                    <button onclick="gotoTab('datatab')">Get Started</button>
-                </div>
+                <div class="container">
+                    <!--Home tab-->
+                    <div id = "homeOptions"  class="tab active">
+                        <h2>RevScripter: An Introductory Tool for Creating RevBayes Analysis Scripts</h2><br>
+                        <p>RevScripter is a web-based tool that enables researchers to create scripts describing phylogenetic models and analyses in the Rev language. These script files then can be executed in the program <a href="https://revbayes.github.io">RevBayes</a>. RevBayes is a statistical inference tool for Bayesian phylogenetics.</p>
+                        <p>RevBayes is extremely flexible and the Rev language and graphical model framework enable researchers to apply a very rich set of complex evolutionary models. The development of RevScripter was motivated by a need to provide a familiar introductory interface for RevBayes and the Rev language. It will not be possible to maintain a menu-driven graphical user interface that encompasses the wide range of models and methods available in RevBayes. Thus, this tool will be useful for those new to RevBayes to set up standard analyses and easily see how elements of the model are reflected in the generated Rev language script. </p>
+                        <p>Currently, the options available in RevScripter are limited and the tool is still very much in development. The tool can create scripts for running an unrooted analysis using nucleotide data under standard substitution models. For more details about the available models and analyses, please see the README file in the <a href="https://github.com/revbayes/revscripter">RevScripter source repository</a>.</p>
+                        <h3>How to use RevScripter</h3>
+                        <p>RevScripter is set up to guide you through the options that must be specified in the script. Start with the <i>Data</i> tab or click the <i>Get Started</i> button below. Complete your model specification and MCMC options. When you have specified a complete analysis, go to the <i>Scripts</i> tab and generate the Rev script. You will then be able to download the script as a text file or copy it to a file that you have saved locally. With a completed analysis script for RevBayes, you can run the file on your own computer (or HPC resources).</p>
+                        <p>To run the generated script in RevBayes, be sure that the file names and paths in the generated script are correct. Then open RevBayes and type the command: <tt>source myscript.Rev</tt>, where <tt>myscript.Rev</tt> is the name of the file you downloaded from RevScripter.</p>
+                        <h3>Source</h3>
+                        <p>The source code (Javascript) for RevScripter is hosted on GitHub at <a href="https://github.com/revbayes/revscripter">https://github.com/revbayes/revscripter</a></p>
+                        <br>
+                        <button onclick="gotoTab('datatab')">Get Started</button>
+                    </div>
 
-                <!--Data Options-->
-                <div id = "dataOptions" class="tab">
-                    <script src="./src/js/dataOptions.js"></script>
-                </div>
+                    <!--Data Options-->
+                    <div id = "dataOptions" class="tab">
+                        <script src="./src/js/dataOptions.js"></script>
+                    </div>
 
-                <!--Taxa Options-->
-                <div id = "taxaOptions" class="tab">
-                    <!-- <script src="./src/js/taxaOptions.js"></script> -->
-                    <table class="table table-bordered">
-                        <thead>
-                          <tr>
-                            <th scope="col">Select</th>
-                            <th scope="col">Taxa</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>Mark</td>
-                          </tr>
-                          <tr>
-                            <td>Jacob</td>
-                          </tr>
-                          <tr>
-                            <td>Larry</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                </div>
-            
-                <!--Substitution Model Options-->
-                <div id = "substitutionOptions" class="tab" >
-                    <script src="./src/js/substitutionmodelOptions.js"></script>
-                </div>
-            
-                <!--Tree Model Option-->
-                <div class="tab"  id = "treeOptions">
-                    <script src="./src/js/treemodelOptions.js"></script>
-                </div>
-            
-                <!--MCMC option-->
-                <div class="tab"  id="mcmcOptions">
-                    <script src="./src/js/mcmcOptions.js"></script>
-                </div>
+                    <!--Taxa Options-->
+                    <div id = "taxaOptions" class="tab">
+                        <h2>Taxa Data:</h2>
+                        <div class="container">
+                        <div class="row">
+                            <div class="col-3" >
+                            <table class="table table-bordered" id ="taxadata" >
+                                <thead>
+                                <tr>
+                                    <th>Select</th>
+                                    <th>Taxa</th>
+                                </tr>
+                                </thead>
+                                <tbody id="taxadatatable">
+                                <tr>
+                                    <td style="width: 20%"></td>
+                                    <td>Taxa</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
+                        </div>
+                        <!-- </div> -->
+                        <script src="./src/js/taxaOptions.js"></script>  
+                    </div>
+                
+                    <!--Substitution Model Options-->
+                    <div id = "substitutionOptions" class="tab" >
+                        <script src="./src/js/substitutionmodelOptions.js"></script>
+                    </div>
+                
+                    <!--Tree Model Option-->
+                    <div class="tab"  id = "treeOptions">
+                        <script src="./src/js/treemodelOptions.js"></script>
+                    </div>
+                
+                    <!--MCMC option-->
+                    <div class="tab"  id="mcmcOptions">
+                        <script src="./src/js/mcmcOptions.js"></script>
+                    </div>
 
-                <!--Scripts Option-->
-                <div class="tab" id ="scriptsGenerated">
-                    <h2>Generated Script:</h2>          
-                    <button onclick ="generateScript()">Generate Script</button>
-                    <button onclick ="copyScript()">Copy Script</button>
-                    <button onclick ="downloadScript()">Download Script</button>
-                    <br>
-                    <br>
-                    <textarea id="scriptBox" rows="30" cols="80"  readonly>Generated script goes here.</textarea>
-                    <br>
-                    <button onclick="gotoTab('mcmctab')" >Back</button> 
-                    <button onclick ="resetScript()">Reset</button>
-                </div>
+                    <!--Scripts Option-->
+                    <div class="tab" id ="scriptsGenerated">
+                        <h2>Generated Script:</h2>          
+                        <button onclick ="generateScript()">Generate Script</button>
+                        <button onclick ="copyScript()">Copy Script</button>
+                        <button onclick ="downloadScript()">Download Script</button>
+                        <br>
+                        <br>
+                        <textarea id="scriptBox" rows="30" cols="80"  readonly>Generated script goes here.</textarea>
+                        <br>
+                        <button onclick="gotoTab('mcmctab')" >Back</button> 
+                        <button onclick ="resetScript()">Reset</button>
+                    </div>
 
                 </div>
             </div>

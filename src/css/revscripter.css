@@ -131,22 +131,24 @@ li.active a, li.active a:hover {
   
 /*----- Content of Tabs -----*/
 .tab-content {
-	padding:15px;
+	/* padding:15px; */
 	border-radius:3px;
 	box-shadow:-1px 1px 1px rgba(0,0,0,0.15);
-	background:#fff;
+    background:#fff;
+    border: 1px solid black;
+    padding-bottom: 1%;
 }
 
 .tab {
     display:none;
     text-align:left;
-    border: 1px solid black;
-    padding: 5px; 
+    /* border: 1px solid black; */
+    /* padding: 5px;  */
 }
 
 .tab.active {
     display:block;
     text-align:left;
-    border: 1px solid black;
-    padding: 5px; 
+    /* border: 1px solid black; */
+    /* padding: 5px;  */
 }
