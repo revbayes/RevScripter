@@ -34,9 +34,6 @@ function createTaxaOptions(){
         }
 
     }
-    // for(var i = 0; i < taxa.length; i++){
-    //     console.log(taxa[i]);
-    // }
      
 }
 

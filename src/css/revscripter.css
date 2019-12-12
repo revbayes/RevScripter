@@ -152,3 +152,6 @@ li.active a, li.active a:hover {
     /* border: 1px solid black; */
     /* padding: 5px;  */
 }
+
+/* Makes a tables body scrollable and fixes the header */
+.tableFixHead thead th { position: sticky; top: 0; background: #EEEEEE;}
