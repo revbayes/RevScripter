@@ -14,7 +14,7 @@ function createTaxaOptions(){
             var tr = document.createElement('TR');
             //Td that is appended to Tr
             //Checks for each option
-            var check = $("<input type=\"checkbox\" class=\"custom-control-input\" />");
+            var check = $("<input type=\"checkbox\" />");
             //Sets the function to call for each checkbox on change
             check[0].setAttribute("onchange","updateSelectTable()" );
             var td = document.createElement('TD');
@@ -31,7 +31,38 @@ function createTaxaOptions(){
         }
 
     }
-     
+
+    //Adds the filter functionality to the search bar for the taxa data table
+    var $rows = $('#taxadatatable tr');
+    $('#taxadatasearch').keyup(debounce(function() {
+
+    var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+        reg = RegExp(val, 'i'),
+        text;
+
+    $rows.show().filter(function() {
+        text = $(this).text().replace(/\s+/g, ' ');
+        return !reg.test(text);
+    }).hide();
+    }, 300));
+
+    function debounce(func, wait, immediate) {
+    var timeout;
+    return function() {
+        var context = this,
+        args = arguments;
+        var later = function() {
+        timeout = null;
+        if (!immediate) func.apply(context, args);
+        };
+        var callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+    };
+    };
+
+
 }
 
 function updateSelectTable(){
