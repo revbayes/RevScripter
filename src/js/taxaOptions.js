@@ -6,7 +6,10 @@ function createTaxaOptions(){
     var taxadata = getTaxa();
     console.log("Taxa size: " + taxadata.length);
 
-    if(taxadata.length !== 0){
+    if(taxadata.length && taxadata.length !== 0){
+        //Enables the search input for taxa table
+        $('#taxadatasearch').removeAttr('disabled');
+        //Clears taxa table
         $("#taxadatatable").empty();
         //Adds the taxa to the table
         for(var i = 0; i < taxa.length; i++){
@@ -25,11 +28,25 @@ function createTaxaOptions(){
             td.style = "text-align: center;";
             tr.append(td);
             tr.append(td2);
-
+            //Appends the tr to the tbody
             tbody.append(tr);
-
         }
-
+    }else{
+        //Disables the search input for taxa table
+        $('#taxadatasearch').attr({'disabled': 'disabled' });
+        $("#taxadatatable").empty();
+        //Tr that is appended to tbody
+        var tr = document.createElement('TR');
+        //Td that is appended to Tr
+        var td = document.createElement('TD');
+        //Taxa names
+        var td2 = document.createElement('TD');
+        td2.appendChild(document.createTextNode("File has no taxa..."));
+        td.style = "text-align: center;";
+        tr.append(td);
+        tr.append(td2);
+        //Appends the tr to the tbody
+        tbody.append(tr);
     }
 
     //Adds the filter functionality to the search bar for the taxa data table
@@ -62,9 +79,9 @@ function createTaxaOptions(){
     };
     };
 
-
 }
 
+//Updates the selected taxa table with selected taxa
 function updateSelectTable(){
     var selectedTaxa = [];
     var table = document.getElementById("taxadata");
@@ -75,7 +92,7 @@ function updateSelectTable(){
         }
     }
 
-    //Updates the selected taca table
+    //Updates the selected taxa table
     var tbody = document.getElementById("selectedtaxatable");
 
     var taxadata = getTaxa();
@@ -110,4 +127,7 @@ function updateSelectTable(){
 
 }
 
-createTaxaOptions();
+//Updates the data displayer
+function updateDataDisplayer(){
+    //TODO
+}
