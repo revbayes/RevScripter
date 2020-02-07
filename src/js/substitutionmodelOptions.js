@@ -119,7 +119,7 @@ function createModelOptions(){
     y.append(gOptions[0]);
 
     //Back button
-    var backbutton = $("<button onclick=\"gotoTab('datatab')\">Back<button/>");
+    var backbutton = $("<button onclick=\"gotoTab('taxatab')\">Back<button/>");
 
     //Reset button
     var resetbutton = $("<button onclick=\"createModelOptions()\">Reset<button/>");

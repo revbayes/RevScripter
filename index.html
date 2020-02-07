@@ -87,7 +87,7 @@
                                 <div class="input-group">
                                     <input id="taxagroupcreate" type="text" class="form-control" placeholder="Group Name" disabled/>
                                     <span class="input-group-btn">
-                                        <button id="taxagroupcreatebutton" class="btn btn-default" type="button" onclick="createTaxaGroup()" disabled>Create</button>
+                                        <button id="taxagroupcreatebutton" class="btn btn-default" type="button" onclick="createTaxaGroup();" disabled>Create</button>
                                     </span>
                                 </div>
                             </div>
@@ -95,10 +95,10 @@
                         <div class="row">
                             <div class="col-sm-3 col-xs-3">
                                 <div class="tableFixHead" style="height: 61vh; overflow-y:auto; background: white; border: black; border-style: solid; border-width: 1%; overflow-x: auto;">
-                                    <table class=" table table-bordered" style="width:100%;" id="taxadata" >
+                                    <table class="table table-bordered" style="width:100%;" id="taxadata" >
                                     <thead id="taxadatahead">
                                         <tr>
-                                            <th style="width: 10%"><input id="selectalltaxacheckbox" type="Checkbox" onchange="updateSelectAllTaxa()" disabled></th>
+                                            <th style="width: 10%"><input id="selectalltaxacheckbox" type="Checkbox" onchange="selectAllTaxa()" disabled></th>
                                             <th style="width: 80%">Taxa</th>
                                             <th style="width: 10%">Tags</th>
                                         </tr>
@@ -115,7 +115,7 @@
                             </div>
                             <div class="col-sm-3 col-xs-3">
                                 <div class="tableFixHead" style="height: 61vh; overflow-y:auto; background: white; border: black; border-style: solid; border-width: 1%;">
-                                    <table class="table table-bordered" style="width:100%;" id="selectedtaxadata" >
+                                    <table class="table table-bordered" style="width:100%;" id="selectedtaxadata">
                                         <thead>
                                             <tr>
                                                 <th>Selected Taxa</th>
@@ -139,7 +139,7 @@
                                         </thead>
                                         <tbody id="taxagrouptable">
                                             <tr>
-                                                <td>No group is created...</td>
+                                                <td contenteditable='true'>No group is created...</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -151,6 +151,18 @@
                                 </div>
                             </div>
                             <script src="./src/js/taxaOptions.js"></script>  
+                        </div>
+                        <div class="row" style="margin-top: 2%;">
+                            <div class="col-sm-3 col-xs-3">
+                                <button onclick="gotoTab('datatab')">Back</button>
+                            </div>
+                            <div class="col-sm-3 col-xs-3">
+                            </div>
+                            <div class="col-sm-3 col-xs-3">
+                            </div>
+                            <div class="col-sm-3 col-xs-3">
+                                <button onclick="gotoTab('substitutiontab')" class="nextbutton">Next</button>
+                            </div>
                         </div>
                     </div>
                 

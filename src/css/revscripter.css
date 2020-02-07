@@ -155,3 +155,18 @@ li.active a, li.active a:hover {
 
 /* Makes a tables body scrollable and fixes the header */
 .tableFixHead thead th { position: sticky; top: 0; background: #EEEEEE;}
+
+.tableFixHead tbody tr td {
+    vertical-align: middle;
+}
+
+/* CSS for taxa group tags. */
+.group-tag{
+    color:#438ac7; 
+    background: #e1ecf4; 
+    border: 1px solid #e1ecf4; 
+    margin: 2px 2px 2px 2px; 
+    text-decoration: none !important; 
+    text-align: center;
+    padding: 3px 5px;
+}

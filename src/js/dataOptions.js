@@ -23,7 +23,7 @@ function createdataOptions(){
     var resetbutton = $("<button onclick=\"createdataOptions()\">Reset<button/>");
 
     //Next button
-    var nextbutton = $("<button onclick=\"gotoTab('substitutiontab')\" class =\"nextbutton\">Next<button/>");
+    var nextbutton = $("<button onclick=\"gotoTab('taxatab')\" class =\"nextbutton\">Next<button/>");
 
     //Adding the information that will be displayed from parsed file
     var parsedData = $("<textarea id=\"parseddata\" style=\"font-size: 16px;\" rows=\"6\" cols=\"40\"  wrap=\"soft\" readonly></textarea>");

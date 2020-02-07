@@ -6,11 +6,13 @@ var taxaGroups = [];
 
 function createTaxaOptions() {
 
+    //Sets the taxa group back to zero
+    taxaGroups = [];
+
     //Taxa tab body
     var tbody = document.getElementById("taxadatatable");
 
     var taxadata = getTaxa();
-    // console.log("Taxa size: " + taxadata.length);
 
     if (taxadata.length && taxadata.length !== 0) {
 
@@ -107,6 +109,35 @@ function createTaxaOptions() {
     //Updates Select Table
     updateSelectTable();
 
+    //Updates Taxa Group Table
+    updateTaxaGroupTable();
+
+}
+
+function updateTaxaTags(groupname, taxaset) {
+
+    var table = document.getElementById('taxadata');
+    for (var i = 0, row; row = table.rows[i]; i++) {
+        var taxaname = row.cells[1].innerHTML;
+        //Adds the taxa index if checkbox is checked.
+        if(compareTaxa(taxaname, taxaset) === true){
+            var tag = document.createElement('a');
+            tag.className = "group-tag";
+            tag.appendChild(document.createTextNode(groupname));
+            row.cells[2].append(tag);
+        }
+    }
+    
+}
+
+function compareTaxa(taxa, taxaset){
+
+    for(var i = 0; i < taxaset.length; i++){
+        if(taxa === taxaset[i]){
+            return true;
+        }
+    }
+    return false;
 }
 
 //Updates the selected taxa table with selected taxa
@@ -168,7 +199,7 @@ function updateSelectTable() {
 
 }
 
-function updateSelectAllTaxa() {
+function selectAllTaxa() {
     var checktaxa = false;
 
     if ($('#selectalltaxacheckbox').is(':checked')) {
@@ -191,15 +222,8 @@ function updateSelectAllTaxa() {
 }
 
 function createTaxaGroup() {
-    //TODO
-    var taxagroup = { name: $("#taxagroupcreate").val(), taxa: selectedTaxa }
+    var taxagroup = { name: $("#taxagroupcreate").val(), taxa: selectedTaxa };
     taxaGroups.push(taxagroup);
-
-    console.log("Group Name: " + taxaGroups[0].name);
-    console.log("taxa: ")
-    for (var i = 0; i < taxaGroups[0].taxa.length; i++) {
-        console.log(taxaGroups[0].taxa[i]);
-    }
 
     //clears the  taxa group input name
     $("#taxagroupcreate").val('');
@@ -207,11 +231,11 @@ function createTaxaGroup() {
     //Updates Taxa Group Table
     updateTaxaGroupTable();
 
+    //Updates the Taxa tags
+    updateTaxaTags(taxagroup.name, selectedTaxa);
 }
 
 function updateTaxaGroupTable() {
-    //TODO
-
     //Gets the selected taxa table
     var tbody = document.getElementById("taxagrouptable");
 
@@ -226,6 +250,13 @@ function updateTaxaGroupTable() {
             var tr = document.createElement('TR');
             //Td that is appended to Tr
             var td = document.createElement('TD');
+
+
+            //Td set edit attribute
+            // td.setAttribute('contenteditable','true')
+            // td.setAttribute('onchange', 'updateTaxaGroupName(' + i +')');
+
+
             //Taxa names
             td.appendChild(document.createTextNode(taxaGroups[i].name));
             tr.append(td);
