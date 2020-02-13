@@ -4,6 +4,7 @@ var selectedTaxa = [];
 //Created taxa groups
 var taxaGroups = [];
 
+
 function createTaxaOptions() {
 
     //Sets the taxa group back to zero
@@ -78,17 +79,13 @@ function createTaxaOptions() {
     //Adds the filter functionality to the search bar for the taxa data table
     var $rows = $('#taxadatatable tr');
     $('#taxadatasearch').keyup(debounce(function () {
-
-        var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
-            reg = RegExp(val, 'i'),
-            text;
-
-        $rows.show().filter(function () {
-            text = $(this).text().replace(/\s+/g, ' ');
-            return !reg.test(text);
-        }).hide();
+        var value = $(this).val().toLowerCase();
+        $rows.filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
     }, 300));
 
+    //To prevent filter function to run too often
     function debounce(func, wait, immediate) {
         var timeout;
         return function () {
@@ -120,20 +117,20 @@ function updateTaxaTags(groupname, taxaset) {
     for (var i = 0, row; row = table.rows[i]; i++) {
         var taxaname = row.cells[1].innerHTML;
         //Adds the taxa index if checkbox is checked.
-        if(compareTaxa(taxaname, taxaset) === true){
+        if (compareTaxa(taxaname, taxaset) === true) {
             var tag = document.createElement('a');
             tag.className = "group-tag";
             tag.appendChild(document.createTextNode(groupname));
             row.cells[2].append(tag);
         }
     }
-    
+
 }
 
-function compareTaxa(taxa, taxaset){
+function compareTaxa(taxa, taxaset) {
 
-    for(var i = 0; i < taxaset.length; i++){
-        if(taxa === taxaset[i]){
+    for (var i = 0; i < taxaset.length; i++) {
+        if (taxa === taxaset[i]) {
             return true;
         }
     }
@@ -158,13 +155,13 @@ function updateSelectTable() {
     //Gets the selected taxa table
     var tbody = document.getElementById("selectedtaxatable");
 
-    // var taxadata = getTaxa();
+    //Clears Selected Taxa table
     $("#selectedtaxatable").empty();
+
 
     if (selectedTaxa.length !== 0) {
         //Removes disabled from create taxa group form
-        $('#taxagroupcreate').removeAttr('disabled');
-        $('#taxagroupcreatebutton').removeAttr('disabled');
+        disableSelectedTaxaForms(false);
 
         //Adds the taxa to the table
         for (var i = 0; i < selectedTaxa.length; i++) {
@@ -183,8 +180,7 @@ function updateSelectTable() {
     //If no taxa is selected, display message in body of table
     if (selectedTaxa.length === 0) {
         //Adds disabled to create a taxa group form
-        $('#taxagroupcreate').attr({ 'disabled': 'disabled' });
-        $('#taxagroupcreatebutton').attr({ 'disabled': 'disabled' });
+        disableSelectedTaxaForms(true);
 
 
         //Tr that is appended to tbody
@@ -219,6 +215,51 @@ function selectAllTaxa() {
 
     //Updates Select table
     updateSelectTable();
+}
+
+function resetSelectTable() {
+    //Selected Taxa array gets reset
+    selectedTaxa = [];
+
+    //Table gets reset
+    $("#selectedtaxatable").empty();
+    var tbody = document.getElementById("selectedtaxatable");
+
+    //Adds disabled to create a taxa group form
+    disableSelectedTaxaForms(true);
+
+    //Tr that is appended to tbody
+    var tr = document.createElement('TR');
+    //Td that is appended to Tr
+    var td = document.createElement('TD');
+    //Taxa names
+    td.appendChild(document.createTextNode("No data is selected..."));
+    tr.append(td);
+    tbody.append(tr);
+
+    //Unchecks select all taxa checkbox
+    $('#selectalltaxacheckbox').attr("checked", false);
+
+    //Checkboxes get unchecked
+    var table = document.getElementById("taxadata");
+    for (var i = 1, row; row = table.rows[i]; i++) {
+        var col = row.cells[0].children[0];
+        //Adds the taxa index if checkbox is checked.
+        col.checked = false;
+    }
+
+}
+
+function disableSelectedTaxaForms(disable) {
+    if (disable) {
+        $('#taxagroupcreate').attr({ 'disabled': 'disabled' });
+        $('#taxagroupcreatebutton').attr({ 'disabled': 'disabled' });
+        $('#resetselecttaxa').attr({ 'disabled': 'disabled' });
+    } else {
+        $('#taxagroupcreate').removeAttr('disabled');
+        $('#taxagroupcreatebutton').removeAttr('disabled');
+        $('#resetselecttaxa').removeAttr('disabled');
+    }
 }
 
 function createTaxaGroup() {

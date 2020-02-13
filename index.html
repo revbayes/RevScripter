@@ -81,7 +81,7 @@
                         <h2>Taxa:</h2>
                         <div class="row" style="padding-bottom: 1%;">
                             <div class="col-sm-3 col-xs-3" >
-                                <input id="taxadatasearch" type="text" class="form-control" placeholder="Type to search" disabled></input>
+                                <input id="taxadatasearch" type="text" class="form-control" placeholder="Filter" disabled></input>
                             </div>
                             <div class="col-sm-3 col-xs-3" >
                                 <div class="input-group">
@@ -94,7 +94,7 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-3 col-xs-3">
-                                <div class="tableFixHead" style="height: 61vh; overflow-y:auto; background: white; border: black; border-style: solid; border-width: 1%; overflow-x: auto;">
+                                <div class="tableFixHead taxa-displayer">
                                     <table class="table table-bordered" style="width:100%;" id="taxadata" >
                                     <thead id="taxadatahead">
                                         <tr>
@@ -114,11 +114,11 @@
                                 </div>
                             </div>
                             <div class="col-sm-3 col-xs-3">
-                                <div class="tableFixHead" style="height: 61vh; overflow-y:auto; background: white; border: black; border-style: solid; border-width: 1%;">
+                                <div class="tableFixHead taxa-displayer">
                                     <table class="table table-bordered" style="width:100%;" id="selectedtaxadata">
                                         <thead>
                                             <tr>
-                                                <th>Selected Taxa</th>
+                                                <th>Selected Taxa</th> 
                                             </tr>
                                         </thead>
                                         <tbody id="selectedtaxatable">
@@ -128,9 +128,10 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <button id="resetselecttaxa" class="btn btn-default" style="float:right;" type="button" onclick="resetSelectTable()" disabled>Reset</button>
                             </div>
                             <div class="col-sm-3 col-xs-3">
-                                <div class="tableFixHead" style="height: 61vh; overflow-y:auto; background: white; border: black; border-style: solid; border-width: 1%;">
+                                <div class="tableFixHead taxa-displayer">
                                     <table class="table table-bordered" style="width:100%;" id="taxagroupdata" >
                                         <thead>
                                             <tr>
