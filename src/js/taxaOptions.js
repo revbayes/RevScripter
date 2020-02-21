@@ -4,7 +4,6 @@ var selectedTaxa = [];
 //Created taxa groups
 var taxaGroups = [];
 
-
 function createTaxaOptions() {
 
     //Sets the taxa group back to zero
@@ -294,7 +293,7 @@ function updateTaxaGroupTable() {
 
 
             //Td set edit attribute
-            // td.setAttribute('contenteditable','true')
+            td.setAttribute('contenteditable','true');
             // td.setAttribute('onchange', 'updateTaxaGroupName(' + i +')');
 
 
@@ -319,7 +318,40 @@ function updateTaxaGroupTable() {
     }
 }
 
+function changeGroupName() {
+    var grouptable = document.getElementById('taxagroupdata');
+    for (var i = 1, row; row=grouptable.rows[i]; i++){
+        if(row.children[0] && row.children[0].innerHTML !== taxaGroups[i-1].name){
+            
+            // console.log(row.children[0].innerHTML);
+
+            //Remove tag
+            removeTaxaTag(taxaGroups[i-1].name);
+
+            //Update tag
+            taxaGroups[i-1].name = row.children[0].innerHTML;
+            updateTaxaTags(taxaGroups[i-1].name, taxaGroups[i-1].taxa)
+        }
+    }
+}
+
+function removeTaxaTag(tag){
+    var table = document.getElementById('taxadata');
+    console.log('Removed Tag: ' + tag);
+    for (var i = 1, row; row=table.rows[i]; i++) {
+        //Each tag in row
+        for(var j = 0; j < row.children[2].children.length; j++){
+            if(row.children[2].children[j].innerHTML === tag){
+                // console.log(row.children[2].children[j].innerHTML);
+                console.log('Removes tag')
+                row.children[2].removeChild(row.children[2].children[j]);
+            }
+        }
+    }
+}
+
 //Updates the data displayer
 function updateDataDisplayer() {
     //TODO
+
 }
