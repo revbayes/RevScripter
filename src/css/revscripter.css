@@ -163,7 +163,8 @@ li.active a, li.active a:hover {
 /* Displayer for taxa tab tables */
 .taxa-displayer {
     height: 61vh; 
-    overflow-y:auto; 
+    width: 100%;
+    overflow-y: auto; 
     background: white; 
     border: black; 
     border-style: solid; 

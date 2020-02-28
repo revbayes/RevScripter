@@ -106,7 +106,7 @@ function createTaxaOptions() {
     updateSelectTable();
 
     //Updates Taxa Group Table
-    updateTaxaGroupTable();
+    resetTaxaGroupTable();
 
 }
 
@@ -269,84 +269,172 @@ function createTaxaGroup() {
     $("#taxagroupcreate").val('');
 
     //Updates Taxa Group Table
-    updateTaxaGroupTable();
+    addTaxaGroupToTable(taxagroup.name);
 
     //Updates the Taxa tags
     updateTaxaTags(taxagroup.name, selectedTaxa);
 }
 
-function updateTaxaGroupTable() {
+// function updateTaxaGroupTable() {
+//     //Gets the selected taxa table
+//     var tbody = document.getElementById("taxagrouptable");
+
+//     // Clears group taxa table
+//     $("#taxagrouptable").empty();
+
+//     if (taxaGroups.length !== 0) {
+
+//         //Adds the taxa to the table
+//         for (var i = 0; i < taxaGroups.length; i++) {
+//             //Tr that is appended to tbody
+//             var tr = document.createElement('TR');
+//             //Td that is appended to Tr
+//             var td = document.createElement('TD');
+
+
+//             //Td set edit attribute
+//             td.setAttribute('contenteditable','true');
+//             // td.setAttribute('onchange', 'updateTaxaGroupName(' + i +')');
+
+
+//             //Taxa names
+//             td.appendChild(document.createTextNode(taxaGroups[i].name));
+//             tr.append(td);
+//             tbody.append(tr);
+//         }
+
+//     }
+
+//     //If no taxa is selected, display message in body of table
+//     if (taxaGroups.length === 0) {
+//         //Tr that is appended to tbody
+//         var tr = document.createElement('TR');
+//         //Td that is appended to Tr
+//         var td = document.createElement('TD');
+//         //Taxa names
+//         td.appendChild(document.createTextNode("No group is created..."));
+//         tr.append(td);
+//         tbody.append(tr);
+//     }
+// }
+
+function resetTaxaGroupTable() {
     //Gets the selected taxa table
     var tbody = document.getElementById("taxagrouptable");
 
     // Clears group taxa table
     $("#taxagrouptable").empty();
 
-    if (taxaGroups.length !== 0) {
+    //Addes message to Taxa Group Table
+    //Tr that is appended to tbody
+    var tr = document.createElement('TR');
+    //Td that is appended to Tr
+    var td = document.createElement('TD');
+    //Taxa names
+    td.appendChild(document.createTextNode("No group is created..."));
+    //Td2 that is appended to Tr
+    var td2 = document.createElement('TD');
+    tr.append(td);
+    tr.append(td2);
+    tbody.append(tr);
 
-        //Adds the taxa to the table
-        for (var i = 0; i < taxaGroups.length; i++) {
-            //Tr that is appended to tbody
-            var tr = document.createElement('TR');
-            //Td that is appended to Tr
-            var td = document.createElement('TD');
-
-
-            //Td set edit attribute
-            td.setAttribute('contenteditable','true');
-            // td.setAttribute('onchange', 'updateTaxaGroupName(' + i +')');
-
-
-            //Taxa names
-            td.appendChild(document.createTextNode(taxaGroups[i].name));
-            tr.append(td);
-            tbody.append(tr);
-        }
-
-    }
-
-    //If no taxa is selected, display message in body of table
-    if (taxaGroups.length === 0) {
-        //Tr that is appended to tbody
-        var tr = document.createElement('TR');
-        //Td that is appended to Tr
-        var td = document.createElement('TD');
-        //Taxa names
-        td.appendChild(document.createTextNode("No group is created..."));
-        tr.append(td);
-        tbody.append(tr);
-    }
 }
 
-function changeGroupName() {
-    var grouptable = document.getElementById('taxagroupdata');
-    for (var i = 1, row; row=grouptable.rows[i]; i++){
-        if(row.children[0] && row.children[0].innerHTML !== taxaGroups[i-1].name){
-            
-            // console.log(row.children[0].innerHTML);
+function addTaxaGroupToTable(groupname) {
 
-            //Remove tag
-            removeTaxaTag(taxaGroups[i-1].name);
-
-            //Update tag
-            taxaGroups[i-1].name = row.children[0].innerHTML;
-            updateTaxaTags(taxaGroups[i-1].name, taxaGroups[i-1].taxa)
-        }
+    //Deletes messag in table if this is the first group that is created
+    if(taxaGroups.length === 1){
+        $("#taxagrouptable").empty();
     }
+
+    //Gets the selected taxa table
+    var tbody = document.getElementById("taxagrouptable");
+
+    //Adds the taxa to the table
+    //Tr that is appended to tbody
+    var tr = document.createElement('TR');
+    //Td that is appended to Tr
+    var td = document.createElement('TD');
+
+    //Placeholder of the taxagroup in the table
+    var placeholder = taxaGroups.length;
+
+    //Td that is appended to Tr
+    var td2 = document.createElement('TD');
+
+    var a = document.createElement('a');
+    a.setAttribute('data-toggle', 'modal');
+    a.setAttribute('href', '#taxagroupoption');
+    a.setAttribute('style', 'color: inherit; text-decoration: none;');
+    a.setAttribute('onclick', 'openModalOption(\'' + placeholder +'\')');
+   
+    var i = document.createElement('i');
+    i.setAttribute('class', 'glyphicon glyphicon-pencil');
+    // i.setAttribute('style', 'float: right;');
+    a.appendChild(i);
+
+    //Taxa names
+    td.appendChild(document.createTextNode(groupname));
+    // td.appendChild(a);
+    td2.appendChild(a);
+    tr.append(td);
+    tr.append(td2);
+    tbody.append(tr);
+
 }
 
-function removeTaxaTag(tag){
+function openModalOption(placeholder){
+    var groupname = document.getElementById('taxagroupdata').rows[placeholder].children[0].innerHTML;
+    document.getElementById('modalheader').innerHTML = groupname;
+    document.getElementById('newtaxagroupname').value = groupname;
+    // console.log(placeholder);
+    document.getElementById('taxagroupchangebutton').removeAttribute("onclick");
+    document.getElementById('taxagroupchangebutton').setAttribute('onclick', 'changeGroupName(' + placeholder + ')');
+}
+
+function changeGroupName(placeholder) {
+    // console.log(placeholder === 1);
+    var oldtaxagroup = document.getElementById('taxagroupdata').rows[placeholder].children[0].innerHTML;
+    var newtaxagroup = document.getElementById('newtaxagroupname').value;
+    console.log('Old name: ' + oldtaxagroup + '\n New name: ' + newtaxagroup);
+    updateNewTaxaName(oldtaxagroup, newtaxagroup);
+    taxaGroups[placeholder-1].name = newtaxagroup;
+    document.getElementById('taxagroupdata').rows[placeholder].children[0].innerHTML = newtaxagroup;
+}
+
+function updateNewTaxaName(oldtag, newtag) {
     var table = document.getElementById('taxadata');
-    console.log('Removed Tag: ' + tag);
-    for (var i = 1, row; row=table.rows[i]; i++) {
+    console.log('Removed Tag: ' + oldtag);
+    for (var i = 1, row; row = table.rows[i]; i++) {
         //Each tag in row
-        for(var j = 0; j < row.children[2].children.length; j++){
-            if(row.children[2].children[j].innerHTML === tag){
+        for (var j = 0; j < row.children[2].children.length; j++) {
+            if (row.children[2].children[j].innerHTML === oldtag) {
                 // console.log(row.children[2].children[j].innerHTML);
-                console.log('Removes tag')
-                row.children[2].removeChild(row.children[2].children[j]);
+                // console.log('Removes tag');
+                // row.children[2].removeChild(row.children[2].children[j]);
+                row.children[2].children[j].innerHTML = newtag;
+                console.log(row.children[2].children[j].innerHTML);
             }
         }
+    }
+}
+
+
+function filterTaxaTag() {
+    var input, filter, table, tr, td, i;
+    input = document.getElementById("taxatagfilter");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("taxadata");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[1];
+      if (td) {
+        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }       
     }
 }
 

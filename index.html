@@ -30,10 +30,12 @@
 
         <!--Nexus Parser -->
         <script src="./src/js/nexusparser.js"></script>
+
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         
     </head>
     <body>
-    
+
         <h1 class="maintitle" align="center">
             <a href="https://revbayes.github.io/" style="color: inherit; text-decoration: none;">
                 <img src="./src/img/revbayessymbol.png" alt="RevBayes" width="40px" height="40px" href="https://revbayes.github.io/" >
@@ -100,7 +102,13 @@
                                         <tr>
                                             <th style="width: 10%"><input id="selectalltaxacheckbox" type="Checkbox" onchange="selectAllTaxa()" disabled></th>
                                             <th style="width: 80%">Taxa</th>
-                                            <th style="width: 10%">Tags</th>
+                                            <th style="width: 10%">
+                                                <!-- <select class="custom-select" id="taxatagfilter" onchange="filterTaxaTag()">
+                                                    <option selected>Tags</option>
+                                                    <option>name</option>
+                                                </select> -->
+                                                Tags
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody id="taxadatatable">
@@ -135,17 +143,49 @@
                                     <table class="table table-bordered" style="width:100%;" id="taxagroupdata" >
                                         <thead>
                                             <tr>
-                                                <th>Taxa Group</th>
+                                                <th style="width: 85%;">Taxa Group</th>
+                                                <th style="width: 15%;"></th>
                                             </tr>
                                         </thead>
                                         <tbody id="taxagrouptable">
                                             <tr>
-                                                <td contenteditable='true'>No group is created...</td>
+                                                <td>No group is created...</td>
+                                                <td></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                                <button class="btn btn-default" style="float:right;" type="button" onclick="changeGroupName()">Change Name</button>
+                                <!--For debugging-->
+                                <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#taxagroupoption">Open Modal</button> -->
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="taxagroupoption" role="dialog">
+                                    <div class="modal-dialog modal-sm">
+                                    
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title" id="modalheader">Taxa Group</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                        <!-- <p>Some text in the modal.</p> -->
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                <span class="input-group-text">Change Name: </span>
+                                                </div>
+                                                <input type="text" class="form-control" id="newtaxagroupname">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal"id="taxagroupchangebutton">Save</button>
+                                        </div>
+                                    </div>
+                                    
+                                    </div>
+                                </div>
+
+
                             </div>
                             <div class="col-sm-3 col-xs-3">
                                 <div  style="height: 61vh; overflow-y:auto; background: white; border: black; border-style: solid; border-width: 1%;">
