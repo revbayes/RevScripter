@@ -80,7 +80,7 @@ function createTaxaOptions() {
     $('#taxadatasearch').keyup(debounce(function () {
         var value = $(this).val().toLowerCase();
         $rows.filter(function () {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            $(this).toggle(($(this).children(':eq(1)').text().toLowerCase().indexOf(value) > -1) && checkTaginFilter($(this).children(':eq(1)').text()))
         });
     }, 300));
 
@@ -101,13 +101,32 @@ function createTaxaOptions() {
         };
     };
 
-
     //Updates Select Table
     updateSelectTable();
 
     //Updates Taxa Group Table
     resetTaxaGroupTable();
+}
 
+function checkTaginFilter(taxaname) {
+    var input, filter, table, tr, td;
+    input = document.getElementById("taxatagfilter");
+    filter = input.value.toUpperCase();
+    var firstOptionSelected = input.selectedIndex === 0;
+    if (firstOptionSelected) {
+        return true;
+    } else {
+        for (var i = 0; i < taxaGroups.length; i++){
+            if(taxaGroups[i].name.toUpperCase() === filter){
+                for (var j = 0; j < taxaGroups[i].taxa.length; j++){
+                    if (taxaGroups[i].taxa[j] === taxaname){
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    return false;
 }
 
 function updateTaxaTags(groupname, taxaset) {
@@ -273,6 +292,25 @@ function createTaxaGroup() {
 
     //Updates the Taxa tags
     updateTaxaTags(taxagroup.name, selectedTaxa);
+
+    //Udates taxa filter select
+    addOptionToTaxaFilter(taxagroup.name);
+}
+
+function addOptionToTaxaFilter(tag) {
+    var select = document.getElementById('taxatagfilter');
+    var opt = document.createElement('option');
+    opt.innerHTML = tag;
+    select.appendChild(opt);
+}
+
+function changeOptionInTaxaFilter(oldTag, newTag) {
+    var select = document.getElementById('taxatagfilter');
+    for (var i = 0; i < select.children.length; i++) {
+        if (select.children[i].innerHTML === oldTag) {
+            select.children[i].innerHTML = newTag;
+        }
+    }
 }
 
 // function updateTaxaGroupTable() {
@@ -343,7 +381,7 @@ function resetTaxaGroupTable() {
 function addTaxaGroupToTable(groupname) {
 
     //Deletes messag in table if this is the first group that is created
-    if(taxaGroups.length === 1){
+    if (taxaGroups.length === 1) {
         $("#taxagrouptable").empty();
     }
 
@@ -366,8 +404,8 @@ function addTaxaGroupToTable(groupname) {
     a.setAttribute('data-toggle', 'modal');
     a.setAttribute('href', '#taxagroupoption');
     a.setAttribute('style', 'color: inherit; text-decoration: none;');
-    a.setAttribute('onclick', 'openModalOption(\'' + placeholder +'\')');
-   
+    a.setAttribute('onclick', 'openModalOption(\'' + placeholder + '\')');
+
     var i = document.createElement('i');
     i.setAttribute('class', 'glyphicon glyphicon-pencil');
     // i.setAttribute('style', 'float: right;');
@@ -383,7 +421,7 @@ function addTaxaGroupToTable(groupname) {
 
 }
 
-function openModalOption(placeholder){
+function openModalOption(placeholder) {
     var groupname = document.getElementById('taxagroupdata').rows[placeholder].children[0].innerHTML;
     document.getElementById('modalheader').innerHTML = groupname;
     document.getElementById('newtaxagroupname').value = groupname;
@@ -396,15 +434,16 @@ function changeGroupName(placeholder) {
     // console.log(placeholder === 1);
     var oldtaxagroup = document.getElementById('taxagroupdata').rows[placeholder].children[0].innerHTML;
     var newtaxagroup = document.getElementById('newtaxagroupname').value;
-    console.log('Old name: ' + oldtaxagroup + '\n New name: ' + newtaxagroup);
-    updateNewTaxaName(oldtaxagroup, newtaxagroup);
-    taxaGroups[placeholder-1].name = newtaxagroup;
+    // console.log('Old name: ' + oldtaxagroup + '\n New name: ' + newtaxagroup);
+    taxaGroups[placeholder - 1].name = newtaxagroup;
     document.getElementById('taxagroupdata').rows[placeholder].children[0].innerHTML = newtaxagroup;
+    updateNewTaxaName(oldtaxagroup, newtaxagroup);
+    changeOptionInTaxaFilter(oldtaxagroup, newtaxagroup);
 }
 
 function updateNewTaxaName(oldtag, newtag) {
     var table = document.getElementById('taxadata');
-    console.log('Removed Tag: ' + oldtag);
+    // console.log('Removed Tag: ' + oldtag);
     for (var i = 1, row; row = table.rows[i]; i++) {
         //Each tag in row
         for (var j = 0; j < row.children[2].children.length; j++) {
@@ -419,23 +458,42 @@ function updateNewTaxaName(oldtag, newtag) {
     }
 }
 
-
 function filterTaxaTag() {
-    var input, filter, table, tr, td, i;
+    var input, filter, table, tr, td;
     input = document.getElementById("taxatagfilter");
     filter = input.value.toUpperCase();
     table = document.getElementById("taxadata");
     tr = table.getElementsByTagName("tr");
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[1];
-      if (td) {
-        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
+    var firstOptionSelected = input.selectedIndex === 0;
+    //Search input value
+    var searchinput = $('#taxadatasearch').val().toLowerCase();
+    var $rows = $('#taxadatatable tr');
+    console.log("Search box: " + searchinput);
+
+    console.log("Filter: " + filter);
+    for (var i = 1, row; row = table.rows[i]; i++) {
+        //sets display to none
+        row.style.display = "none"
+
+        //Checks if first menu option is selected
+        if (firstOptionSelected) {
+            row.style.display = "";
         } else {
-          tr[i].style.display = "none";
+            //Each tag in row
+            for (var j = 0; j < row.children[2].children.length; j++) {
+                //Checks if row has tags and if tag matches filter
+                if (row.children[2].children.length !== 0 && row.children[2].children[j].innerHTML.toUpperCase() === filter) {
+                    row.style.display = "";
+                }
+            }
         }
-      }       
     }
+
+    //Filters with the search input
+    $rows.filter(function () {
+        $(this).toggle(($(this).children(':eq(1)').text().toLowerCase().indexOf(searchinput) > -1) && checkTaginFilter($(this).children(':eq(1)').text()))
+    });
+
 }
 
 //Updates the data displayer
