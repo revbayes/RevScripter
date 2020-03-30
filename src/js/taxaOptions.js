@@ -137,7 +137,7 @@ function checkTaginFilter(taxaname) {
     return false;
 }
 
-function updateTaxaTags(groupname, taxaset) {
+function createTaxaTags(groupname, taxaset) {
 
     var table = document.getElementById('taxadata');
     for (var i = 0, row; row = table.rows[i]; i++) {
@@ -299,7 +299,7 @@ function createTaxaGroup() {
     addTaxaGroupToTable(taxagroup.name);
 
     //Updates the Taxa tags
-    updateTaxaTags(taxagroup.name, selectedTaxa);
+    createTaxaTags(taxagroup.name, selectedTaxa);
 
     //Udates taxa filter select
     addOptionToTaxaFilter(taxagroup.name);
@@ -414,18 +414,28 @@ function changeGroupInfo(placeholder) {
     } else {
         taxaGroups[placeholder - 1].monophyletic = false;
     }
-    updateNewTaxaName(oldtaxagroup, newtaxagroup);
+    updateGroupTaxa(oldtaxagroup, newtaxagroup, taxaGroups[placeholder - 1].monophyletic);
     changeOptionInTaxaFilter(oldtaxagroup, newtaxagroup);
 }
 
-function updateNewTaxaName(oldtag, newtag) {
+function updateGroupTaxa(oldtag, newtag, monophyletic) {
     var table = document.getElementById('taxadata');
     // console.log('Removed Tag: ' + oldtag);
     for (var i = 1, row; row = table.rows[i]; i++) {
         //Each tag in row
         for (var j = 0; j < row.children[2].children.length; j++) {
+            console.log("Tag colour: " + row.children[2].children[j].style.background)
+            console.log("Monophyletic: " + monophyletic)
+            // row.children[2].children[j].style.background = 'red';
+            //Changes Tag Name
             if (row.children[2].children[j].innerHTML === oldtag) {
                 row.children[2].children[j].innerHTML = newtag;
+                //Changes Tag color if it is monophyletic
+                if (monophyletic === true) {
+                    row.children[2].children[j].style.background = '#ffb3b3';
+                } else {
+                    row.children[2].children[j].style.background = '#e1ecf4';
+                }
             }
         }
     }
