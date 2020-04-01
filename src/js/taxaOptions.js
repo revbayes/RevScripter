@@ -101,8 +101,23 @@ function createTaxaOptions() {
         };
     };
 
+
+    $('#taxadatatable').on('click', '.clickable-row', function(event) {
+        $(this).addClass('active').siblings().removeClass('active');
+      });
+
+    //Adds the highlighted
+    $('#taxadatatable').on('click', '.clickable-row', function(event) {
+        if($(this).hasClass('active')){
+          $(this).removeClass('active'); 
+        } else {
+          $(this).addClass('active').siblings().removeClass('active');
+        }
+      });
+      
+
+    //Adds functionality to create taxa group
     $("#creategroupform").on('submit', function (e) {
-        //ajax call here
         createTaxaGroup();
 
         //stop form submission
