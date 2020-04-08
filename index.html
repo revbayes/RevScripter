@@ -99,9 +99,20 @@
                         <div class="row">
                             <div class="col-sm-3 col-xs-3">
                                 <div class="tableFixHead taxa-displayer">
-                                               <!-- <select class="custom-select">
-                                                    <option selected>Tags</option>
-                                                </select></th> -->
+                                            <ul class="nav">
+                                                <li class="nav-item dropdown">
+                                                    <!-- <a class="nav-link dropdown-toggle"  data-toggle="dropdown" >Add/Remove Tag</a> -->
+                                                    <button class="nav-link dropdown-toggle"  data-toggle="dropdown" >Add/Remove Tag</button>
+                                                    <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
+                                                        <div id="addremovetaxa">
+                                                            <h4 id="addremoveheader">No Taxa selected</h4>
+                                                            <!-- <input style="margin-bottom: 15px;" type="checkbox" placeholder="Username" id="username" name="checkbox123"> -->
+                                                            <!-- <label for=checkbox123> Taxa 1 </label> -->
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+
                                     <table class="table table-bordered" style="width:100%;" id="taxadata" >
                                     <thead id="taxadatahead">
                                         <tr>
@@ -115,7 +126,7 @@
                                         </tr>
                                     </thead>
                                     <tbody id="taxadatatable">
-                                        <tr>
+                                        <tr class="clickableRow">
                                             <td></td>
                                             <td>No file is entered...</td>
                                             <td></td>

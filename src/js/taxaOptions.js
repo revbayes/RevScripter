@@ -102,19 +102,43 @@ function createTaxaOptions() {
     };
 
 
-    $('#taxadatatable').on('click', '.clickable-row', function(event) {
-        $(this).addClass('active').siblings().removeClass('active');
-      });
+    // $('#taxadatatable').on('click', '.clickable-row', function(event) {
+    //     $(this).addClass('active').siblings().removeClass('active');
+    //   });
 
-    //Adds the highlighted
-    $('#taxadatatable').on('click', '.clickable-row', function(event) {
-        if($(this).hasClass('active')){
-          $(this).removeClass('active'); 
+    // //Adds the highlighted
+    // $('#taxadatatable').on('click', '.clickable-row', function(event) {
+    //     if($(this).hasClass('active')){
+    //       $(this).removeClass('active'); 
+    //     } else {
+    //       $(this).addClass('active').siblings().removeClass('active');
+    //     }
+    //   });
+    //Function to highlight table and call edit remove function.
+    $('#taxadata').on('click', 'tbody tr', function(event) {
+        var taxaname = $(this)[0].children[1].innerHTML;
+        if($(this).hasClass('highlight')) {
+            $(this).removeClass('highlight');
+            // console.log($(this)[0].children[1].innerHTML);
+            //Updates Header
+            document.getElementById('addremoveheader').innerHTML = "No taxa is selected";
+            updateAddRemoveCheckboxes(taxaname);
         } else {
-          $(this).addClass('active').siblings().removeClass('active');
+            $(this).addClass('highlight').siblings().removeClass('highlight');
+            // console.log($(this)[0].children[1].innerHTML);
+            //Updates Header
+            document.getElementById('addremoveheader').innerHTML = taxaname;
+            updateAddRemoveCheckboxes(taxaname);
         }
-      });
-      
+    });
+
+    //Was with the add remove button
+    // $(document).ready(function(){
+    //     //Handles menu drop down
+    //     $('.dropdown-menu').find('form').click(function (e) {
+    //         e.stopPropagation();
+    //     });
+    // });
 
     //Adds functionality to create taxa group
     $("#creategroupform").on('submit', function (e) {
@@ -129,6 +153,24 @@ function createTaxaOptions() {
 
     //Updates Taxa Group Table
     resetTaxaGroupTable();
+}
+
+function updateAddRemoveCheckboxes(taxaname){
+    var form = document.getElementById('addremovetaxa');
+    // console.log(form);
+    var i;
+    for(i = 1; i < form.children.length; i++) {
+        if (i%2 !== 0){
+            // console.log(form.children[i].name);
+            // console.log('TaxaGroup for checkbox: ' + taxaGroups[i-1].name);
+            // console.log('Is taxa in group: ' + compareTaxa(taxaname, taxaGroups[i-1].taxa))
+            // if(compareTaxa(taxaname, taxaGroups[i-1].taxa)) {
+            //     form.children[i].checked = true;
+            // } else {
+            //     form.children[i].checked = false;
+            // }
+        }
+    }
 }
 
 function checkTaginFilter(taxaname) {
@@ -168,6 +210,7 @@ function createTaxaTags(groupname, taxaset) {
 
 }
 
+//Checks if given taxa is in the given taxaset
 function compareTaxa(taxa, taxaset) {
 
     for (var i = 0; i < taxaset.length; i++) {
@@ -318,6 +361,23 @@ function createTaxaGroup() {
 
     //Udates taxa filter select
     addOptionToTaxaFilter(taxagroup.name);
+
+    //Updates the add/remove form
+    addGroupToTagForm(taxagroup.name);
+}
+
+function addGroupToTagForm(taxatag){
+    var taxaname = taxatag + 'checkbox';
+    var check = $("<input type=\"checkbox\" style=\"margin-bottom: 15px; margin-right: 10px;\" placeholder=\"Username\" id=\"" + taxaname + "\" name=\"" + taxaname + "\" />");
+    var label = $("<label for=\"" + taxaname + "\"><label/>");
+    label[0].innerHTML =taxatag;
+    //Sets the function to call to remove taxa or add taxa to group
+    // check[0].setAttribute("onchange", "updateSelectTable()");
+    var form = document.getElementById('addremovetaxa');
+    form.append(check[0]);
+    form.append(label[0]);
+    linebreak = document.createElement("br");
+    form.appendChild(linebreak);
 }
 
 function addOptionToTaxaFilter(tag) {
