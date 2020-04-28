@@ -86,37 +86,46 @@
                                 <input id="taxadatasearch" type="text" class="form-control" placeholder="Filter" disabled></input>
                             </div>
                             <div class="col-sm-3 col-xs-3" >
-                                <form id="creategroupform" >
+                                <!-- <form id="creategroupform" > -->
                                 <div class="input-group">
                                     <input id="taxagroupcreate" type="text" class="form-control" placeholder="Group Name" required="required" disabled/>
                                     <span class="input-group-btn">
-                                        <button id="taxagroupcreatebutton" class="btn btn-default" type="submit" disabled>Create</button>
+                                        <button id="taxagroupcreatebutton" class="btn btn-default" onclick="createTaxaGroup()" disabled>Create</button>
                                     </span>
                                 </div>
-                                </form>
+                                <!-- </form> -->
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-3 col-xs-3">
                                 <div class="tableFixHead taxa-displayer">
-                                            <ul class="nav">
-                                                <li class="nav-item dropdown">
+                                            <!-- <ul class="nav">
+                                                <li class="nav-item dropdown"> -->
                                                     <!-- <a class="nav-link dropdown-toggle"  data-toggle="dropdown" >Add/Remove Tag</a> -->
-                                                    <button class="nav-link dropdown-toggle"  data-toggle="dropdown" >Add/Remove Tag</button>
-                                                    <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
-                                                        <div id="addremovetaxa">
-                                                            <h4 id="addremoveheader">No Taxa selected</h4>
-                                                            <!-- <input style="margin-bottom: 15px;" type="checkbox" placeholder="Username" id="username" name="checkbox123"> -->
-                                                            <!-- <label for=checkbox123> Taxa 1 </label> -->
+                                                    <!-- <button class="nav-link dropdown-toggle"  data-toggle="dropdown" >Add/Remove Tag</button>
+                                                    
+                                                    <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;"> -->
+                                                        <!-- Form keeps menu from hiding when clicking inside -->
+                                                        <!-- <form>
+                                                        <div id="addremovetaxaAll">
+                                                            <h5>Remove Tag From All</h5>
                                                         </div>
+                                                        <div id="addremovetaxaSome">
+                                                            <h5>Add Tag to Missing</h5>
+                                                        </div>
+                                                        <div id="addremovetaxaNone">
+                                                            <h5>Add Tag to All</h5>
+                                                        </div>
+                                                        </form>
                                                     </div>
+                                                
                                                 </li>
-                                            </ul>
-
+                                            </ul> -->
+                                            
                                     <table class="table table-bordered" style="width:100%;" id="taxadata" >
                                     <thead id="taxadatahead">
                                         <tr>
-                                            <th style="width: 10%"><input id="selectalltaxacheckbox" type="Checkbox" onchange="selectAllTaxa()" disabled></th>
+                                            <th style="width: 10%"><input id="selectalltaxacheckbox" type="Checkbox" onchange="selectAllTaxa(); updateAddRemoveForm();" disabled></th>
                                             <th style="width: 80%">Taxa</th>
                                             <th style="width: 10%">
                                                 <select class="custom-select" id="taxatagfilter" onchange="filterTaxaTag()">
@@ -126,7 +135,7 @@
                                         </tr>
                                     </thead>
                                     <tbody id="taxadatatable">
-                                        <tr class="clickableRow">
+                                        <tr>
                                             <td></td>
                                             <td>No file is entered...</td>
                                             <td></td>
@@ -134,6 +143,31 @@
                                     </tbody>
                                     </table>
                                 </div>
+                                <ul class="nav">
+                                    <li class="nav-item dropup">
+                                        <!-- <a class="nav-link dropdown-toggle"  data-toggle="dropdown" >Add/Remove Tag</a> -->
+                                        <button class="nav-link btn btn-default dropdown-toggle"  data-toggle="dropdown" >Add/Remove Tag</button>
+                                        
+                                        <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;" onclick="event.stopPropagation();">
+                                            <!-- Form keeps menu from hiding when clicking inside -->
+                                            <form>
+                                            <h5>Remove Tag From All</h5>
+                                            <div id="addremovetaxaAll">
+                                                
+                                            </div>
+                                            <h5>Add Tag to Missing</h5>
+                                            <div id="addremovetaxaSome">
+                                                
+                                            </div>
+                                            <h5>Add Tag to All</h5>
+                                            <div id="addremovetaxaNone">
+
+                                            </div>
+                                            </form>
+                                        </div>
+                                    
+                                    </li>
+                                </ul>
                             </div>
                             <div class="col-sm-3 col-xs-3">
                                 <div class="tableFixHead taxa-displayer">
@@ -150,7 +184,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <button id="resetselecttaxa" class="btn btn-default" style="float:right;" type="button" onclick="resetSelectTable()" disabled>Reset</button>
+                                <button id="resetselecttaxa" class="btn btn-default" type="button" onclick="resetSelectTable()" disabled>Reset</button>
                             </div>
                             <div class="col-sm-3 col-xs-3">
                                 <div class="tableFixHead taxa-displayer">

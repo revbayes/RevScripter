@@ -188,8 +188,3 @@ li.active a, li.active a:hover {
     padding-top: 1%;
  }
 
-.table tbody tr.highlight td {
-    background-color: #ddd;
-}
-
-#login-nav input { margin-bottom: 15px; }

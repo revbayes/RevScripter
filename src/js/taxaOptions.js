@@ -32,7 +32,7 @@ function createTaxaOptions() {
             //Checks for each option
             var check = $("<input type=\"checkbox\"/>");
             //Sets the function to call for each checkbox on change
-            check[0].setAttribute("onchange", "updateSelectTable()");
+            check[0].setAttribute("onchange", "updateSelectTable();  updateAddRemoveForm();");
             var td = document.createElement('TD');
             td.appendChild(check[0]);
             //Taxa names
@@ -101,76 +101,19 @@ function createTaxaOptions() {
         };
     };
 
-
-    // $('#taxadatatable').on('click', '.clickable-row', function(event) {
-    //     $(this).addClass('active').siblings().removeClass('active');
-    //   });
-
-    // //Adds the highlighted
-    // $('#taxadatatable').on('click', '.clickable-row', function(event) {
-    //     if($(this).hasClass('active')){
-    //       $(this).removeClass('active'); 
-    //     } else {
-    //       $(this).addClass('active').siblings().removeClass('active');
-    //     }
-    //   });
-    //Function to highlight table and call edit remove function.
-    $('#taxadata').on('click', 'tbody tr', function(event) {
-        var taxaname = $(this)[0].children[1].innerHTML;
-        if($(this).hasClass('highlight')) {
-            $(this).removeClass('highlight');
-            // console.log($(this)[0].children[1].innerHTML);
-            //Updates Header
-            document.getElementById('addremoveheader').innerHTML = "No taxa is selected";
-            updateAddRemoveCheckboxes(taxaname);
-        } else {
-            $(this).addClass('highlight').siblings().removeClass('highlight');
-            // console.log($(this)[0].children[1].innerHTML);
-            //Updates Header
-            document.getElementById('addremoveheader').innerHTML = taxaname;
-            updateAddRemoveCheckboxes(taxaname);
-        }
-    });
-
-    //Was with the add remove button
-    // $(document).ready(function(){
-    //     //Handles menu drop down
-    //     $('.dropdown-menu').find('form').click(function (e) {
-    //         e.stopPropagation();
-    //     });
-    // });
-
     //Adds functionality to create taxa group
-    $("#creategroupform").on('submit', function (e) {
-        createTaxaGroup();
+    // $("#creategroupform").on('submit', function (e) {
+    //     createTaxaGroup();
 
-        //stop form submission
-        e.preventDefault();
-    });
+    //     //stop form submission
+    //     e.preventDefault();
+    // });
 
     //Updates Select Table
     updateSelectTable();
 
     //Updates Taxa Group Table
     resetTaxaGroupTable();
-}
-
-function updateAddRemoveCheckboxes(taxaname){
-    var form = document.getElementById('addremovetaxa');
-    // console.log(form);
-    var i;
-    for(i = 1; i < form.children.length; i++) {
-        if (i%2 !== 0){
-            // console.log(form.children[i].name);
-            // console.log('TaxaGroup for checkbox: ' + taxaGroups[i-1].name);
-            // console.log('Is taxa in group: ' + compareTaxa(taxaname, taxaGroups[i-1].taxa))
-            // if(compareTaxa(taxaname, taxaGroups[i-1].taxa)) {
-            //     form.children[i].checked = true;
-            // } else {
-            //     form.children[i].checked = false;
-            // }
-        }
-    }
 }
 
 function checkTaginFilter(taxaname) {
@@ -194,7 +137,8 @@ function checkTaginFilter(taxaname) {
     return false;
 }
 
-function createTaxaTags(groupname, taxaset) {
+//Creates tag for given taxaset in taxatable
+function createTaxaTags(groupname, taxaset, monophyletic) {
 
     var table = document.getElementById('taxadata');
     for (var i = 0, row; row = table.rows[i]; i++) {
@@ -204,6 +148,11 @@ function createTaxaTags(groupname, taxaset) {
             var tag = document.createElement('a');
             tag.className = "group-tag";
             tag.appendChild(document.createTextNode(groupname));
+            if (monophyletic === true) {
+                tag.style.background = '#ffb3b3';
+            } else {
+                tag.style.background = '#e1ecf4';
+            }
             row.cells[2].append(tag);
         }
     }
@@ -266,7 +215,6 @@ function updateSelectTable() {
         //Adds disabled to create a taxa group form
         disableSelectedTaxaForms(true);
 
-
         //Tr that is appended to tbody
         var tr = document.createElement('TR');
         //Td that is appended to Tr
@@ -278,6 +226,328 @@ function updateSelectTable() {
     }
 
 }
+
+function updateAddRemoveForm() {
+    console.log("This is the add remove function.");
+    //Empty each option
+    $("#addremovetaxaAll").empty();
+    $("#addremovetaxaSome").empty();
+    $("#addremovetaxaNone").empty();
+    // console.log("Both groups: ");
+    // printGroup(0);
+    // printGroup(1);
+
+    //If no taxa is selected
+
+    //If taxa is selected
+    //Going to get all the taxa groups from each taxa.
+    for (var i = 0; i < taxaGroups.length; i++) {
+        var hasTaxa = false;
+        var hasAllTaxa = 0;
+        //checks each taxa is in each group
+        for (var j = 0; j < selectedTaxa.length; j++) {
+            if (compareTaxa(selectedTaxa[j], taxaGroups[i].taxa)) {
+                hasTaxa = true;
+                hasAllTaxa++;
+            }
+        }
+        //Adds group to correct option
+        if (hasTaxa) {
+            //All have tag
+            if (hasAllTaxa === selectedTaxa.length) {
+                // console.log(taxaGroups[i].name + " is in all.")
+                var a = document.createElement('a');
+                // a.setAttribute('data-toggle', 'modal');
+                a.setAttribute('href', '#taxagroupoption');
+                a.setAttribute('style', 'color: inherit; text-decoration: none; font: 16px Arial; display: block; ');
+                // a.setAttribute('onclick', 'changeTaxaGroup(\'' + taxaGroups[i].name + '\', \'r\')');
+                a.setAttribute('onclick', 'removeTaxaFromGroup(' + i + ')');
+
+
+                var ielement = document.createElement('i');
+                ielement.appendChild(document.createTextNode(taxaGroups[i].name));
+                var br = document.createElement('br');
+                var br2 = document.createElement('br');
+                // i.setAttribute('class', 'glyphicon glyphicon-pencil');
+                a.appendChild(ielement);
+                var form = document.getElementById('addremovetaxaAll');
+                form.appendChild(a);
+                // form.appendChild(br);
+                // form.appendChild(br2);
+                // Some have tag
+            } else {
+                // console.log(taxaGroups[i].name + " is in some.")
+                var a = document.createElement('a');
+                // a.setAttribute('data-toggle', 'modal');
+                a.setAttribute('href', '#taxagroupoption');
+                a.setAttribute('style', 'color: inherit; text-decoration: none; font: 16px Arial; display: block;  ');
+                a.setAttribute('onclick', 'addMissingTaxaToGroup(' + i + ')');
+
+                var ielement = document.createElement('i');
+                ielement.appendChild(document.createTextNode(taxaGroups[i].name));
+                var br = document.createElement('br');
+                var br2 = document.createElement('br');
+                // i.setAttribute('class', 'glyphicon glyphicon-pencil');
+                a.appendChild(ielement);
+                var form = document.getElementById('addremovetaxaSome');
+                form.appendChild(a);
+                // form.appendChild(br);
+                // form.appendChild(br2);
+            }
+            //None have tag
+        } else {
+            // console.log(taxaGroups[i].name + " is in none.")
+            var a = document.createElement('a');
+            // a.setAttribute('data-toggle', 'modal');
+            a.setAttribute('href', '#taxagroupoption');
+            a.setAttribute('style', 'color: inherit; text-decoration: none; font: 16px Arial; display: block;');
+            a.setAttribute('onclick', 'addTaxaToGroup(' + i + ')');
+
+            var ielement = document.createElement('i');
+            ielement.appendChild(document.createTextNode(taxaGroups[i].name));
+            var br = document.createElement('br');
+            var br2 = document.createElement('br');
+            // i.setAttribute('class', 'glyphicon glyphicon-pencil');
+            a.appendChild(ielement);
+            var form = document.getElementById('addremovetaxaNone');
+            form.appendChild(a);
+            // form.appendChild(br);
+            // form.appendChild(br2);
+        }
+    }
+
+}
+
+function addTaxaToGroup(placeholder) {
+    var newgroup = [];
+    // for(var i = 0; i < taxaGroups[placeholder].taxa.length; i++){
+    //     newgroup.push(taxaGroups[placeholder].taxa[i]);
+    // }
+    console.log("before:");
+    printGroup(0);
+    printGroup(1);
+    for (var j = 0; j < selectedTaxa.length; j++) {
+        taxaGroups[placeholder].taxa.push(selectedTaxa[j]);
+    }
+    //taxaGroups[placeholder].taxa = newgroup;
+    console.log("after:");
+    printGroup(0);
+    printGroup(1);
+    createTaxaTags(taxaGroups[placeholder].name, selectedTaxa, taxaGroups[placeholder].monophyletic);
+    updateAddRemoveForm();
+}
+
+function addMissingTaxaToGroup(placeholder) {
+    // var newgroup = taxaGroups[placeholder].taxa;
+    var newgroup = [];
+    var missingSet = [];
+    //for(var i = 0; i < taxaGroups[placeholder].taxa.length; i++){
+    // newgroup.push(taxaGroups[placeholder].taxa[i]);
+    //}
+    console.log("before:");
+    printGroup(0);
+    printGroup(1);
+    for (var j = 0; j < selectedTaxa.length; j++) {
+        if (compareTaxa(selectedTaxa[j], taxaGroups[placeholder].taxa) === false) {
+            // newgroup.push(selectedTaxa[j]);
+            taxaGroups[placeholder].taxa.push(selectedTaxa[j]);
+            missingSet.push(selectedTaxa[j]);
+        }
+    }
+    // taxaGroups[placeholder].taxa = newgroup;
+    console.log("after:");
+    printGroup(0);
+    printGroup(1);
+    createTaxaTags(taxaGroups[placeholder].name, missingSet, taxaGroups[placeholder].monophyletic);
+    updateAddRemoveForm();
+}
+
+function removeTaxaFromGroup(placeholder) {
+    var newgroup = [];
+    console.log("before:");
+    printGroup(0);
+    printGroup(1);
+
+    for (var j = 0; j < taxaGroups[placeholder].taxa.length; j++) {
+        if (compareTaxa(taxaGroups[placeholder].taxa[j], selectedTaxa) === true) {
+            removeGroupTag(taxaGroups[placeholder].taxa[j], taxaGroups[placeholder].name);
+        } else {
+            newgroup.push(taxaGroups[placeholder].taxa[j]);
+        }
+    }
+
+    taxaGroups[placeholder].taxa = deepCopyFunction(newgroup);
+    // console.log("taxa that is changed: " + taxaGroups[placeholder].taxa)
+    // console.log("Test for remove taxa from group");
+    console.log("after:");
+    printGroup(0);
+    printGroup(1);
+    updateAddRemoveForm();
+}
+
+
+/*
+function changeTaxaGroup(groupname, change) {
+    console.log("Group is: " + groupname + ". And change is: " + change);
+    //Adds Tag to all
+    if (change === "a") {
+        console.log("Before:")
+        printGroup(0);
+        printGroup(1);
+        for (var i = 0; i < taxaGroups.length; i++) {
+            if (groupname === taxaGroups[i].name) {
+                // for (var j = 0; j < selectedTaxa.length; j++) {
+                taxaGroups[i].taxa = addAllSetToGroup(taxaGroups[i].taxa, selectedTaxa);
+                // }
+            }
+        }
+        createTaxaTags(groupname, selectedTaxa);
+        console.log("After:")
+        printGroup(0);
+        printGroup(1);
+    }
+    //Adds Tag to missing
+    if (change === "m") {
+        // console.log("Before:")
+        // printGroup(0);
+        // printGroup(1);
+        var missingSet = [];
+        let group = taxaGroups.find((p) => {
+            return p.name === groupname;
+        });
+        console.log("this is the group name: " + group.name + " and Group Taxa: " + group.taxa);
+
+        // for (var i = 0; i < taxaGroups.length; i++) {
+        //     if (groupname === taxaGroups[i].name) {
+        // for (var j = 0; j < selectedTaxa.length; j++) {
+        // var newGroup = {name: taxaGroups[i].name, taxa: [], monophyletic: taxaGroups[i].monophyletic};
+        // console.log("New Group that is changeded: " + taxaGroups[i].length);
+        //             missingSet = findMissingSetInGroup(group.taxa, selectedTaxa);
+        //             // // console.log("Taxa that is missed: " + missingSet);
+        //             var newtaxa = addAllSetToGroup(group.taxa, missingSet);
+        //             // taxaGroups[i] = newGroup;
+        //             // console.log("Gruop after it is changeded: " + taxaGroups[i].length);
+        //         // }
+        // //     }
+        // // }
+        // group.taxa = newtaxa;
+        
+        for (var j = 0; j < selectedTaxa.length; j++) {
+            var isInGroup = false;
+            for (var n = 0; n < group.taxa.length; n++) {
+                if (selectedTaxa[j] === group.taxa[n]) {
+                    isInGroup = true;
+                }
+            }
+            if (isInGroup === false) {
+                missingSet.push(selectedTaxa[j])
+                console.log("Before:")
+                printGroup(0);
+                printGroup(1);
+                group.taxa.push(selectedTaxa[j])
+                console.log("After:")
+                printGroup(0);
+                printGroup(1);
+            }
+        }
+
+
+        createTaxaTags(groupname, missingSet);
+        // console.log("After:")
+        // printGroup(0);
+        // printGroup(1);
+
+    }
+    //Removes Tag from all
+    if (change === "r") {
+        for (var i = 0; i < taxaGroups.length; i++) {
+            if (groupname === taxaGroups[i].name) {
+
+                for (var j = 0; j < selectedTaxa.length; j++) {
+                    for (var n = 0; n < taxaGroups[i].taxa.length; n++) {
+                        if (selectedTaxa[j] === taxaGroups[i].taxa[n]) {
+                            console.log("Before:")
+                            printGroup(0);
+                            printGroup(1);
+                            removeGroupTag(taxaGroups[i].taxa[n], taxaGroups[i].name);
+                            taxaGroups[i].taxa = removeTaxaFromGroup(taxaGroups[i].taxa, selectedTaxa[j]);
+                            // (taxaGroups[i].taxa).splice(n, 1);
+                            // console.log("Group that is changed: " + taxaGroups[i].name);
+                            // console.log("Taxa that is Changed(temp): " + temp);
+                            // taxaGroups[i].taxa = temp;
+                            console.log("After:")
+                            printGroup(0);
+                            printGroup(1);
+                            // console.log("Group that is changed: " + taxaGroups[i].name);
+                            // console.log("Taxa that is Changed: " + taxaGroups[i].taxa);
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    //Updates the add/remove form and taxa tags
+    updateAddRemoveForm();
+
+
+}
+
+//Finds given taxa set to taxagroup, if they are missing
+function findMissingSetInGroup(group, taxaset) {
+    var missingGroup = [];
+    // for (var i = 0; i < group.length; i++){
+    for (var j = 0; j < taxaset.length; j++) {
+        if (!compareTaxa(taxaset[j], group)) {
+            missingGroup.push(taxaset[j]);
+        }
+    }
+    // }
+    return missingGroup;
+}
+
+//Adds given taxa set to taxagroup
+function addAllSetToGroup(group, taxaset) {
+    var newgroup = group;
+    // for (var i = 0; i < group.length; i++){
+    for (var j = 0; j < taxaset.length; j++) {
+        newgroup.push(taxaset[j]);
+    }
+    // }
+    return newgroup;
+}*/
+
+//Removes given taxa from taxa group
+// function removeTaxaFromGroup(group, taxa) {
+//     var newgroup = [];
+//     for (var i = 0; i < group.length; i++) {
+//         if (group[i] !== taxa) {
+//             newgroup.push(group[i]);
+//         }
+//     }
+//     return newgroup;
+// }
+
+//Removes tag from given taxa in taxa table
+function removeGroupTag(taxaname, taxatag) {
+    var table = document.getElementById('taxadata');
+    for (var i = 0, row; row = table.rows[i]; i++) {
+        var rowname = row.cells[1].innerHTML;
+        //Finds the row in taxa table
+        if (taxaname === rowname) {
+            //finds tag in taxatable
+            for (var j = 0; j < row.children[2].children.length; j++) {
+                //Removes 
+                if (row.children[2].children[j].innerHTML === taxatag) {
+                    row.children[2].removeChild(row.children[2].children[j]);
+                }
+            }
+
+        }
+    }
+}
+
 
 function selectAllTaxa() {
     var checktaxa = false;
@@ -346,39 +616,64 @@ function disableSelectedTaxaForms(disable) {
     }
 }
 
+//Deep copy function - https://medium.com/javascript-in-plain-english/how-to-deep-copy-objects-and-arrays-in-javascript-7c911359b089
+function deepCopyFunction(inObject) {
+    let outObject, value, key
+
+    if (typeof inObject !== "object" || inObject === null) {
+        return inObject // Return the value if inObject is not an object
+    }
+
+    // Create an array or object to hold the values
+    outObject = Array.isArray(inObject) ? [] : {}
+
+    for (key in inObject) {
+        value = inObject[key]
+
+        // Recursively (deep) copy for nested objects, including arrays
+        outObject[key] = deepCopyFunction(value)
+    }
+
+    return outObject
+}
+
 function createTaxaGroup() {
-    var taxagroup = { name: $("#taxagroupcreate").val(), taxa: selectedTaxa, monophyletic: false };
-    taxaGroups.push(taxagroup);
+    //If group is not empty or name is already created.
+    if ($("#taxagroupcreate").val() && /\S/.test($("#taxagroupcreate").val()) && !ifGroupExists($("#taxagroupcreate").val())) {
+        var taxagroup = { name: $("#taxagroupcreate").val(), taxa: [], monophyletic: false };
+        //Deep copies selected taxa to taxa of created group
+        taxagroup.taxa = deepCopyFunction(selectedTaxa);
 
-    //clears the  taxa group input name
-    $("#taxagroupcreate").val('');
+        taxaGroups.push(taxagroup);
 
-    //Updates Taxa Group Table
-    addTaxaGroupToTable(taxagroup.name);
+        //clears the  taxa group input name
+        $("#taxagroupcreate").val('');
 
-    //Updates the Taxa tags
-    createTaxaTags(taxagroup.name, selectedTaxa);
+        //Updates Taxa Group Table
+        addTaxaGroupToTable(taxagroup.name);
 
-    //Udates taxa filter select
-    addOptionToTaxaFilter(taxagroup.name);
+        //Updates the Taxa tags
+        createTaxaTags(taxagroup.name, selectedTaxa, taxagroup.monophyletic);
 
-    //Updates the add/remove form
-    addGroupToTagForm(taxagroup.name);
+        //Udates taxa filter select
+        addOptionToTaxaFilter(taxagroup.name);
+
+        //Updates add remove option
+        updateAddRemoveForm();
+    } else {
+        console.log("Can't create a group");
+    }
 }
 
-function addGroupToTagForm(taxatag){
-    var taxaname = taxatag + 'checkbox';
-    var check = $("<input type=\"checkbox\" style=\"margin-bottom: 15px; margin-right: 10px;\" placeholder=\"Username\" id=\"" + taxaname + "\" name=\"" + taxaname + "\" />");
-    var label = $("<label for=\"" + taxaname + "\"><label/>");
-    label[0].innerHTML =taxatag;
-    //Sets the function to call to remove taxa or add taxa to group
-    // check[0].setAttribute("onchange", "updateSelectTable()");
-    var form = document.getElementById('addremovetaxa');
-    form.append(check[0]);
-    form.append(label[0]);
-    linebreak = document.createElement("br");
-    form.appendChild(linebreak);
+function ifGroupExists(inputname){
+    for(var i = 0; i < taxaGroups.length; i++){
+        if(inputname === taxaGroups[i].name){
+            return true;
+        }
+    }
+    return false;
 }
+
 
 function addOptionToTaxaFilter(tag) {
     var select = document.getElementById('taxatagfilter');
@@ -387,6 +682,7 @@ function addOptionToTaxaFilter(tag) {
     select.appendChild(opt);
 }
 
+//Changes group tag in filter with new tag name
 function changeOptionInTaxaFilter(oldTag, newTag) {
     var select = document.getElementById('taxatagfilter');
     for (var i = 0; i < select.children.length; i++) {
@@ -461,6 +757,7 @@ function addTaxaGroupToTable(groupname) {
 
 }
 
+//Updates modal option for each group, when the modal is opened. And gives onlclick function to each group in group table.
 function openModalOption(placeholder) {
     var groupname = document.getElementById('taxagroupdata').rows[placeholder].children[0].innerHTML;
     //Changes the modal header to groupname
@@ -477,6 +774,7 @@ function openModalOption(placeholder) {
     document.getElementById('taxagroupchangebutton').setAttribute('onclick', 'changeGroupInfo(' + placeholder + ')');
 }
 
+//Updates group information with information from modal form
 function changeGroupInfo(placeholder) {
     //Updates group table and array with new name
     var oldtaxagroup = document.getElementById('taxagroupdata').rows[placeholder].children[0].innerHTML;
@@ -489,18 +787,23 @@ function changeGroupInfo(placeholder) {
     } else {
         taxaGroups[placeholder - 1].monophyletic = false;
     }
+    //Updates new group information for tags in taxa table
     updateGroupTaxa(oldtaxagroup, newtaxagroup, taxaGroups[placeholder - 1].monophyletic);
+    //Updates taxa filter with name on input
     changeOptionInTaxaFilter(oldtaxagroup, newtaxagroup);
+    //Updates add/remove pop-up form
+    updateAddRemoveForm();
 }
 
+//Updates the new group tag from modal to taxa table
 function updateGroupTaxa(oldtag, newtag, monophyletic) {
     var table = document.getElementById('taxadata');
     // console.log('Removed Tag: ' + oldtag);
     for (var i = 1, row; row = table.rows[i]; i++) {
         //Each tag in row
         for (var j = 0; j < row.children[2].children.length; j++) {
-            console.log("Tag colour: " + row.children[2].children[j].style.background)
-            console.log("Monophyletic: " + monophyletic)
+            // console.log("Tag color: " + row.children[2].children[j].style.background)
+            // console.log("Monophyletic: " + monophyletic)
             // row.children[2].children[j].style.background = 'red';
             //Changes Tag Name
             if (row.children[2].children[j].innerHTML === oldtag) {
@@ -558,4 +861,9 @@ function filterTaxaTag() {
 function updateDataDisplayer() {
     //TODO
 
+}
+
+//For debugging
+function printGroup(index) {
+    console.log("Groupname: " + taxaGroups[index].name + " Taxa: " + taxaGroups[index].taxa + " M: " + taxaGroups[index].monophyletic);
 }
