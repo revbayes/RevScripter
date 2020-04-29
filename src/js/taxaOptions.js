@@ -323,16 +323,16 @@ function addTaxaToGroup(placeholder) {
     // for(var i = 0; i < taxaGroups[placeholder].taxa.length; i++){
     //     newgroup.push(taxaGroups[placeholder].taxa[i]);
     // }
-    console.log("before:");
-    printGroup(0);
-    printGroup(1);
+    // console.log("before:");
+    // printGroup(0);
+    // printGroup(1);
     for (var j = 0; j < selectedTaxa.length; j++) {
         taxaGroups[placeholder].taxa.push(selectedTaxa[j]);
     }
     //taxaGroups[placeholder].taxa = newgroup;
-    console.log("after:");
-    printGroup(0);
-    printGroup(1);
+    // console.log("after:");
+    // printGroup(0);
+    // printGroup(1);
     createTaxaTags(taxaGroups[placeholder].name, selectedTaxa, taxaGroups[placeholder].monophyletic);
     updateAddRemoveForm();
 }
@@ -344,9 +344,9 @@ function addMissingTaxaToGroup(placeholder) {
     //for(var i = 0; i < taxaGroups[placeholder].taxa.length; i++){
     // newgroup.push(taxaGroups[placeholder].taxa[i]);
     //}
-    console.log("before:");
-    printGroup(0);
-    printGroup(1);
+    // console.log("before:");
+    // printGroup(0);
+    // printGroup(1);
     for (var j = 0; j < selectedTaxa.length; j++) {
         if (compareTaxa(selectedTaxa[j], taxaGroups[placeholder].taxa) === false) {
             // newgroup.push(selectedTaxa[j]);
@@ -355,18 +355,18 @@ function addMissingTaxaToGroup(placeholder) {
         }
     }
     // taxaGroups[placeholder].taxa = newgroup;
-    console.log("after:");
-    printGroup(0);
-    printGroup(1);
+    // console.log("after:");
+    // printGroup(0);
+    // printGroup(1);
     createTaxaTags(taxaGroups[placeholder].name, missingSet, taxaGroups[placeholder].monophyletic);
     updateAddRemoveForm();
 }
 
 function removeTaxaFromGroup(placeholder) {
     var newgroup = [];
-    console.log("before:");
-    printGroup(0);
-    printGroup(1);
+    // console.log("before:");
+    // printGroup(0);
+    //printGroup(1);
 
     for (var j = 0; j < taxaGroups[placeholder].taxa.length; j++) {
         if (compareTaxa(taxaGroups[placeholder].taxa[j], selectedTaxa) === true) {
@@ -379,9 +379,9 @@ function removeTaxaFromGroup(placeholder) {
     taxaGroups[placeholder].taxa = deepCopyFunction(newgroup);
     // console.log("taxa that is changed: " + taxaGroups[placeholder].taxa)
     // console.log("Test for remove taxa from group");
-    console.log("after:");
-    printGroup(0);
-    printGroup(1);
+    // console.log("after:");
+    // printGroup(0);
+    //printGroup(1);
     updateAddRemoveForm();
 }
 
@@ -660,6 +660,9 @@ function createTaxaGroup() {
 
         //Updates add remove option
         updateAddRemoveForm();
+
+        //Enbales export groups button
+        $('#exportgroupsbtn').removeAttr('disabled');
     } else {
         console.log("Can't create a group");
     }
@@ -819,6 +822,7 @@ function updateGroupTaxa(oldtag, newtag, monophyletic) {
     }
 }
 
+//Filters taxa by selected tag
 function filterTaxaTag() {
     var input, filter, table, tr, td;
     input = document.getElementById("taxatagfilter");
@@ -856,6 +860,39 @@ function filterTaxaTag() {
     });
 
 }
+
+// //Exports created taxa groups to a text file
+// function exportTaxaGroups(){
+//     console.log('Exporting taxa groups');
+//     var groupstext;
+//     var mconstraint;
+//     for(var i =0; i<taxaGroups.length;i++){
+//         //var group = taxaGroups[i].name + " = clade(";
+//         var groups = [];
+//         for(var j = 0;j<taxaGroups[i].taxa.length;j++){
+//             var group = "\"" + taxaGroups[i].taxa[j] + "\"";
+//             groups.push(group);
+//         }
+//         groups.join(", ");
+//         //group = group + ")";
+//     }
+//     console.log(groupstext);
+//     // downloadFile("taxagroups", document.getElementById('scriptBox').value);
+// }
+
+// //function dowloads the file to the users computer
+// function downloadFile(filename, text) {
+//     var element = document.createElement('a');
+//     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+//     element.setAttribute('download', filename);
+  
+//     element.style.display = 'none';
+//     document.body.appendChild(element);
+  
+//     element.click();
+  
+//     document.body.removeChild(element);
+// }
 
 //Updates the data displayer
 function updateDataDisplayer() {
