@@ -183,6 +183,18 @@ li.active a, li.active a:hover {
     padding: 3px 5px;
 }
 
+.addremove-tag {
+    color:black !important; 
+    /* background: #e1ecf4;  */
+    text-decoration: none !important;
+    /* border: 1px solid #e1ecf4;  */
+    margin: 2px 2px 2px 2px; 
+    text-align: center;
+    padding: 3px 5px;
+    font: 16px;
+    display: block;
+}
+
 .modal-body .row {
     padding-bottom: 1%;
     padding-top: 1%;

@@ -238,84 +238,110 @@ function updateAddRemoveForm() {
     // printGroup(1);
 
     //If no taxa is selected
-
-    //If taxa is selected
-    //Going to get all the taxa groups from each taxa.
-    for (var i = 0; i < taxaGroups.length; i++) {
-        var hasTaxa = false;
-        var hasAllTaxa = 0;
-        //checks each taxa is in each group
-        for (var j = 0; j < selectedTaxa.length; j++) {
-            if (compareTaxa(selectedTaxa[j], taxaGroups[i].taxa)) {
-                hasTaxa = true;
-                hasAllTaxa++;
+    if (selectedTaxa.length !== 0) {
+        //If taxa is selected
+        //Going to get all the taxa groups from each taxa.
+        for (var i = 0; i < taxaGroups.length; i++) {
+            var hasTaxa = false;
+            var hasAllTaxa = 0;
+            //checks each taxa is in each group
+            for (var j = 0; j < selectedTaxa.length; j++) {
+                if (compareTaxa(selectedTaxa[j], taxaGroups[i].taxa)) {
+                    hasTaxa = true;
+                    hasAllTaxa++;
+                }
             }
-        }
-        //Adds group to correct option
-        if (hasTaxa) {
-            //All have tag
-            if (hasAllTaxa === selectedTaxa.length) {
-                // console.log(taxaGroups[i].name + " is in all.")
-                var a = document.createElement('a');
-                // a.setAttribute('data-toggle', 'modal');
-                a.setAttribute('href', '#taxagroupoption');
-                a.setAttribute('style', 'color: inherit; text-decoration: none; font: 16px Arial; display: block; ');
-                // a.setAttribute('onclick', 'changeTaxaGroup(\'' + taxaGroups[i].name + '\', \'r\')');
-                a.setAttribute('onclick', 'removeTaxaFromGroup(' + i + ')');
+            //Adds group to correct option
+            if (hasTaxa) {
+                //All have tag
+                if (hasAllTaxa === selectedTaxa.length) {
+                    // console.log(taxaGroups[i].name + " is in all.")
+                    var a = document.createElement('a');
+                    // a.setAttribute('data-toggle', 'modal');
+                    a.setAttribute('href', '#taxagroupoption');
+                    a.className = "addremove-tag";
+                    // if (taxaGroups[i].monophyletic === true) {
+                    //     a.style.background = '#ffb3b3';
+                    // } else {
+                    //     a.style.background = '#e1ecf4';
+                    // }
+                    // a.setAttribute('onclick', 'changeTaxaGroup(\'' + taxaGroups[i].name + '\', \'r\')');
+                    a.setAttribute('onclick', 'removeTaxaFromGroup(' + i + ')');
 
 
-                var ielement = document.createElement('i');
-                ielement.appendChild(document.createTextNode(taxaGroups[i].name));
-                var br = document.createElement('br');
-                var br2 = document.createElement('br');
-                // i.setAttribute('class', 'glyphicon glyphicon-pencil');
-                a.appendChild(ielement);
-                var form = document.getElementById('addremovetaxaAll');
-                form.appendChild(a);
-                // form.appendChild(br);
-                // form.appendChild(br2);
-                // Some have tag
+                    var ielement = document.createElement('i');
+                    ielement.appendChild(document.createTextNode(taxaGroups[i].name));
+                    //testing
+                    ielement.setAttribute('style', 'padding: 3px 5px;');
+                    if (taxaGroups[i].monophyletic === true) {
+                        ielement.style.background = '#ffb3b3';
+                    } else {
+                        ielement.style.background = '#e1ecf4';
+                    }
+                    var br = document.createElement('br');
+                    var br2 = document.createElement('br');
+                    // i.setAttribute('class', 'glyphicon glyphicon-pencil');
+                    a.appendChild(ielement);
+                    var form = document.getElementById('addremovetaxaAll');
+                    form.appendChild(a);
+                    // form.appendChild(br);
+                    // form.appendChild(br2);
+                    // Some have tag
+                } else {
+                    // console.log(taxaGroups[i].name + " is in some.")
+                    var a = document.createElement('a');
+                    // a.setAttribute('data-toggle', 'modal');
+                    a.setAttribute('href', '#taxagroupoption');
+                    a.className = "addremove-tag";
+                    a.setAttribute('onclick', 'addMissingTaxaToGroup(' + i + ')');
+
+                    var ielement = document.createElement('i');
+                    ielement.appendChild(document.createTextNode(taxaGroups[i].name));
+                    //testing
+                    ielement.setAttribute('style', 'padding: 3px 5px;');
+                    if (taxaGroups[i].monophyletic === true) {
+                        ielement.style.background = '#ffb3b3';
+                    } else {
+                        ielement.style.background = '#e1ecf4';
+                    }
+                    var br = document.createElement('br');
+                    var br2 = document.createElement('br');
+                    // i.setAttribute('class', 'glyphicon glyphicon-pencil');
+                    a.appendChild(ielement);
+                    var form = document.getElementById('addremovetaxaSome');
+                    form.appendChild(a);
+                    // form.appendChild(br);
+                    // form.appendChild(br2);
+                }
+                //None have tag
             } else {
-                // console.log(taxaGroups[i].name + " is in some.")
+                // console.log(taxaGroups[i].name + " is in none.")
                 var a = document.createElement('a');
                 // a.setAttribute('data-toggle', 'modal');
                 a.setAttribute('href', '#taxagroupoption');
-                a.setAttribute('style', 'color: inherit; text-decoration: none; font: 16px Arial; display: block;  ');
-                a.setAttribute('onclick', 'addMissingTaxaToGroup(' + i + ')');
+                a.className = "addremove-tag";
+                a.setAttribute('onclick', 'addTaxaToGroup(' + i + ')');
 
                 var ielement = document.createElement('i');
                 ielement.appendChild(document.createTextNode(taxaGroups[i].name));
+                //testing
+                ielement.setAttribute('style', 'padding: 3px 5px;');
+                if (taxaGroups[i].monophyletic === true) {
+                    ielement.style.background = '#ffb3b3';
+                } else {
+                    ielement.style.background = '#e1ecf4';
+                }
                 var br = document.createElement('br');
                 var br2 = document.createElement('br');
                 // i.setAttribute('class', 'glyphicon glyphicon-pencil');
                 a.appendChild(ielement);
-                var form = document.getElementById('addremovetaxaSome');
+                var form = document.getElementById('addremovetaxaNone');
                 form.appendChild(a);
                 // form.appendChild(br);
                 // form.appendChild(br2);
             }
-            //None have tag
-        } else {
-            // console.log(taxaGroups[i].name + " is in none.")
-            var a = document.createElement('a');
-            // a.setAttribute('data-toggle', 'modal');
-            a.setAttribute('href', '#taxagroupoption');
-            a.setAttribute('style', 'color: inherit; text-decoration: none; font: 16px Arial; display: block;');
-            a.setAttribute('onclick', 'addTaxaToGroup(' + i + ')');
-
-            var ielement = document.createElement('i');
-            ielement.appendChild(document.createTextNode(taxaGroups[i].name));
-            var br = document.createElement('br');
-            var br2 = document.createElement('br');
-            // i.setAttribute('class', 'glyphicon glyphicon-pencil');
-            a.appendChild(ielement);
-            var form = document.getElementById('addremovetaxaNone');
-            form.appendChild(a);
-            // form.appendChild(br);
-            // form.appendChild(br2);
         }
     }
-
 }
 
 function addTaxaToGroup(placeholder) {
@@ -382,152 +408,17 @@ function removeTaxaFromGroup(placeholder) {
     // console.log("after:");
     // printGroup(0);
     //printGroup(1);
+
+    //Checks if group is empty and deletes from taxa groups if it is
+    if (taxaGroups[placeholder].taxa.length === 0) {
+        console.log("Delete taxa group!")
+        deleteTaxaGroup(placeholder);
+        if (taxaGroups.length === 0) {
+            $('#exportgroupsbtn').attr({ 'disabled': 'disabled' });
+        }
+    }
     updateAddRemoveForm();
 }
-
-
-/*
-function changeTaxaGroup(groupname, change) {
-    console.log("Group is: " + groupname + ". And change is: " + change);
-    //Adds Tag to all
-    if (change === "a") {
-        console.log("Before:")
-        printGroup(0);
-        printGroup(1);
-        for (var i = 0; i < taxaGroups.length; i++) {
-            if (groupname === taxaGroups[i].name) {
-                // for (var j = 0; j < selectedTaxa.length; j++) {
-                taxaGroups[i].taxa = addAllSetToGroup(taxaGroups[i].taxa, selectedTaxa);
-                // }
-            }
-        }
-        createTaxaTags(groupname, selectedTaxa);
-        console.log("After:")
-        printGroup(0);
-        printGroup(1);
-    }
-    //Adds Tag to missing
-    if (change === "m") {
-        // console.log("Before:")
-        // printGroup(0);
-        // printGroup(1);
-        var missingSet = [];
-        let group = taxaGroups.find((p) => {
-            return p.name === groupname;
-        });
-        console.log("this is the group name: " + group.name + " and Group Taxa: " + group.taxa);
-
-        // for (var i = 0; i < taxaGroups.length; i++) {
-        //     if (groupname === taxaGroups[i].name) {
-        // for (var j = 0; j < selectedTaxa.length; j++) {
-        // var newGroup = {name: taxaGroups[i].name, taxa: [], monophyletic: taxaGroups[i].monophyletic};
-        // console.log("New Group that is changeded: " + taxaGroups[i].length);
-        //             missingSet = findMissingSetInGroup(group.taxa, selectedTaxa);
-        //             // // console.log("Taxa that is missed: " + missingSet);
-        //             var newtaxa = addAllSetToGroup(group.taxa, missingSet);
-        //             // taxaGroups[i] = newGroup;
-        //             // console.log("Gruop after it is changeded: " + taxaGroups[i].length);
-        //         // }
-        // //     }
-        // // }
-        // group.taxa = newtaxa;
-        
-        for (var j = 0; j < selectedTaxa.length; j++) {
-            var isInGroup = false;
-            for (var n = 0; n < group.taxa.length; n++) {
-                if (selectedTaxa[j] === group.taxa[n]) {
-                    isInGroup = true;
-                }
-            }
-            if (isInGroup === false) {
-                missingSet.push(selectedTaxa[j])
-                console.log("Before:")
-                printGroup(0);
-                printGroup(1);
-                group.taxa.push(selectedTaxa[j])
-                console.log("After:")
-                printGroup(0);
-                printGroup(1);
-            }
-        }
-
-
-        createTaxaTags(groupname, missingSet);
-        // console.log("After:")
-        // printGroup(0);
-        // printGroup(1);
-
-    }
-    //Removes Tag from all
-    if (change === "r") {
-        for (var i = 0; i < taxaGroups.length; i++) {
-            if (groupname === taxaGroups[i].name) {
-
-                for (var j = 0; j < selectedTaxa.length; j++) {
-                    for (var n = 0; n < taxaGroups[i].taxa.length; n++) {
-                        if (selectedTaxa[j] === taxaGroups[i].taxa[n]) {
-                            console.log("Before:")
-                            printGroup(0);
-                            printGroup(1);
-                            removeGroupTag(taxaGroups[i].taxa[n], taxaGroups[i].name);
-                            taxaGroups[i].taxa = removeTaxaFromGroup(taxaGroups[i].taxa, selectedTaxa[j]);
-                            // (taxaGroups[i].taxa).splice(n, 1);
-                            // console.log("Group that is changed: " + taxaGroups[i].name);
-                            // console.log("Taxa that is Changed(temp): " + temp);
-                            // taxaGroups[i].taxa = temp;
-                            console.log("After:")
-                            printGroup(0);
-                            printGroup(1);
-                            // console.log("Group that is changed: " + taxaGroups[i].name);
-                            // console.log("Taxa that is Changed: " + taxaGroups[i].taxa);
-                        }
-                    }
-                }
-
-            }
-        }
-    }
-
-    //Updates the add/remove form and taxa tags
-    updateAddRemoveForm();
-
-
-}
-
-//Finds given taxa set to taxagroup, if they are missing
-function findMissingSetInGroup(group, taxaset) {
-    var missingGroup = [];
-    // for (var i = 0; i < group.length; i++){
-    for (var j = 0; j < taxaset.length; j++) {
-        if (!compareTaxa(taxaset[j], group)) {
-            missingGroup.push(taxaset[j]);
-        }
-    }
-    // }
-    return missingGroup;
-}
-
-//Adds given taxa set to taxagroup
-function addAllSetToGroup(group, taxaset) {
-    var newgroup = group;
-    // for (var i = 0; i < group.length; i++){
-    for (var j = 0; j < taxaset.length; j++) {
-        newgroup.push(taxaset[j]);
-    }
-    // }
-    return newgroup;
-}*/
-
-//Removes given taxa from taxa group
-// function removeTaxaFromGroup(group, taxa) {
-//     var newgroup = [];
-//     for (var i = 0; i < group.length; i++) {
-//         if (group[i] !== taxa) {
-//             newgroup.push(group[i]);
-//         }
-//     }
-//     return newgroup;
-// }
 
 //Removes tag from given taxa in taxa table
 function removeGroupTag(taxaname, taxatag) {
@@ -644,6 +535,7 @@ function createTaxaGroup() {
         //Deep copies selected taxa to taxa of created group
         taxagroup.taxa = deepCopyFunction(selectedTaxa);
 
+        //Group gets added to taxa groups array
         taxaGroups.push(taxagroup);
 
         //clears the  taxa group input name
@@ -658,25 +550,43 @@ function createTaxaGroup() {
         //Udates taxa filter select
         addOptionToTaxaFilter(taxagroup.name);
 
-        //Updates add remove option
+        //Updates add/remove option
         updateAddRemoveForm();
 
-        //Enbales export groups button
+        //Enables export groups button
         $('#exportgroupsbtn').removeAttr('disabled');
     } else {
         console.log("Can't create a group");
     }
 }
 
-function ifGroupExists(inputname){
-    for(var i = 0; i < taxaGroups.length; i++){
-        if(inputname === taxaGroups[i].name){
+function ifGroupExists(inputname) {
+    for (var i = 0; i < taxaGroups.length; i++) {
+        if (inputname === taxaGroups[i].name) {
             return true;
         }
     }
     return false;
 }
 
+
+//Deletes tacagroup with given placholder
+function deleteTaxaGroup(placeholder) {
+    console.log("Deleted group: " + taxaGroups[placeholder].name);
+    var tbody = document.getElementById("taxagrouptable");
+    tbody.removeChild(tbody.children[placeholder]);
+    taxaGroups.splice(placeholder, 1);
+    // printGroup(0);
+    // printGroup(1);
+    //Removes group from group table
+    var select = document.getElementById('taxatagfilter');
+    select.removeChild(select.children[placeholder + 1]);
+    //Updates openModal method for each taxa group in table
+    // for (var i = placeholder + 1; i < taxaGroups.length+1;i++){
+    //     var groupname = document.getElementById("taxagrouptable").children[placeholder].children[1];
+    //     console.log(groupname);
+    // }
+}
 
 function addOptionToTaxaFilter(tag) {
     var select = document.getElementById('taxatagfilter');
@@ -686,7 +596,7 @@ function addOptionToTaxaFilter(tag) {
 }
 
 //Changes group tag in filter with new tag name
-function changeOptionInTaxaFilter(oldTag, newTag) {
+function updateOptionInTaxaFilter(oldTag, newTag) {
     var select = document.getElementById('taxatagfilter');
     for (var i = 0; i < select.children.length; i++) {
         if (select.children[i].innerHTML === oldTag) {
@@ -734,7 +644,7 @@ function addTaxaGroupToTable(groupname) {
     var td = document.createElement('TD');
 
     //Placeholder of the taxagroup in the table
-    var placeholder = taxaGroups.length;
+    var placeholder = taxaGroups.length - 1;
 
     //Td that is appended to Tr
     var td2 = document.createElement('TD');
@@ -762,13 +672,14 @@ function addTaxaGroupToTable(groupname) {
 
 //Updates modal option for each group, when the modal is opened. And gives onlclick function to each group in group table.
 function openModalOption(placeholder) {
-    var groupname = document.getElementById('taxagroupdata').rows[placeholder].children[0].innerHTML;
+    // var groupname = document.getElementById('taxagroupdata').rows[placeholder].children[0].innerHTML;
+    var groupname = document.getElementById("taxagrouptable").children[placeholder].children[0].innerHTML;
     //Changes the modal header to groupname
     document.getElementById('modalheader').innerHTML = groupname;
     //changes the modal input to groupname
     document.getElementById('newtaxagroupname').value = groupname;
     //Changes monophyletic input to what is selected to group
-    if (taxaGroups[placeholder - 1].monophyletic === true) {
+    if (taxaGroups[placeholder].monophyletic === true) {
         document.getElementById("monophyleticcheckbox").checked = true;
     } else {
         document.getElementById("monophyleticcheckbox").checked = false;
@@ -780,20 +691,22 @@ function openModalOption(placeholder) {
 //Updates group information with information from modal form
 function changeGroupInfo(placeholder) {
     //Updates group table and array with new name
-    var oldtaxagroup = document.getElementById('taxagroupdata').rows[placeholder].children[0].innerHTML;
+    // var oldtaxagroup = document.getElementById('taxagroupdata').rows[placeholder].children[0].innerHTML;
+    var oldtaxagroup = document.getElementById("taxagrouptable").children[placeholder].children[0].innerHTML;
     var newtaxagroup = document.getElementById('newtaxagroupname').value;
-    taxaGroups[placeholder - 1].name = newtaxagroup;
-    document.getElementById('taxagroupdata').rows[placeholder].children[0].innerHTML = newtaxagroup;
+    taxaGroups[placeholder].name = newtaxagroup;
+    // document.getElementById('taxagroupdata').rows[placeholder].children[0].innerHTML = newtaxagroup;
+    document.getElementById("taxagrouptable").children[placeholder].children[0].innerHTML = newtaxagroup;
     //Updates monophyletic boolean
     if ($('#monophyleticcheckbox').is(':checked')) {
-        taxaGroups[placeholder - 1].monophyletic = true;
+        taxaGroups[placeholder].monophyletic = true;
     } else {
-        taxaGroups[placeholder - 1].monophyletic = false;
+        taxaGroups[placeholder].monophyletic = false;
     }
     //Updates new group information for tags in taxa table
-    updateGroupTaxa(oldtaxagroup, newtaxagroup, taxaGroups[placeholder - 1].monophyletic);
+    updateGroupTaxa(oldtaxagroup, newtaxagroup, taxaGroups[placeholder].monophyletic);
     //Updates taxa filter with name on input
-    changeOptionInTaxaFilter(oldtaxagroup, newtaxagroup);
+    updateOptionInTaxaFilter(oldtaxagroup, newtaxagroup);
     //Updates add/remove pop-up form
     updateAddRemoveForm();
 }
@@ -861,38 +774,67 @@ function filterTaxaTag() {
 
 }
 
-// //Exports created taxa groups to a text file
-// function exportTaxaGroups(){
-//     console.log('Exporting taxa groups');
-//     var groupstext;
-//     var mconstraint;
-//     for(var i =0; i<taxaGroups.length;i++){
-//         //var group = taxaGroups[i].name + " = clade(";
-//         var groups = [];
-//         for(var j = 0;j<taxaGroups[i].taxa.length;j++){
-//             var group = "\"" + taxaGroups[i].taxa[j] + "\"";
-//             groups.push(group);
-//         }
-//         groups.join(", ");
-//         //group = group + ")";
-//     }
-//     console.log(groupstext);
-//     // downloadFile("taxagroups", document.getElementById('scriptBox').value);
-// }
+function openExportModal() {
+    document.getElementById('exporttaxafilename').value = "";
+    document.getElementById('exportgroupscontent').value = createTaxaGroupScript();
+}
 
-// //function dowloads the file to the users computer
-// function downloadFile(filename, text) {
-//     var element = document.createElement('a');
-//     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-//     element.setAttribute('download', filename);
+function createTaxaGroupScript() {
+    var taxagroupscript = [];
+    var monphyleticgroupname = [];
+    for (var i = 0; i < taxaGroups.length; i++) {
+        //var taxagroupname = taxaGroups[i].name + " = clade(";
+        if (taxaGroups[i].monophyletic === true) {
+            monphyleticgroupname.push(taxaGroups[i].name);
+        }
+        var groups = [];
+        for (var j = 0; j < taxaGroups[i].taxa.length; j++) {
+            var group = "\"" + taxaGroups[i].taxa[j] + "\"";
+            groups.push(group);
+        }
+        // groups.join(", ");
+        var taxagroup = "taxaset_" + taxaGroups[i].name + " = clade(" + groups.join(", ") + ")";
+        taxagroupscript.push(taxagroup);
+        //group = group + ")";
+    }
+    var monophyleticgroups = "\nmonophyl_constraints = v(" + monphyleticgroupname.join(", ") + ")";
+    taxagroupscript.push(monophyleticgroups);
+
+    return taxagroupscript.join("\n");
+}
+
+function copyTaxaGroupScript() {
+    /* Get the text field */
+    var copyText = document.getElementById('exportgroupscontent');
+
+    /* Select the text field */
+    copyText.select();
+
+    /* Copy the text inside the text field */
+    document.execCommand("copy");
+}
+
+function downloadTaxaGroupScript() {
+    //Checks if filename is empty or not
+    if ($("#exporttaxafilename").val() && /\S/.test($("#exporttaxafilename").val())) {
+        downloadTaxaGroups(document.getElementById('exporttaxafilename').value, document.getElementById('exportgroupscontent').value);
+    } else {
+        downloadTaxaGroups("taxagroups", document.getElementById('exportgroupscontent').value);
+    }
+}
+
+function downloadTaxaGroups(filename, text) {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
   
-//     element.style.display = 'none';
-//     document.body.appendChild(element);
+    element.style.display = 'none';
+    document.body.appendChild(element);
   
-//     element.click();
+    element.click();
   
-//     document.body.removeChild(element);
-// }
+    document.body.removeChild(element);
+}
 
 //Updates the data displayer
 function updateDataDisplayer() {
