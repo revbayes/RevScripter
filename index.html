@@ -86,14 +86,12 @@
                                 <input id="taxadatasearch" type="text" class="form-control" placeholder="Filter" disabled></input>
                             </div>
                             <div class="col-sm-3 col-xs-3" >
-                                <!-- <form id="creategroupform" > -->
                                 <div class="input-group">
                                     <input id="taxagroupcreate" type="text" class="form-control" placeholder="Group Name" required="required" disabled/>
                                     <span class="input-group-btn">
                                         <button id="taxagroupcreatebutton" class="btn btn-default" onclick="createTaxaGroup()" disabled>Create</button>
                                     </span>
                                 </div>
-                                <!-- </form> -->
                             </div>
                         </div>
                         <div class="row">
@@ -203,7 +201,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <button id="exportgroupsbtn" class="btn btn-default" type="button"  data-toggle="modal" data-target="#exportgroupoptions" onclick="openExportModal()">Export</button>
+                                <button id="exportgroupsbtn" class="btn btn-default" type="button"  data-toggle="modal" data-target="#exportgroupoptions" onclick="openExportModal()" disabled>Export</button>
                                 <!--For debugging-->
                                 <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#taxagroupoption">Open Modal</button> -->
 
@@ -274,7 +272,7 @@
                                                             <button type="button" class="btn btn-default" onclick="copyTaxaGroupScript()">Copy</button>
                                                             <button id="taxagroupcreatebutton" class="btn btn-default" onclick="downloadTaxaGroupScript()">Download</button>
                                                         </span>
-                                                        <input id="exporttaxafilename" type="text" class="form-control" placeholder="Filename Name" />
+                                                        <input id="exporttaxafilename" type="text" class="form-control" placeholder="Filename" />
                                                         
                                                     </div>
                                                 </div>

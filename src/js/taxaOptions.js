@@ -101,14 +101,6 @@ function createTaxaOptions() {
         };
     };
 
-    //Adds functionality to create taxa group
-    // $("#creategroupform").on('submit', function (e) {
-    //     createTaxaGroup();
-
-    //     //stop form submission
-    //     e.preventDefault();
-    // });
-
     //Updates Select Table
     updateSelectTable();
 
@@ -238,7 +230,7 @@ function updateAddRemoveForm() {
     // printGroup(1);
 
     //If no taxa is selected
-    if (selectedTaxa.length !== 0) {
+    if (selectedTaxa.length > 0) {
         //If taxa is selected
         //Going to get all the taxa groups from each taxa.
         for (var i = 0; i < taxaGroups.length; i++) {
@@ -582,10 +574,12 @@ function deleteTaxaGroup(placeholder) {
     var select = document.getElementById('taxatagfilter');
     select.removeChild(select.children[placeholder + 1]);
     //Updates openModal method for each taxa group in table
-    // for (var i = placeholder + 1; i < taxaGroups.length+1;i++){
-    //     var groupname = document.getElementById("taxagrouptable").children[placeholder].children[1];
-    //     console.log(groupname);
-    // }
+    for (var i = 0; i < taxaGroups.length;i++){
+        var groupname = document.getElementById("taxagrouptable").children[i].children[1].children[0];
+        document.getElementById("taxagrouptable").children[i].children[1].children[0].removeAttribute('onclick');
+        document.getElementById("taxagrouptable").children[i].children[1].children[0].setAttribute('onclick','openModalOption(\'' + i + '\')');
+        console.log(groupname);
+    }
 }
 
 function addOptionToTaxaFilter(tag) {
@@ -785,7 +779,7 @@ function createTaxaGroupScript() {
     for (var i = 0; i < taxaGroups.length; i++) {
         //var taxagroupname = taxaGroups[i].name + " = clade(";
         if (taxaGroups[i].monophyletic === true) {
-            monphyleticgroupname.push(taxaGroups[i].name);
+            monphyleticgroupname.push("taxaset_" + taxaGroups[i].name);
         }
         var groups = [];
         for (var j = 0; j < taxaGroups[i].taxa.length; j++) {
@@ -797,8 +791,10 @@ function createTaxaGroupScript() {
         taxagroupscript.push(taxagroup);
         //group = group + ")";
     }
-    var monophyleticgroups = "\nmonophyl_constraints = v(" + monphyleticgroupname.join(", ") + ")";
-    taxagroupscript.push(monophyleticgroups);
+    if(monphyleticgroupname.length > 0){
+        var monophyleticgroups = "\nmonophyl_constraints = v(" + monphyleticgroupname.join(", ") + ")";
+        taxagroupscript.push(monophyleticgroups);
+    }
 
     return taxagroupscript.join("\n");
 }
