@@ -80,12 +80,15 @@
 
                     <!--Taxa Options-->
                     <div id = "taxaOptions" class="tab container-fluid">
+                        <!--Header-->
                         <h2>Taxa:</h2>
                         <div class="row" style="padding-bottom: 1%;">
                             <div class="col-sm-3 col-xs-3" >
+                                <!--Filter Search Box-->
                                 <input id="taxadatasearch" type="text" class="form-control" placeholder="Filter" disabled></input>
                             </div>
                             <div class="col-sm-3 col-xs-3" >
+                                <!--Create Taxa Group Input Box and button-->
                                 <div class="input-group">
                                     <input id="taxagroupcreate" type="text" class="form-control" placeholder="Group Name" required="required" disabled/>
                                     <span class="input-group-btn">
@@ -96,30 +99,8 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-3 col-xs-3">
+                                <!--Taxa Data Table-->
                                 <div class="tableFixHead taxa-displayer">
-                                            <!-- <ul class="nav">
-                                                <li class="nav-item dropdown"> -->
-                                                    <!-- <a class="nav-link dropdown-toggle"  data-toggle="dropdown" >Add/Remove Tag</a> -->
-                                                    <!-- <button class="nav-link dropdown-toggle"  data-toggle="dropdown" >Add/Remove Tag</button>
-                                                    
-                                                    <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;"> -->
-                                                        <!-- Form keeps menu from hiding when clicking inside -->
-                                                        <!-- <form>
-                                                        <div id="addremovetaxaAll">
-                                                            <h5>Remove Tag From All</h5>
-                                                        </div>
-                                                        <div id="addremovetaxaSome">
-                                                            <h5>Add Tag to Missing</h5>
-                                                        </div>
-                                                        <div id="addremovetaxaNone">
-                                                            <h5>Add Tag to All</h5>
-                                                        </div>
-                                                        </form>
-                                                    </div>
-                                                
-                                                </li>
-                                            </ul> -->
-                                            
                                     <table class="table table-bordered" style="width:100%;" id="taxadata" >
                                     <thead id="taxadatahead">
                                         <tr>
@@ -141,33 +122,32 @@
                                     </tbody>
                                     </table>
                                 </div>
+                                <!--Add/Remove Taxa Pop-up Button and Form-->
                                 <ul class="nav">
                                     <li class="nav-item dropup">
-                                        <!-- <a class="nav-link dropdown-toggle"  data-toggle="dropdown" >Add/Remove Tag</a> -->
                                         <button class="nav-link btn btn-default dropdown-toggle"  data-toggle="dropdown" >Add/Remove Tag</button>
-                                        
                                         <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;" onclick="event.stopPropagation();">
                                             <!-- Form keeps menu from hiding when clicking inside -->
                                             <form>
-                                            <h5>Remove Tag From All</h5>
-                                            <div id="addremovetaxaAll">
-                                                
-                                            </div>
-                                            <h5>Add Tag to Missing</h5>
-                                            <div id="addremovetaxaSome">
-                                                
-                                            </div>
-                                            <h5>Add Tag to All</h5>
-                                            <div id="addremovetaxaNone">
+                                                <h5>Remove Tag From All</h5>
+                                                <div id="addremovetaxaAll">
+                                                    
+                                                </div>
+                                                <h5>Add Tag to Missing</h5>
+                                                <div id="addremovetaxaSome">
+                                                    
+                                                </div>
+                                                <h5>Add Tag to All</h5>
+                                                <div id="addremovetaxaNone">
 
-                                            </div>
+                                                </div>
                                             </form>
                                         </div>
-                                    
                                     </li>
                                 </ul>
                             </div>
                             <div class="col-sm-3 col-xs-3">
+                                <!--Selected Taxa Table and Reset Button-->
                                 <div class="tableFixHead taxa-displayer">
                                     <table class="table table-bordered" style="width:100%;" id="selectedtaxadata">
                                         <thead>
@@ -185,6 +165,7 @@
                                 <button id="resetselecttaxa" class="btn btn-default" type="button" onclick="resetSelectTable()" disabled>Reset</button>
                             </div>
                             <div class="col-sm-3 col-xs-3">
+                                <!--Taxa Group Table and Export Button-->
                                 <div class="tableFixHead taxa-displayer">
                                     <table class="table table-bordered" style="width:100%;" id="taxagroupdata" >
                                         <thead>
@@ -202,8 +183,6 @@
                                     </table>
                                 </div>
                                 <button id="exportgroupsbtn" class="btn btn-default" type="button"  data-toggle="modal" data-target="#exportgroupoptions" onclick="openExportModal()" disabled>Export</button>
-                                <!--For debugging-->
-                                <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#taxagroupoption">Open Modal</button> -->
 
                                 <!-- Modal For Editing Selected Taxa Group-->
                                 <div class="modal fade" id="taxagroupoption" role="dialog">
@@ -218,6 +197,7 @@
                                         <div class="modal-body">
                                         <div class="container">
                                             <div class="row">
+                                                <!--Input for changing name-->
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">Change Name: </span>
@@ -226,6 +206,7 @@
                                                 </div>
                                             </div>
                                             <div class="row">
+                                                <!--Monophyletic checkbox-->
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" id="monophyleticcheckbox">
                                                     <label class="form-check-label" for="defaultCheck1">Monophyletic</label>
@@ -234,6 +215,7 @@
                                         </div>
                                         </div>
                                         <div class="modal-footer">
+                                        <!--Close and Save Buttons-->
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                         <button type="button" class="btn btn-default" data-dismiss="modal"id="taxagroupchangebutton">Save</button>
                                         </div>
@@ -260,37 +242,37 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
+                                                    <!--Text Area for taxa group content-->
                                                     <div class="col-sm-6">
                                                         <textarea id="exportgroupscontent" rows="20" cols="80" readonly></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="row">
+                                                    <!--Copy and Download button-->
                                                     <div class="col-sm-4">
-                                                    <!-- <button type="button" class="btn btn-default">Download</button> -->
                                                     <div class="input-group">
                                                         <span class="input-group-btn">
                                                             <button type="button" class="btn btn-default" onclick="copyTaxaGroupScript()">Copy</button>
                                                             <button id="taxagroupcreatebutton" class="btn btn-default" onclick="downloadTaxaGroupScript()">Download</button>
                                                         </span>
                                                         <input id="exporttaxafilename" type="text" class="form-control" placeholder="Filename" />
-                                                        
                                                     </div>
                                                 </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <!--Button to close modal-->
                                         <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>
-                                    
                                     </div>
                                 </div>
 
                             </div>
                             <div class="col-sm-3 col-xs-3">
                                 <div  style="height: 61vh; overflow-y:auto; background: white; border: black; border-style: solid; border-width: 1%;">
-                                    <!-- Data displayer -->
+                                    <!-- Data displayer- TODO -->
                                 </div>
                             </div>
                             <script src="./src/js/taxaOptions.js"></script>  
