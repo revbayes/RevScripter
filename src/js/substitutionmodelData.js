@@ -1,18 +1,6 @@
-//Only if Nucleotide and Amino Acid are both being use
-/*
-function checksubstitutionModel(){
-    if(document.getElementById("datatype").value == "A"){
-        updateaminoacidModel();
-    }
-    else{
-        updatenucleotideModel();
-    }
-}
-*/
-
-//Makes the script for the Substitution Model
+/*Creates the script for Substitution Model options */
 function getSubstitutionOptions(){
-    
+    //variable for each part
     var substitutionModel = "";
     var model = "";
     var ioption = "";
@@ -31,7 +19,7 @@ function getSubstitutionOptions(){
         }
         //if it is estimated
         if($("#ef81bf").is(':checked')){
-            model = getSimplexEString("pi_F81", $("#f81bfcparameter1").val(), $("#f81bfcparameter2").val(), $("#f81bfcparameter3").val(), $("#f81bfcparameter4").val());
+            model = getSimplexEString("pi_F81", $("#f81bfcparameter0").val(), $("#f81bfcparameter0").val(), $("#f81bfcparameter0").val(), $("#f81bfcparameter0").val());
         }
         var temp = [model, getQString("F81", "pi_F81", null)];
         model = temp.join("\n");
@@ -84,7 +72,7 @@ function getSubstitutionOptions(){
         }
         //if it is estimated
         if($("#ehkybf").is(':checked')){
-            bf = getSimplexEString("pi_HKY", $("#hkybfcparameter1").val(), $("#hkybfcparameter2").val(), $("#hkybfcparameter3").val(), $("#hkybfcparameter4").val());
+            bf = getSimplexEString("pi_HKY", $("#hkybfcparameter0").val(), $("#hkybfcparameter1").val(), $("#hkybfcparameter2").val(), $("#hkybfcparameter3").val());
         }
 
         var temp = [tt, bf, getQString("HKY", "kappa_HKY", "pi_HKY")];
@@ -113,7 +101,7 @@ function getSubstitutionOptions(){
         }
         //If it is estimated
         if($("#egtre").is(':checked')){
-            er = getSimplexEString("er_GTR", $("#gtrecparameter1").val(), $("#gtrecparameter2").val(), $("#gtrecparameter3").val(), $("#gtrecparameter4").val());
+            er = getSimplex6EString("er_GTR", $("#gtrecparameter0").val(), $("#gtrecparameter1").val(), $("#gtrecparameter2").val(), $("#gtrecparameter3").val(), $("#gtrecparameter4").val(), $("#gtrecparameter5").val());
         }
 
         //Checks the basefrequency
@@ -124,7 +112,7 @@ function getSubstitutionOptions(){
         }
         //if it is estimated
         if($("#egtrbf").is(':checked')){
-            bf = getSimplexEString("pi_GTR", $("#gtrbfcparameter1").val(), $("#gtrbfcparameter2").val(), $("#gtrbfcparameter3").val(), $("#gtrbfcparameter4").val());
+            bf = getSimplexEString("pi_GTR", $("#gtrbfcparameter0").val(), $("#gtrbfcparameter1").val(), $("#gtrbfcparameter2").val(), $("#gtrbfcparameter3").val());
         }
 
         var temp = [er, bf, getQString("GTR", "er_GTR", "pi_GTR")];
@@ -204,7 +192,7 @@ function getSubstitutionOptions(){
 
 }
 
-//Makes the script for a string like "Q <- fnJC(num_char_states)"
+//Makes the script for a Q string (Ex. "Q <- fnJC(num_char_states)")
 function getQString(name, input, input2){
     if(input2){
         var scripts = ["Q := ", "fn", name, "(", input, ",", input2, ")"];
@@ -215,7 +203,7 @@ function getQString(name, input, input2){
             var scripts = ["Q <- ", "fn", name, "(", input, ")"];
         }
         else{
-            var scripts = ["Q :- ", "fn", name, "(", input, ")"];
+            var scripts = ["Q := ", "fn", name, "(", input, ")"];
         }
         return scripts.join('');
     }
@@ -245,6 +233,12 @@ function getSimplexEString(parameter, value1, value2, value3, value4){
     return scripts.join("\n");
 }
 
+//Makes the script for a 6-simplex parameter when it is estimataed
+function getSimplex6EString(parameter, value1, value2, value3, value4, value5, value6){
+    var scripts = [parameter + " ~ dnDirichlet(v(" + value1 + ", " + value2 + ", " + value3 + ", " + value4 + ", " + value5 + ", " + value6 + "))", "moves.append(mvBetaSimplex(" + parameter + "))"];
+    return scripts.join("\n");
+}
+
 //Makes the script for a probabilty parameter when it is fixed 
 //This also works for Real Pos when it is fixed
 function getProbabilityFString(parameter, value){
@@ -253,7 +247,7 @@ function getProbabilityFString(parameter, value){
 
 //Makes the script for a probability parameter when it is estimated
 function getProbabilityEString(parameter, alpha, beta){
-    var scripts = [parameter + " ~ " + "dnBeta(" + alpha + ", " + beta + ")", "moves.append(mvBetaSimplex(" + parameter + "))"];
+    var scripts = [parameter + " ~ " + "dnBeta(" + alpha + ", " + beta + ")", "moves.append(mvScale(" + parameter + "))"];
     return scripts.join("\n");
 }
 

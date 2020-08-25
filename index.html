@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv=“X-UA-Compatible” content=“IE=edge”>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>RevScripter</title>  
+
+        <!--Google font:Raleway-->
+        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
+        <!--Revbayes style sheets-->
+        <link rel="stylesheet" type="text/css" href="https://revbayes.github.io/assets/css/syntax.css">
+        <link rel="stylesheet" type="text/css" href="https://revbayes.github.io/assets/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="https://revbayes.github.io/assets/css/bootstrap-theme.css">
+        <link rel="stylesheet" type="text/css" href="https://revbayes.github.io/assets/css/main.css">
+
+        <!--Revscripter style sheet-->
+        <link rel="stylesheet" type="text/css" href="./src/css/revscripter.css">
+        
+        <!--Lodash Library-->
+        <script src="./src/js/core.min.js"></script>
+
+        <!--JQuery Library-->
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+        <!--Revbayes base.js-->
+        <script src="https://revbayes.github.io/assets/js/base.js"></script>
+
+        <!--Nexus Parser -->
+        <script src="./src/js/nexusparser.js"></script>
+
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        
+    </head>
+    <body>
+
+        <h1 class="maintitle" align="center">
+            <a href="https://revbayes.github.io/" style="color: inherit; text-decoration: none;">
+                <img src="./src/img/revbayessymbol.png" alt="RevBayes" width="40px" height="40px" href="https://revbayes.github.io/" >
+                <div style="display: inline;">RevScripter</div>
+            </a>
+        </h1>
+
+        <div class="tabs">
+
+            <!--Tabs for each section-->
+            <ul class="tab-links">
+                    <li class="active" ><a id="hometab" href="#homeOptions">Home</a></li>
+                    <li><a id="datatab" href="#dataOptions" >Data</a></li>
+                    <li><a id="taxatab" href="#taxaOptions" >Taxa</a></li>
+                    <li><a id="substitutiontab" href="#substitutionOptions">Substitution Model</a></li>
+                    <li><a id="treetab" href="#treeOptions">Tree Model</a></li>
+                    <li><a id="mcmctab" href="#mcmcOptions">MCMC</a></li>
+                    <li><a id="scripttab" href="#scriptsGenerated">Scripts</a></li>
+            </ul>
+            
+            <!--Options for each tab-->
+            <div class="tab-content">
+                    <!--Home tab-->
+                    <div id = "homeOptions"  class="tab active container">
+                        <h2>RevScripter: An Introductory Tool for Creating RevBayes Analysis Scripts</h2><br>
+                        <p>RevScripter is a web-based tool that enables researchers to create scripts describing phylogenetic models and analyses in the Rev language. These script files then can be executed in the program <a href="https://revbayes.github.io">RevBayes</a>. RevBayes is a statistical inference tool for Bayesian phylogenetics.</p>
+                        <p>RevBayes is extremely flexible and the Rev language and graphical model framework enable researchers to apply a very rich set of complex evolutionary models. The development of RevScripter was motivated by a need to provide a familiar introductory interface for RevBayes and the Rev language. It will not be possible to maintain a menu-driven graphical user interface that encompasses the wide range of models and methods available in RevBayes. Thus, this tool will be useful for those new to RevBayes to set up standard analyses and easily see how elements of the model are reflected in the generated Rev language script. </p>
+                        <p>Currently, the options available in RevScripter are limited and the tool is still very much in development. The tool can create scripts for running an unrooted analysis using nucleotide data under standard substitution models. For more details about the available models and analyses, please see the README file in the <a href="https://github.com/revbayes/revscripter">RevScripter source repository</a>.</p>
+                        <h3>How to use RevScripter</h3>
+                        <p>RevScripter is set up to guide you through the options that must be specified in the script. Start with the <i>Data</i> tab or click the <i>Get Started</i> button below. Complete your model specification and MCMC options. When you have specified a complete analysis, go to the <i>Scripts</i> tab and generate the Rev script. You will then be able to download the script as a text file or copy it to a file that you have saved locally. With a completed analysis script for RevBayes, you can run the file on your own computer (or HPC resources).</p>
+                        <p>To run the generated script in RevBayes, be sure that the file names and paths in the generated script are correct. Then open RevBayes and type the command: <tt>source myscript.Rev</tt>, where <tt>myscript.Rev</tt> is the name of the file you downloaded from RevScripter.</p>
+                        <h3>Source</h3>
+                        <p>The source code (Javascript) for RevScripter is hosted on GitHub at <a href="https://github.com/revbayes/revscripter">https://github.com/revbayes/revscripter</a></p>
+                        <br>
+                        <button onclick="gotoTab('datatab')">Get Started</button>
+                    </div>
+
+                    <!--Data Options-->
+                    <div id = "dataOptions" class="tab container">
+                        <script src="./src/js/dataOptions.js"></script>
+                    </div>
+
+                    <!--Taxa Options-->
+                    <div id = "taxaOptions" class="tab container-fluid">
+                        <!--Header-->
+                        <h2>Taxa:</h2>
+                        <div class="row" style="padding-bottom: 1%;">
+                            <div class="col-sm-4 col-xs-4" >
+                                <!--Filter Search Box-->
+                                <input id="taxadatasearch" type="text" class="form-control" placeholder="Filter" disabled></input>
+                            </div>
+                            <div class="col-sm-4 col-xs-4" >
+                                <!--Create Taxa Group Input Box and button-->
+                                <div class="input-group">
+                                    <input id="taxagroupcreate" type="text" class="form-control" placeholder="Group Name" required="required" disabled/>
+                                    <span class="input-group-btn">
+                                        <button id="taxagroupcreatebutton" class="btn btn-default" onclick="createTaxaGroup()" disabled>Create</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4 col-xs-4">
+                                <!--Taxa Data Table-->
+                                <div class="tableFixHead taxa-displayer">
+                                    <table class="table table-bordered" style="width:100%;" id="taxadata" >
+                                    <thead id="taxadatahead">
+                                        <tr>
+                                            <th style="width: 10%"><input id="selectalltaxacheckbox" type="Checkbox" onchange="selectAllTaxa(); updateAddRemoveForm();" disabled></th>
+                                            <th style="width: 80%">Taxa</th>
+                                            <th style="width: 10%">
+                                                <select class="custom-select" id="taxatagfilter" onchange="filterTaxaTag()">
+                                                    <option selected>Tags</option>
+                                                </select>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="taxadatatable">
+                                        <tr>
+                                            <td></td>
+                                            <td>No file is entered...</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                </div>
+                                <!--Add/Remove Taxa Pop-up Button and Form-->
+                                <ul class="nav">
+                                    <li class="nav-item dropup">
+                                        <button class="nav-link btn btn-default dropdown-toggle"  data-toggle="dropdown" >Add/Remove Tag</button>
+                                        <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;" onclick="event.stopPropagation();">
+                                            <!-- Form keeps menu from hiding when clicking inside -->
+                                            <form>
+                                                <h5>Remove Tag From All</h5>
+                                                <div id="addremovetaxaAll">
+                                                    
+                                                </div>
+                                                <h5>Add Tag to Missing</h5>
+                                                <div id="addremovetaxaSome">
+                                                    
+                                                </div>
+                                                <h5>Add Tag to All</h5>
+                                                <div id="addremovetaxaNone">
+
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-4 col-xs-4">
+                                <!--Selected Taxa Table and Reset Button-->
+                                <div class="tableFixHead taxa-displayer">
+                                    <table class="table table-bordered" style="width:100%;" id="selectedtaxadata">
+                                        <thead>
+                                            <tr>
+                                                <th>Selected Taxa</th> 
+                                            </tr>
+                                        </thead>
+                                        <tbody id="selectedtaxatable">
+                                            <tr>
+                                                <td>No data is selected...</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <button id="resetselecttaxa" class="btn btn-default" type="button" onclick="resetSelectTable()" disabled>Reset</button>
+                            </div>
+                            <div class="col-sm-4 col-xs-4">
+                                <!--Taxa Group Table and Export Button-->
+                                <div class="tableFixHead taxa-displayer">
+                                    <table class="table table-bordered" style="width:100%;" id="taxagroupdata" >
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 85%;">Taxa Group</th>
+                                                <th style="width: 15%;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="taxagrouptable">
+                                            <tr>
+                                                <td>No group is created...</td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <button id="exportgroupsbtn" class="btn btn-default" type="button"  data-toggle="modal" data-target="#exportgroupoptions" onclick="openExportModal()" disabled>Export</button>
+
+                                <!-- Modal For Editing Selected Taxa Group-->
+                                <div class="modal fade" id="taxagroupoption" role="dialog">
+                                    <div class="modal-dialog modal-sm">
+                                    
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title" id="modalheader">Taxa Group</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                        <div class="container">
+                                            <div class="row">
+                                                <!--Input for changing name-->
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Change Name: </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" id="newtaxagroupname">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <!--Monophyletic checkbox-->
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="monophyleticcheckbox">
+                                                    <label class="form-check-label" for="defaultCheck1">Monophyletic</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                        <!--Close and Save Buttons-->
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal"id="taxagroupchangebutton">Save</button>
+                                        </div>
+                                    </div>
+                                    
+                                    </div>
+                                </div>
+
+                                <!-- Modal For Exporting Groups-->
+                                <div class="modal fade" id="exportgroupoptions" role="dialog">
+                                    <div class="modal-dialog">
+                                    
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title" id="modalheader">Export Taxa</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <h4>Taxa Groups:</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <!--Text Area for taxa group content-->
+                                                    <div class="col-sm-6">
+                                                        <textarea id="exportgroupscontent" rows="20" cols="80" readonly></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <!--Copy and Download button-->
+                                                    <div class="col-sm-4">
+                                                    <div class="input-group">
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-default" onclick="copyTaxaGroupScript()">Copy</button>
+                                                            <button id="taxagroupcreatebutton" class="btn btn-default" onclick="downloadTaxaGroupScript()">Download</button>
+                                                        </span>
+                                                        <input id="exporttaxafilename" type="text" class="form-control" placeholder="Filename" />
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--Button to close modal-->
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- Data Displayer Box- TODO -->
+                            <!-- Change col-sm-4 on all divs to 3 before this div.-->
+                            <!-- <div class="col-sm-3 col-xs-3">
+                                <div  style="height: 61vh; overflow-y:auto; background: white; border: black; border-style: solid; border-width: 1%;"> -->
+                                    <!-- Data displayer- TODO -->
+                                <!-- </div>
+                            </div> -->
+                            <script src="./src/js/taxaOptions.js"></script>  
+                        </div>
+                        <div class="row" style="margin-top: 2%;">
+                            <div class="col-sm-3 col-xs-3">
+                                <button onclick="gotoTab('datatab')">Back</button>
+                            </div>
+                            <div class="col-sm-3 col-xs-3">
+                            </div>
+                            <div class="col-sm-3 col-xs-3">
+                            </div>
+                            <div class="col-sm-3 col-xs-3">
+                                <button onclick="gotoTab('substitutiontab')" class="nextbutton">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <!--Substitution Model Options-->
+                    <div id="substitutionOptions" class="tab container" >
+                        <script src="./src/js/substitutionmodelOptions.js"></script>
+                    </div>
+                
+                    <!--Tree Model Option-->
+                    <div id="treeOptions" class="tab container">
+                        <script src="./src/js/treemodelOptions.js"></script>
+                    </div>
+                
+                    <!--MCMC option-->
+                    <div id="mcmcOptions" class="tab container">
+                        <script src="./src/js/mcmcOptions.js"></script>
+                    </div>
+
+                    <!--Scripts Option-->
+                    <div id ="scriptsGenerated" class="tab container">
+                        <h2>Generated Script:</h2>          
+                        <button onclick ="generateScript()">Generate Script</button>
+                        <button onclick ="copyScript()">Copy Script</button>
+                        <button onclick ="downloadScript()">Download Script</button>
+                        <br>
+                        <br>
+                        <textarea id="scriptBox" rows="30" cols="80" readonly>Generated script goes here.</textarea>
+                        <br>
+                        <button onclick="gotoTab('mcmctab')" >Back</button> 
+                        <button onclick ="resetScript()">Reset</button>
+                    </div>
+            </div>
+        </div>   
+            <script src="./src/js/scriptData.js"></script>
+            <script src="./src/js/dataData.js"></script>
+            <script src="./src/js/substitutionmodelData.js"></script>
+            <script src="./src/js/treemodelData.js"></script>
+            <script src="./src/js/mcmcData.js"></script>
+
+            <!--Functions to move from tab to tab-->
+            <script>
+                    //Used to move from a tab by clicking on it 
+                    jQuery(document).ready(function() {
+	                jQuery('.tabs .tab-links a').on('click', function(e) {
+		            var currentAttrValue = jQuery(this).attr('href');
+		            // Show/Hide Tabs
+                    jQuery('.tabs ' + currentAttrValue).show().siblings().hide();
+		            // Change/remove current tab to active
+		            jQuery(this).parent('li').addClass('active').siblings().removeClass('active');
+		            e.preventDefault();
+	                });
+                    });
+
+                    //Used by the buttons to go to a certain tab, takes in the tabs id name
+                    function gotoTab(tabname){
+                        var currentAttrValue = $('#' + tabname).attr('href');
+                        // Show/Hide Tabs
+                        jQuery('.tabs ' + currentAttrValue).show().siblings().hide();
+                        // Change/remove current tab to active
+                        $('#' + tabname).parent('li').addClass('active').siblings().removeClass('active');
+                    }
+            </script>
+        
+    </body>
+</html>

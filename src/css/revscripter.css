@@ -1,0 +1,202 @@
+ 
+body{
+    padding-top: 5px;
+} 
+  
+/*Used for the Fixed radio button option*/
+.fixed{
+    margin-left: 5% !important; /*was 50px*/
+}
+
+/*Used for the inputs that are numbers*/
+.numberinput{
+    margin-right: .5%;
+    width: 6%;
+}
+  
+/*Used for numbers that are decimals*/
+.decimalnumberinput{
+    margin-right: .5%;
+    width: 8%;
+}
+  
+/*Used for checkboxes*/
+.checkboxbutton{
+    margin-left:1% !important; 
+}
+
+/*Turns the bold on labels off*/  
+label {
+    font-weight: normal !important;
+}
+
+/*Used for button*/
+.button {
+    background-color: white;
+    border: .5px solid black;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+  
+/*Used for the text area*/
+textarea { 
+    font-size: 10px;
+    resize: none;
+}
+/*Used for the radio button options*/
+.radiooptions {
+    margin-left: 5%;
+}
+  
+/*Used for the menu options*/
+.menuOption {
+    margin-left: 3%;
+}
+
+/*Used for the nect button on each tab*/
+.nextbutton {
+    float: right;
+}
+
+/*Makes sure that nothing goes outside of a tab*/
+div{
+    overflow:hidden;
+}
+
+/*Takes away the arrows from the number inputs*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+  
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+}
+  
+/*----- Tabs -----*/
+.tabs {
+	width:100%;
+	display:inline-block;
+}
+
+/*----- Tab Links -----*/
+/* Clearfix */
+.tab-links:after {
+	display:block;
+	clear:both;
+	content:'';
+}
+
+.tab-links li {
+	margin:0px 5px;
+	float:left;
+	list-style:none;
+}
+
+.tab-links lr {
+	margin:0px 5px;
+	float:right;
+    list-style:none;
+    margin-right: 2%;
+}
+
+.tab-links a {
+	padding:9px 15px;
+	display:inline-block;
+	border-radius:3px 3px 0px 0px;
+	background:#438ac7; /* #7FB5DA */
+	font-size:16px;
+	font-weight:600;
+	color:white;
+	transition:all linear 0.15s;
+}
+
+.tab-links a:hover {
+	background:#a7cce5;
+	text-decoration:none;
+}
+
+li.active a, li.active a:hover {
+	background:#fff;
+	color: black;
+}
+
+  
+/*----- Content of Tabs -----*/
+.tab-content {
+	/* padding:15px; */
+	border-radius:3px;
+	box-shadow:-1px 1px 1px rgba(0,0,0,0.15);
+    background:#fff;
+    border: 1px solid black;
+    padding-bottom: 1%;
+}
+
+.tab {
+    display:none;
+    text-align:left;
+    /* border: 1px solid black; */
+    /* padding: 5px;  */
+}
+
+.tab.active {
+    display:block;
+    text-align:left;
+    /* border: 1px solid black; */
+    /* padding: 5px;  */
+}
+
+/* Makes a tables body scrollable and fixes the header */
+.tableFixHead thead th { position: sticky; top: 0; background: #EEEEEE;}
+
+.tableFixHead tbody tr td {
+    vertical-align: middle;
+}
+
+/* Displayer for taxa tab tables */
+.taxa-displayer {
+    height: 61vh; 
+    width: 100%;
+    overflow-y: auto; 
+    background: white; 
+    border: black; 
+    border-style: solid; 
+    border-width: 1%; 
+    overflow-x: auto;
+}
+
+/* CSS for taxa group tags. */
+.group-tag {
+    color:black !important; 
+    background: #e1ecf4; 
+    text-decoration: none !important;
+    /* border: 1px solid #e1ecf4;  */
+    margin: 2px 2px 2px 2px; 
+    text-align: center;
+    padding: 3px 5px;
+}
+
+.addremove-tag {
+    color:black !important; 
+    /* background: #e1ecf4;  */
+    text-decoration: none !important;
+    /* border: 1px solid #e1ecf4;  */
+    margin: 2px 2px 2px 2px; 
+    text-align: center;
+    padding: 3px 5px;
+    font: 16px;
+    display: block;
+}
+
+.modal-body .row {
+    padding-bottom: 1%;
+    padding-top: 1%;
+ }
+
