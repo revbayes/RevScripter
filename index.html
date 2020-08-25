@@ -83,11 +83,11 @@
                         <!--Header-->
                         <h2>Taxa:</h2>
                         <div class="row" style="padding-bottom: 1%;">
-                            <div class="col-sm-3 col-xs-3" >
+                            <div class="col-sm-4 col-xs-4" >
                                 <!--Filter Search Box-->
                                 <input id="taxadatasearch" type="text" class="form-control" placeholder="Filter" disabled></input>
                             </div>
-                            <div class="col-sm-3 col-xs-3" >
+                            <div class="col-sm-4 col-xs-4" >
                                 <!--Create Taxa Group Input Box and button-->
                                 <div class="input-group">
                                     <input id="taxagroupcreate" type="text" class="form-control" placeholder="Group Name" required="required" disabled/>
@@ -98,7 +98,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3 col-xs-3">
+                            <div class="col-sm-4 col-xs-4">
                                 <!--Taxa Data Table-->
                                 <div class="tableFixHead taxa-displayer">
                                     <table class="table table-bordered" style="width:100%;" id="taxadata" >
@@ -146,7 +146,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="col-sm-3 col-xs-3">
+                            <div class="col-sm-4 col-xs-4">
                                 <!--Selected Taxa Table and Reset Button-->
                                 <div class="tableFixHead taxa-displayer">
                                     <table class="table table-bordered" style="width:100%;" id="selectedtaxadata">
@@ -164,7 +164,7 @@
                                 </div>
                                 <button id="resetselecttaxa" class="btn btn-default" type="button" onclick="resetSelectTable()" disabled>Reset</button>
                             </div>
-                            <div class="col-sm-3 col-xs-3">
+                            <div class="col-sm-4 col-xs-4">
                                 <!--Taxa Group Table and Export Button-->
                                 <div class="tableFixHead taxa-displayer">
                                     <table class="table table-bordered" style="width:100%;" id="taxagroupdata" >
@@ -270,11 +270,13 @@
                                 </div>
 
                             </div>
-                            <div class="col-sm-3 col-xs-3">
-                                <div  style="height: 61vh; overflow-y:auto; background: white; border: black; border-style: solid; border-width: 1%;">
+                            <!-- Data Displayer Box- TODO -->
+                            <!-- Change col-sm-4 on all divs to 3 before this div.-->
+                            <!-- <div class="col-sm-3 col-xs-3">
+                                <div  style="height: 61vh; overflow-y:auto; background: white; border: black; border-style: solid; border-width: 1%;"> -->
                                     <!-- Data displayer- TODO -->
-                                </div>
-                            </div>
+                                <!-- </div>
+                            </div> -->
                             <script src="./src/js/taxaOptions.js"></script>  
                         </div>
                         <div class="row" style="margin-top: 2%;">

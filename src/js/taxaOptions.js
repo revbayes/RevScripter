@@ -494,7 +494,8 @@ function createTaxaGroup() {
         //Enables export groups button
         $('#exportgroupsbtn').removeAttr('disabled');
     } else {
-        console.log("Can't create a group");
+        //debugging
+        // console.log("Can't create a group");
     }
 }
 

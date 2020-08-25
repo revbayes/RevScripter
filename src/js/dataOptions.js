@@ -68,7 +68,8 @@ function handleFileLoad(event){
 function parseData(data){
     var n = new NexusReader(data);
     taxa = n.getTaxa;
-    console.log("Taxa:" + n.getTaxa);
+    //debugging
+    //console.log("Taxa:" + n.getTaxa);
     document.getElementById('parseddata').textContent = "Datatype: " + n.getdataType + "\n\nNumber of Taxa: " + n.getNTAX + "\n\nNumber of Characters: " + n.getNCHAR;
     createTaxaOptions();
 }
