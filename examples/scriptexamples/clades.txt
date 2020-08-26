@@ -1,0 +1,22 @@
+## This example is based on the clades selected in the
+## file "clades_example_screenshot.png"
+
+# First, create a variable for each clade.
+# This will use the name created by the user
+# So this probably means, we may have to pay attention to ways
+# that user-given names may be problematic. 
+# I think it makes sense for each of these to have a prefix (taxset_)
+
+
+taxset_G1 = clade("Ailuropoda_melanoleuca", "Tremarctos_ornatus")
+taxset_G2 = clade("Tremarctos_ornatus", "Helarctos_malayanus",
+				  "Melursus_ursinus", "Ursus_americanus")
+taxset_G3 = clade("Ursus_arctos", "Ursus_thibetanus")
+taxset_G4 = clade("Ursus_arctos","Ursus_thibetanus", "Ursus_maritimus")
+
+# Next, we will handle the monophyletic constraints.
+# So the following will only apply to those that have Monophyletic == TRUE
+# Though, if we want to really don anything with these, we will deal 
+# with them in the Tree Model window.
+
+monophyl_constraints = v(taxset_G2, taxset_G4)
