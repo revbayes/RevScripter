@@ -630,8 +630,8 @@ function changeGroupInfo(placeholder) {
     //Updates taxa group table and taxa group array with new name
     var oldtaxagroup = document.getElementById("taxagrouptable").children[placeholder].children[0].innerHTML;
     var newtaxagroup = document.getElementById('newtaxagroupname').value;
-    //checks if new name from modal exists
-    if (!ifGroupExists(newtaxagroup)) {
+    //checks if new name from modal exists or if the new name is the same as old name
+    if (!ifGroupExists(newtaxagroup) || oldtaxagroup == newtaxagroup) {
         taxaGroups[placeholder].name = newtaxagroup;
         document.getElementById("taxagrouptable").children[placeholder].children[0].innerHTML = newtaxagroup;
         //Updates monophyletic boolean for taxa group
