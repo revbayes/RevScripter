@@ -200,3 +200,28 @@ li.active a, li.active a:hover {
     padding-top: 1%;
  }
 
+ /* Circle Packing Style */
+ .node {
+    cursor: pointer;
+  }
+  
+  .node:hover {
+    stroke: #000;
+    stroke-width: 1.5px;
+  }
+  
+  .node--leaf {
+    fill: white;
+  }
+  
+  .labelCirclePacking {
+    font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-anchor: middle;
+    text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+  }
+  
+  .labelCirclePacking,
+  .node--root,
+  .node--leaf {
+    pointer-events: none;
+  }
