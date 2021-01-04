@@ -802,7 +802,10 @@ function updateDataDisplayer() {
         .size([diameter - margin, diameter - margin])
         .padding(2);
 
+    //Defines array that will have the data for the displayer
     var array = { "name": "parent", "children": [] };
+    //Array keeps track of 
+    
     //Adds each taxagroup name to the displayer
     for (var i = 0; i < taxaGroups.length; i++) {
         var group = { "name": taxaGroups[i].name,"children": [] };
