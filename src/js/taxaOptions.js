@@ -805,16 +805,25 @@ function updateDataDisplayer() {
     //Defines array that will have the data for the displayer
     var array = { "name": "parent", "children": [] };
     //Array keeps track of 
-    
+    var usedGroup = [];
     //Adds each taxagroup name to the displayer
     for (var i = 0; i < taxaGroups.length; i++) {
-        var group = { "name": taxaGroups[i].name,"children": [] };
-        //Adds the name for each taxa in the group to the displayer
-        for(var j = 0; j<taxaGroups[i].taxa.length; j++){
-            var child  = { "name": taxaGroups[i].taxa[j], "size": 14 };
-            group.children.push(child);
+        if (i != usedGroup[1]) {
+            var group = { "name": taxaGroups[i].name, "children": [] };
+            //Adds the name for each taxa in the group to the displayer
+            for (var j = 0; j < taxaGroups[i].taxa.length; j++) {
+                var child = { "name": taxaGroups[i].taxa[j], "size": 14 };
+                //checks if there are any subgroups 
+                for (var n = 0; n < taxaGroups.length; n++) {
+                    if(taxaGroups[i].taxa.length > taxaGroups[n].taxa.length){
+
+                    }
+                }
+
+                group.children.push(child);
+            }
+            array.children.push(group);
         }
-        array.children.push(group);
     }
     // array.children.push(piece);
     console.log(array);
