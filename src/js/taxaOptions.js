@@ -469,7 +469,7 @@ function createTaxaGroup() {
     //Checks if group is not empty or name is already created.
     if ($("#taxagroupcreate").val() && /\S/.test($("#taxagroupcreate").val()) && !ifGroupExists($("#taxagroupcreate").val())) {
         //New group
-        var taxagroup = { name: $("#taxagroupcreate").val(), taxa: [], monophyletic: false };
+        var taxagroup = { name: $("#taxagroupcreate").val(), taxa: [], monophyletic: false, subgroups: [] };
         //Deep copies selected taxa to taxa of created group
         taxagroup.taxa = deepCopyFunction(selectedTaxa);
 
@@ -491,6 +491,9 @@ function createTaxaGroup() {
         //Updates add/remove form
         updateAddRemoveForm();
 
+        //Updates subgroups
+        updateSubgroups(taxaGroups.length - 1);
+
         //Enables export groups button
         $('#exportgroupsbtn').removeAttr('disabled');
     } else {
@@ -509,6 +512,36 @@ function ifGroupExists(inputname) {
     return false;
 }
 
+//Checks if there are any subgroups to the given taxa group or if the given taxa group is a subgroup to another group and updates the subgroup information
+//Inserted is the placeholder of the taxa group that is going to be checked
+function updateSubgroups(placeholder) {
+
+    for (var i = 0; i < taxaGroups.length; i++) {
+        //Checks if this taxa group has any subgroups
+        if (taxaGroups[i].taxa.length < taxaGroups[placeholder].taxa.length) {
+            if (compareTaxa(taxaGroups[i].taxa[0], taxaGroups[placeholder].taxa)) {
+                if (compareTaxa(taxaGroups[i].name, taxaGroups[placeholder].subgroups) == false) {
+                    taxaGroups[placeholder].subgroups.push(taxaGroups[i].name);
+                }
+            } else {
+                //Can be used to check if the group was originally added as a subgroup, but is no longer a subgruop it can be removed
+            }
+        }
+
+        //Checks if this taxa group is a subgroup to any other taxa groups
+        if (taxaGroups[i].taxa.length > taxaGroups[placeholder].taxa.length) {
+            if (compareTaxa(taxaGroups[placeholder].taxa[0], taxaGroups[i].taxa)) {
+                if (compareTaxa(taxaGroups[placeholder].name, taxaGroups[i].subgroups) == false) {
+                    taxaGroups[i].subgroups.push(taxaGroups[placeholder].name);
+                }
+            }
+        }
+        //Debug
+        console.log("Taxa: " + taxaGroups[i].name);
+        console.log("Subgroups: " + taxaGroups[i].subgroups);
+    }
+
+}
 
 //Deletes taxa group from taxa table with given placholder
 function deleteTaxaGroup(placeholder) {
@@ -815,7 +848,7 @@ function updateDataDisplayer() {
                 var child = { "name": taxaGroups[i].taxa[j], "size": 14 };
                 //checks if there are any subgroups 
                 for (var n = 0; n < taxaGroups.length; n++) {
-                    if(taxaGroups[i].taxa.length > taxaGroups[n].taxa.length){
+                    if (taxaGroups[i].taxa.length > taxaGroups[n].taxa.length) {
 
                     }
                 }
