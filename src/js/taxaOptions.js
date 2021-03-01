@@ -1,7 +1,7 @@
 //Keeps track of selected taxa from taxa table
 var selectedTaxa = [];
 
-//Keeps track of taxa groups in taxa group table, contains objects with name, taxa, and monophyletic
+//Keeps track of taxa groups in taxa group table, contains objects with name, taxa, and monophyletic, and other group information
 var taxaGroups = [];
 
 //Creates Taxa Table taxa from parsed taxa and sets different functionalities, is called each time a file is parsed
@@ -16,7 +16,7 @@ function createTaxaOptions() {
     //Taxa from parsed file
     var taxadata = getTaxa();
 
-    //Checks if taxa from parsed file is more than 0
+    //Checks if taxa from parsed file is more than 0, else no data would be put in table
     if (taxadata.length && taxadata.length !== 0) {
         //Enables the checkbox for select all taxa
         $('#selectalltaxacheckbox').attr("checked", false);
@@ -26,7 +26,7 @@ function createTaxaOptions() {
         //Clears taxa table
         $("#taxadatatable").empty();
         //Adds the taxa to the table
-        for (var i = 0; i < taxa.length; i++) {
+        for (var i = 0; i < taxadata.length; i++) {
             //Tr that is appended to tbody
             var tr = document.createElement('TR');
             //Td that is appended to Tr - checkbox
@@ -110,7 +110,8 @@ function createTaxaOptions() {
     resetTaxaGroupTable();
 }
 
-//Checks if given taxa is in current filter
+//Checks if given taxa is in current filter, used when filtering with tags
+//Takes in given taxa group name
 function checkTaginFilter(taxaname) {
     var input, filter;
     input = document.getElementById("taxatagfilter");
@@ -132,7 +133,8 @@ function checkTaginFilter(taxaname) {
     return false;
 }
 
-//Creates tag for given taxaset in taxa table, also gives color of each tag depending on given monophyletic
+//Creates tag for given taxaset in taxa table, also gives color of each tag depending on monophyletic of group
+//Takes in given taxa group name, taxa, and boolean of monophyletic
 function createTaxaTags(groupname, taxaset, monophyletic) {
     var table = document.getElementById('taxadata');
     for (var i = 0, row; row = table.rows[i]; i++) {
@@ -143,8 +145,10 @@ function createTaxaTags(groupname, taxaset, monophyletic) {
             tag.className = "group-tag";
             tag.appendChild(document.createTextNode(groupname));
             if (monophyletic === true) {
+                //Red
                 tag.style.background = '#ffb3b3';
             } else {
+                //Blue
                 tag.style.background = '#e1ecf4';
             }
             row.cells[2].append(tag);
@@ -152,7 +156,8 @@ function createTaxaTags(groupname, taxaset, monophyletic) {
     }
 }
 
-//Checks if given taxa is in the given taxaset
+//Checks if given taxa is in the given taxaset (Use this to compare other things like taxa in parent and sub groups)
+//Takes in taxa that will be checked in given set
 function compareTaxa(taxa, taxaset) {
     for (var i = 0; i < taxaset.length; i++) {
         if (taxa === taxaset[i]) {
@@ -230,7 +235,7 @@ function updateAddRemoveForm() {
     //If no taxa is selected, don't display any tags on form
     if (selectedTaxa.length > 0) {
         //If taxa is selected
-        //Iterate through all the taxa groups tags from each taxa.
+        //Iterate through all the taxa groups from each taxa. To place them in the correct section of the form.
         for (var i = 0; i < taxaGroups.length; i++) {
             //Tracks if taxa group is in some selected taxa
             var hasTaxa = false;
@@ -244,7 +249,7 @@ function updateAddRemoveForm() {
                 }
             }
             //Adds group to correct option
-            //Taxa group contains some selected taxa or none
+            //Taxa group contains some selected taxa
             if (hasTaxa) {
                 //Taxa group contains all selected taxa or some taxa
                 if (hasAllTaxa === selectedTaxa.length) {
@@ -264,6 +269,7 @@ function updateAddRemoveForm() {
                     a.appendChild(ielement);
                     var form = document.getElementById('addremovetaxaAll');
                     form.appendChild(a);
+                // Taxa group contains some of the selected taxa
                 } else {
                     var a = document.createElement('a');
                     a.setAttribute('href', '#taxagroupoption');
@@ -282,6 +288,7 @@ function updateAddRemoveForm() {
                     var form = document.getElementById('addremovetaxaSome');
                     form.appendChild(a);
                 }
+            // Taxa group contains none of the selected taxa
             } else {
                 var a = document.createElement('a');
                 a.setAttribute('href', '#taxagroupoption');
@@ -304,18 +311,66 @@ function updateAddRemoveForm() {
     }
 }
 
-//Adds all selected taxa to group,group is based on given placeholder
+//Adds all selected taxa to group
+//Group is based on given placeholder
 function addSelectedTaxaToGroup(placeholder) {
-    for (var j = 0; j < selectedTaxa.length; j++) {
-        taxaGroups[placeholder].taxa.push(selectedTaxa[j]);
+    //Checks each selected taxa to make sure it is in the parent or no group of the selected taxa
+    //variable makes sure that all selected taxa are able to be added to the group
+    var validtaxa = true;
+
+    for (var i = 0; i < taxaGroups.length; i++) {
+        //Checks if any of the selected taxa are in the taxa of group
+        const filteredArray = taxaGroups[i].taxa.filter(value => selectedTaxa.includes(value));
+        console.log(filteredArray);
+        if (filteredArray.length > 0) {
+            if (compareTaxa(taxaGroups[i].name, taxaGroups[placeholder].parentgroups) == false) {
+                validtaxa = false;
+            }
+        }
     }
-    //Creates tag for new selected taxa added to group
-    createTaxaTags(taxaGroups[placeholder].name, selectedTaxa, taxaGroups[placeholder].monophyletic);
+
+    //If all selected taxa are valid then they all get added to selected group
+    if (validtaxa) {
+        //Adds the selected taxa to the parents of selected group
+        for (var j = 0; j < taxaGroups.length; j++) {
+            if (compareTaxa(taxaGroups[j].name, taxaGroups[placeholder].parentgroups)) {
+                addTaxaToGroup(j);
+            }
+        }
+
+        //Removes it from the origal group/tag
+        addTaxaToGroup(placeholder);
+    } else {
+        //Error message
+        alert("Taxa cannot be added because it is not in the direct parent of this group, or it might be in another group.");
+    }
+
+
+    //Debugg
+    printTaxaGroups();
+
     //Updates form with new taxa in group
     updateAddRemoveForm();
 }
 
-//Adds missing selected Taxa to group, group is based on given placeholder
+//Add Taxa to group
+//Group is based on given placeholder
+function addTaxaToGroup(placeholder) {
+    var newTags = [];
+    //Adds each selected taxa to group
+    for (var i = 0; i < selectedTaxa.length; i++) {
+        //checks if the selecte taxad is already in the group
+        if (compareTaxa(selectedTaxa[i], taxaGroups[placeholder].taxa) == false) {
+            taxaGroups[placeholder].taxa.push(selectedTaxa[i]);
+            newTags.push(selectedTaxa[i]);
+        }
+    }
+    //Creates tag for new selected taxa added to group
+    createTaxaTags(taxaGroups[placeholder].name, newTags, taxaGroups[placeholder].monophyletic);
+}
+
+//Adds missing selected Taxa to group
+//Group is based on given placeholder
 function addMissingSelectedTaxaToGroup(placeholder) {
     var missingSet = [];
     for (var j = 0; j < selectedTaxa.length; j++) {
@@ -330,8 +385,40 @@ function addMissingSelectedTaxaToGroup(placeholder) {
     updateAddRemoveForm();
 }
 
-//Removes selected Taxa from group, group is based on placeholder
+//Removes selected Taxa from group
+//Group is based on placeholder
 function removeSelectedTaxaFromGroup(placeholder) {
+    //checks if any subgroups have selected taxa
+    var taxainsubgroup = false;
+    for (var i = 0; i < taxaGroups.length; i++) {
+        if (compareTaxa(taxaGroups[i].name, taxaGroups[placeholder].subgroups)) {
+            //Filters out the shared values in this taxa group array and selected taxa
+            //Checks if any of the selected taxa is in the subgroup of selected group
+            const filteredArray = taxaGroups[i].taxa.filter(value => selectedTaxa.includes(value));
+            console.log(filteredArray);
+            if (filteredArray.length > 0) {
+                taxainsubgroup = true;
+            }
+        }
+    }
+
+    // If subgroups do not have selected taxa
+    if (!taxainsubgroup) {
+
+        //Removes it from the original group/tag
+        removeTaxaFromGroup(placeholder);
+
+        //Updates form with taxa removed from group
+        updateAddRemoveForm();
+    } else {
+        //error message of subgroups
+        alert("Can't remove the taxa because this group has subgroups.");
+    }
+}
+
+//Removes Taxa from group
+//Group is based on placeholder
+function removeTaxaFromGroup(placeholder) {
     var newgroup = [];
     for (var j = 0; j < taxaGroups[placeholder].taxa.length; j++) {
         if (compareTaxa(taxaGroups[placeholder].taxa[j], selectedTaxa) === true) {
@@ -340,23 +427,51 @@ function removeSelectedTaxaFromGroup(placeholder) {
             newgroup.push(taxaGroups[placeholder].taxa[j]);
         }
     }
+
     //copies new taxa to taxa group
     taxaGroups[placeholder].taxa = deepCopyFunction(newgroup);
 
     //Checks if group is empty, and deletes from taxa groups if it is
     if (taxaGroups[placeholder].taxa.length === 0) {
-        deleteTaxaGroup(placeholder);
+        //Deletes this taxa group from every sub and parent group of the taxa group
+        removeTaxaGroupFromParentandSub(taxaGroups[placeholder].name);
+        //Removes the taxa group from table and TaxaGroup array
+        deleteTaxaGroupFromTaxaTable(placeholder);
+        //Checks to see if there are any groups left
         if (taxaGroups.length === 0) {
             //Resets table
             resetTaxaGroupTable();
             $('#exportgroupsbtn').attr({ 'disabled': 'disabled' });
         }
     }
-    //Updates form with taxa removed from group
-    updateAddRemoveForm();
+
+}
+
+//Removes the given Taxa group name from the parent and sub groups of other Taxa groups
+//Gieven is the removed group name
+function removeTaxaGroupFromParentandSub(removedgroup) {
+    for (var i = 0; i < taxaGroups.length; i++) {
+        //Removes group from the parent group if it is there
+        if (compareTaxa(removedgroup, taxaGroups[i].parentgroups) === true) {
+            for(var j = 0; j < taxaGroups[i].parentgroups.length; j++){
+                if(taxaGroups[i].parentgroups[j] == removedgroup) {
+                    taxaGroups[i].parentgroups.splice(j, 1);
+                }
+            }
+        } 
+        //Removes group from sub group if it is there
+        if (compareTaxa(removedgroup, taxaGroups[i].subgroups) === true) {
+            for(var j = 0; j < taxaGroups[i].subgroups.length; j++){
+                if(taxaGroups[i].subgroups[j] == removedgroup) {
+                    taxaGroups[i].subgroups.splice(j, 1);
+                }
+            }
+        }
+    }
 }
 
 //Removes tag from given taxa name in taxa table
+//Given is the taxa name and the group  name
 function removeGroupTag(taxaname, taxatag) {
     var table = document.getElementById('taxadata');
     for (var i = 0, row; row = table.rows[i]; i++) {
@@ -443,7 +558,7 @@ function disableSelectedTaxaForms(disable) {
 }
 
 //Deep copy function, creates a  deep copy of given object - https://medium.com/javascript-in-plain-english/how-to-deep-copy-objects-and-arrays-in-javascript-7c911359b089
-//Used to create copies of different taxa arrays to created groups and updatind groups with add/remove form
+//Used to create copies of different taxa arrays to created groups and update groups with add/remove form, this is used when an array is changed like the taxa of a group
 function deepCopyFunction(inObject) {
     let outObject, value, key
 
@@ -469,7 +584,7 @@ function createTaxaGroup() {
     //Checks if group is not empty or name is already created.
     if ($("#taxagroupcreate").val() && /\S/.test($("#taxagroupcreate").val()) && !ifGroupExists($("#taxagroupcreate").val())) {
         //New group
-        var taxagroup = { name: $("#taxagroupcreate").val(), taxa: [], monophyletic: false, subgroups: [] };
+        var taxagroup = { name: $("#taxagroupcreate").val(), taxa: [], monophyletic: false, subgroups: [], parentgroups: [] };
         //Deep copies selected taxa to taxa of created group
         taxagroup.taxa = deepCopyFunction(selectedTaxa);
 
@@ -498,11 +613,11 @@ function createTaxaGroup() {
         $('#exportgroupsbtn').removeAttr('disabled');
     } else {
         //debugging
-        // console.log("Can't create a group");
+        alert("Group cannot be created.");
     }
 }
 
-//Checks if group exist with given name
+//Checks if group exist with given name, stops from groups to be created with the same name
 function ifGroupExists(inputname) {
     for (var i = 0; i < taxaGroups.length; i++) {
         if (inputname === taxaGroups[i].name) {
@@ -515,16 +630,14 @@ function ifGroupExists(inputname) {
 //Checks if there are any subgroups to the given taxa group or if the given taxa group is a subgroup to another group and updates the subgroup information
 //Inserted is the placeholder of the taxa group that is going to be checked
 function updateSubgroups(placeholder) {
-
     for (var i = 0; i < taxaGroups.length; i++) {
         //Checks if this taxa group has any subgroups
         if (taxaGroups[i].taxa.length < taxaGroups[placeholder].taxa.length) {
             if (compareTaxa(taxaGroups[i].taxa[0], taxaGroups[placeholder].taxa)) {
                 if (compareTaxa(taxaGroups[i].name, taxaGroups[placeholder].subgroups) == false) {
                     taxaGroups[placeholder].subgroups.push(taxaGroups[i].name);
+                    taxaGroups[i].parentgroups.push(taxaGroups[placeholder].name);
                 }
-            } else {
-                //Can be used to check if the group was originally added as a subgroup, but is no longer a subgruop it can be removed
             }
         }
 
@@ -533,21 +646,19 @@ function updateSubgroups(placeholder) {
             if (compareTaxa(taxaGroups[placeholder].taxa[0], taxaGroups[i].taxa)) {
                 if (compareTaxa(taxaGroups[placeholder].name, taxaGroups[i].subgroups) == false) {
                     taxaGroups[i].subgroups.push(taxaGroups[placeholder].name);
+                    taxaGroups[placeholder].parentgroups.push(taxaGroups[i].name);
                 }
             }
         }
-        //Debug
-        console.log("Taxa: " + taxaGroups[i].name);
-        console.log("Subgroups: " + taxaGroups[i].subgroups);
     }
-
 }
 
-//Deletes taxa group from taxa table with given placholder
-function deleteTaxaGroup(placeholder) {
+//Deletes taxa group from taxa table with given placholder, also removes it form the taxaGroups array
+function deleteTaxaGroupFromTaxaTable(placeholder) {
     //Gets taxa group table body
     var tbody = document.getElementById("taxagrouptable");
     tbody.removeChild(tbody.children[placeholder]);
+    //Removes the group form the taxa group array
     taxaGroups.splice(placeholder, 1);
     //Removes group from group table
     var select = document.getElementById('taxatagfilter');
@@ -559,7 +670,7 @@ function deleteTaxaGroup(placeholder) {
     }
 }
 
-//Adds tag to taxa filter select menu
+//Adds tag to taxa filter select menu with given tag name
 function addOptionToTaxaFilter(tag) {
     var select = document.getElementById('taxatagfilter');
     var opt = document.createElement('option');
@@ -568,6 +679,7 @@ function addOptionToTaxaFilter(tag) {
 }
 
 //Changes group tag in filter with new tag name
+// Given is the old and the new name
 function updateOptionInTaxaFilter(oldTag, newTag) {
     var select = document.getElementById('taxatagfilter');
     for (var i = 0; i < select.children.length; i++) {
@@ -600,9 +712,9 @@ function resetTaxaGroupTable() {
 }
 
 //Adds taxa group name to taxa group table
+//Given is the group name
 function addTaxaGroupToTable(groupname) {
-
-    //Deletes messag in table if this is the first group that is created
+    //Deletes message in table if this is the first group that is created
     if (taxaGroups.length === 1) {
         $("#taxagrouptable").empty();
     }
@@ -673,6 +785,8 @@ function changeGroupInfo(placeholder) {
         } else {
             taxaGroups[placeholder].monophyletic = false;
         }
+        //Updates the parent and sub groups if name is changed on other taxa groups
+        updateParentSubGroups(oldtaxagroup, newtaxagroup);
         //Updates new group information for tags in taxa table
         updateGroupTaxa(oldtaxagroup, newtaxagroup, taxaGroups[placeholder].monophyletic);
         //Updates taxa filter with name on input
@@ -682,7 +796,31 @@ function changeGroupInfo(placeholder) {
     }
 }
 
+//Updates the parent and sub groups of all groups that contain the old given name to the new given name
+//Given are the old taxa group name and the new taxa group name
+function updateParentSubGroups(oldtaxaname, newtaxaname){
+    for (var i = 0; i < taxaGroups.length; i++) {
+        //Removes group from the parent group if it is there
+        if (compareTaxa(oldtaxaname, taxaGroups[i].parentgroups) === true) {
+            for(var j = 0; j < taxaGroups[i].parentgroups.length; j++){
+                if(taxaGroups[i].parentgroups[j] == oldtaxaname) {
+                    taxaGroups[i].parentgroups[j] = newtaxaname;
+                }
+            }
+        } 
+        //Removes group from sub group if it is there
+        if (compareTaxa(oldtaxaname, taxaGroups[i].subgroups) === true) {
+            for(var j = 0; j < taxaGroups[i].subgroups.length; j++){
+                if(taxaGroups[i].subgroups[j] == oldtaxaname) {
+                    taxaGroups[i].subgroups[j] = newtaxaname;
+                }
+            }
+        }
+    }
+}
+
 //Updates the new group tag from modal to each taxa tag in taxa table
+//Given are the old tag name, new tag name, and boolean for monophyletic
 function updateGroupTaxa(oldtag, newtag, monophyletic) {
     var table = document.getElementById('taxadata');
     //Each row
@@ -703,7 +841,7 @@ function updateGroupTaxa(oldtag, newtag, monophyletic) {
     }
 }
 
-//Filters taxa by selected tag in select tag filter and search input box
+//Filters taxa table by selected tag in select tag filter and search input box
 function filterTaxaTag() {
     var input, filter, table, tr;
     //taxa filter from select menu
@@ -819,7 +957,7 @@ function downloadTaxaGroups(filename, text) {
 
 //Updates the data displayer
 function updateDataDisplayer() {
-    //TODO
+    // Grabs the element and sets it up for the displayer
     $("#taxadisplayer").empty();
     var svg = d3.select("svg"),
         margin = 20,
@@ -835,32 +973,35 @@ function updateDataDisplayer() {
         .size([diameter - margin, diameter - margin])
         .padding(2);
 
+    //TODO - Not Finished
     //Defines array that will have the data for the displayer
     var array = { "name": "parent", "children": [] };
     //Array keeps track of 
     var usedGroup = [];
-    //Adds each taxagroup name to the displayer
+
+    // Iterates through each taxa group
     for (var i = 0; i < taxaGroups.length; i++) {
-        if (i != usedGroup[1]) {
-            var group = { "name": taxaGroups[i].name, "children": [] };
-            //Adds the name for each taxa in the group to the displayer
-            for (var j = 0; j < taxaGroups[i].taxa.length; j++) {
-                var child = { "name": taxaGroups[i].taxa[j], "size": 14 };
-                //checks if there are any subgroups 
-                for (var n = 0; n < taxaGroups.length; n++) {
-                    if (taxaGroups[i].taxa.length > taxaGroups[n].taxa.length) {
-
-                    }
+        // Checks if group is already checked
+        if (compareTaxa(taxaGroups[i].name, usedGroup) == false) {
+            // Makes sure that this group has no parents - to start at the top of the nodes
+            if (taxaGroups[i].parentgroups.length == 0) {
+                // creates data for the node
+                var group = { "name": taxaGroups[i].name, "children": [] };
+                //Adds the name for each child in the group to the displayer
+                for (var j = 0; j < taxaGroups[i].subgroups.length; j++) {
+                    var child = { "name": taxaGroups[i].subgroups[j], "size": 14 };
+                    group.children.push(child);
+                    usedGroup.push(taxaGroups[i].subgroups[j])
                 }
-
-                group.children.push(child);
+                // Data is pushed to the corresponding arrays
+                array.children.push(group);
+                usedGroup.push(taxaGroups[i].name)
             }
-            array.children.push(group);
         }
     }
-    // array.children.push(piece);
-    console.log(array);
+
     /*
+    // This is an example of how the data could look. example.json is also another example
     var array1 = {
         "name": "parent",
         "children": [
@@ -903,7 +1044,7 @@ function updateDataDisplayer() {
         ]
     }
     */
-    // console.log(array1);
+//creates the nodes for the displayer using the data that was created
     root = d3.hierarchy(array)
         .sum(function (d) { return d.size; })
         .sort(function (a, b) { return b.value - a.value; });
@@ -960,7 +1101,14 @@ function updateDataDisplayer() {
     }
 }
 
-//For debugging - Prints taxa group from taxa group array with given index
-function printGroup(index) {
-    console.log("Groupname: " + taxaGroups[index].name + " Taxa: " + taxaGroups[index].taxa + " M: " + taxaGroups[index].monophyletic);
+//For debugging - Prints taxa group and all of their information
+function printTaxaGroups() {
+    for(var i = 0; i < taxaGroups.length; i++){
+        console.log("Groupname: " + taxaGroups[i].name);
+        console.log("Taxa: " + taxaGroups[i].name);
+        console.log("M: " + taxaGroups[i].monophyletic);
+        console.log("Subgroups: " + taxaGroups[i].subgroups);
+        console.log("Parentgroups: " + taxaGroups[i].parentgroups);
+        console.log("-----------------------------------------");
+    }
 }

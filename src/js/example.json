@@ -11,7 +11,7 @@
                             "name": "child1child1child1",
                             "children": [
                                 {
-                                    "name": "baby",
+                                    "name": "child",
                                     "size": 28
                                 }
                             ]
@@ -21,110 +21,38 @@
             ]
         },
         {
-            "name": "3",
+            "name": "child2",
             "children": [
                 {
-                    "name": "p21.31",
+                    "name": "child2child1",
                     "children": [
                         {
-                            "name": "CACNA2D2",
+                            "name": "child2child1child1",
                             "children": [
                                 {
-                                    "name": "aaaacxi7gjufoascvqjaabaafi",
+                                    "name": "c1",
                                     "size": 2
                                 },
                                 {
-                                    "name": "undefined",
-                                    "size": 1
-                                },
-                                {
-                                    "name": "aaaacxi7gjufqascvqjaabaaae",
-                                    "size": 2
-                                },
-                                {
-                                    "name": "aaaacxi7gjufqascvqjaabaadu",
-                                    "size": 1
-                                },
-                                {
-                                    "name": "aaaacxi7gjufqascvqjaabaaee",
-                                    "size": 2
-                                },
-                                {
-                                    "name": "aaaacxi7gjufqascvqjaabaace",
-                                    "size": 1
-                                },
-                                {
-                                    "name": "aaaacxi7gjufqascvqjaabaaca",
-                                    "size": 2
-                                },
-                                {
-                                    "name": "aaaacxi7gjufqascvqjaabaad4",
+                                    "name": "c2",
                                     "size": 2
                                 }
                             ]
                         },
                         {
-                            "name": "LARS2",
+                            "name": "child2child1child2",
                             "children": [
                                 {
-                                    "name": "aaaacxi7gj6pmascvqjaabaag4",
+                                    "name": "c1",
                                     "size": 30
                                 },
                                 {
-                                    "name": "aaaacxi7gj6pmascvqjaabaagy",
+                                    "name": "c2",
                                     "size": 9
                                 },
                                 {
-                                    "name": "aaaacxi7gj6pmascvqjaabaaga",
+                                    "name": "c3",
                                     "size": 16
-                                },
-                                {
-                                    "name": "aaaacxi7gj6pmascvqjaabaagq",
-                                    "size": 8
-                                },
-                                {
-                                    "name": "aaaacxi7gj6pmascvqjaabaahi",
-                                    "size": 11
-                                },
-                                {
-                                    "name": "aaaacxi7gj6pmascvqjaabaagm",
-                                    "size": 14
-                                },
-                                {
-                                    "name": "aaaacxi7gj6pmascvqjaabaage",
-                                    "size": 1
-                                },
-                                {
-                                    "name": "undefined",
-                                    "size": 10
-                                },
-                                {
-                                    "name": "aaaacxi7gj6pmascvqjaabaaia",
-                                    "size": 12
-                                },
-                                {
-                                    "name": "aaaacxi7gj6pmascvqjaabaahy",
-                                    "size": 15
-                                },
-                                {
-                                    "name": "aaaacxi7gj6pmascvqjaabaafq",
-                                    "size": 8
-                                },
-                                {
-                                    "name": "aaaacxi7gj6pmascvqjaabaaha",
-                                    "size": 10
-                                },
-                                {
-                                    "name": "aaaacxi7gj6pmascvqjaabaagu",
-                                    "size": 12
-                                },
-                                {
-                                    "name": "aaaacxi7gj6pmascvqjaabaaf4",
-                                    "size": 10
-                                },
-                                {
-                                    "name": "aaaacxi7gj6pmascvqjaabaahq",
-                                    "size": 10
                                 }
                             ]
                         }
